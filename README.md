@@ -6,7 +6,7 @@ Solving the climate crisis will need everyone to contribute in one way or anothe
 
 After 30 years of global stalemate, we've realized there is no such thing as a perfect solution. Instead, we need to find acceptable compromises to make any progress at all.
 
-But choosing acceptable compromises in a complex equation with ever-changing variables is a challenge to say the least. Especially if you don't take the time to see the bigger picture and understand how everything is connected 🕸
+But choosing acceptable compromises in a complex equation with ever-changing variables is a challenge to say the least. Especially if you don't take your time to see the bigger picture and understand how everything is connected 🕸
 
 ## And that brings us to why you are here...
 
