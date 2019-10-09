@@ -18,6 +18,6 @@ And that's why you were elected, Mrs. President. People are literally betting th
 
 You have 8 years.
 
-Will you guide your society to a safe, just future? Or will you let the world burn, just like so many have done before you? 🌍🔥
+So, will you guide your society to a safe, just future? Or will you let the world burn, just like so many have done before you? 🌍🔥
 
 Seriously though, no pressure. You got this (we hope...) 😬
