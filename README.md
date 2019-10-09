@@ -1,6 +1,6 @@
 # green-choices
 
-## Welcome, Mrs. President!
+## Welcome, Mrs. President! 🖖
 
 Solving the climate crisis will need everyone to contribute in one way or another. But that is extremely hard given that different "solutions" affect people in different ways. And you need broad public support to succeed 🧩
 
