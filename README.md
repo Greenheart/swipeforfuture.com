@@ -1,6 +1,6 @@
 # green-choices
 
-> Solving the climate crisis, one swipe at a time.
+> Solving the climate crisis, one swipe at a time 🌍🔥
 
 ## Welcome, Mrs. President! 🖖
 
