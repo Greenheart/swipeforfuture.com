@@ -17,6 +17,13 @@
     align-items: center;
 }
 
+.stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
 .stat .icon {
     width: 30px;
     height: 30px;
@@ -24,7 +31,21 @@
     background: lightgreen;
 }
 
-.decision {
+.stat .bar {
+    margin-top: 10px;
+    width: 40px;
+    height: 8px;
+    border-radius: 4px;
+    background: lightslategrey;
+}
+
+.stat .progress {
+    position: relative;
+    top: 1px;
+    left: 1px;
+    height: 6px;
+    max-width: 38px;
+    border-radius: 3px;
 }
 
 footer {
