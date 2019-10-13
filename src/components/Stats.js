@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import { IoIosPeople } from 'react-icons/io'
+import { GiAk47, GiMoneyStack, GiWheat } from 'react-icons/gi'
 
 import Bar from './Bar'
 
@@ -19,29 +21,41 @@ const Stat = styled.div`
 `
 
 const Icon = styled.div`
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: lightgreen;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 function Stats({ stats }) {
     return (
         <Container>
             <Stat>
-                <Icon />
+                <Icon>
+                    <GiWheat size="80%" />
+                </Icon>
                 <Bar value={stats.environment} />
             </Stat>
             <Stat>
-                <Icon />
+                <Icon>
+                    <IoIosPeople size="80%" />
+                </Icon>
                 <Bar value={stats.people} />
             </Stat>
             <Stat>
-                <Icon />
+                <Icon>
+                    <GiAk47 size="80%" />
+                </Icon>
                 <Bar value={stats.security} />
             </Stat>
             <Stat>
-                <Icon />
+                <Icon>
+                    <GiMoneyStack size="80%" />
+                </Icon>
                 <Bar value={stats.money} />
             </Stat>
         </Container>
