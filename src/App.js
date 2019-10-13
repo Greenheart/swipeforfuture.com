@@ -1,4 +1,6 @@
 import React from 'react'
+
+import Bar from './components/Bar'
 import './App.css'
 
 function App() {
@@ -27,29 +29,6 @@ function App() {
                 <div className="time-remaining"></div>
             </footer>
         </main>
-    )
-}
-
-function getBarColor(value) {
-    if (value <= 30) {
-        return 'red'
-    } else if (value <= 60) {
-        return 'yellow'
-    } else {
-        return 'lightgreen'
-    }
-}
-
-function Bar({ value }) {
-    return (
-        <div className="bar">
-            <div
-                className="progress"
-                style={{
-                    width: `${value}%`,
-                    backgroundColor: getBarColor(value)
-                }}></div>
-        </div>
     )
 }
 
