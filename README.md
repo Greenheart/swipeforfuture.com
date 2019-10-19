@@ -23,3 +23,11 @@ You have 8 years.
 So, will you guide your society to a safe, just future? Or will you let the world burn, just like so many have done before you? 🌍🔥
 
 Seriously though, no pressure. You got this (we hope...) 😬
+
+# Contributors
+
+-   [Marie Dubremetz](https://github.com/mardub1635)
+-   Theresa Weber-Qvarfort
+-   [Tianmin Lyu](http://github.com/thecrossed)
+-   [Dimitrios Tsamis](https://github.com/dtsamis)
+-   [Johannes Ridderstedt](https://github.com/johannesl)
