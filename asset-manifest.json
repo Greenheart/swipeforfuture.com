@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/green-choices/static/css/main.0b28b1d8.chunk.css",
-    "main.js": "/green-choices/static/js/main.2574cee8.chunk.js",
-    "main.js.map": "/green-choices/static/js/main.2574cee8.chunk.js.map",
+    "main.js": "/green-choices/static/js/main.9a0f57fc.chunk.js",
+    "main.js.map": "/green-choices/static/js/main.9a0f57fc.chunk.js.map",
     "runtime-main.js": "/green-choices/static/js/runtime-main.8213fbf1.js",
     "runtime-main.js.map": "/green-choices/static/js/runtime-main.8213fbf1.js.map",
     "static/js/2.d4609273.chunk.js": "/green-choices/static/js/2.d4609273.chunk.js",
     "static/js/2.d4609273.chunk.js.map": "/green-choices/static/js/2.d4609273.chunk.js.map",
     "index.html": "/green-choices/index.html",
-    "precache-manifest.b523c775af34539bd7a4eb0f7a6a1794.js": "/green-choices/precache-manifest.b523c775af34539bd7a4eb0f7a6a1794.js",
+    "precache-manifest.d21695dc7355007dcb192ec987cbb340.js": "/green-choices/precache-manifest.d21695dc7355007dcb192ec987cbb340.js",
     "service-worker.js": "/green-choices/service-worker.js",
     "static/css/main.0b28b1d8.chunk.css.map": "/green-choices/static/css/main.0b28b1d8.chunk.css.map"
   },
@@ -16,6 +16,6 @@
     "static/js/runtime-main.8213fbf1.js",
     "static/js/2.d4609273.chunk.js",
     "static/css/main.0b28b1d8.chunk.css",
-    "static/js/main.2574cee8.chunk.js"
+    "static/js/main.9a0f57fc.chunk.js"
   ]
 }
