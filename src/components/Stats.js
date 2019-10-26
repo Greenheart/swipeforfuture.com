@@ -6,7 +6,7 @@ import { GiAk47, GiMoneyStack, GiWheat } from 'react-icons/gi'
 import Bar from './Bar'
 
 const Container = styled.header`
-    background: lightgoldenrodyellow;
+    background: #f6fbf5;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -24,7 +24,7 @@ const Icon = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: lightgreen;
+    background: #91c779;
 
     display: flex;
     justify-content: center;

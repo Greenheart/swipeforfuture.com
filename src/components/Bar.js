@@ -6,7 +6,7 @@ const Container = styled.div`
     width: 40px;
     height: 8px;
     border-radius: 4px;
-    background: lightslategrey;
+    background: #546a76;
 `
 
 const Value = styled.div`
@@ -33,11 +33,11 @@ function Bar({ value = 100 }) {
 
 function getBarColor(value) {
     if (value <= 30) {
-        return 'red'
+        return '#dd7373'
     } else if (value <= 70) {
-        return 'yellow'
+        return '#e7e247'
     } else {
-        return 'lightgreen'
+        return '#91c779'
     }
 }
 

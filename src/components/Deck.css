@@ -14,7 +14,6 @@ body {
 }
 
 .deck-root {
-    background: salmon;
     overflow: hidden;
     width: 100%;
 }
@@ -30,7 +29,7 @@ body {
 
 .deck-root > div > div {
     padding: 5px;
-    background-color: white;
+    background-color: #f6fbf5;
     background-size: auto 85%;
     background-repeat: no-repeat;
     background-position: center center;

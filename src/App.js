@@ -10,13 +10,12 @@ const Container = styled.main`
     left: 0;
     width: 100vw;
     height: 100%;
-    background: lightslategrey;
+    background: #546a76;
     display: grid;
-    grid-template-rows: 100px auto 100px;
+    grid-template-rows: minmax(50px, 80px) auto minmax(50px, 80px);
 `
 
 const Footer = styled.footer`
-    background: lightgoldenrodyellow;
     display: flex;
     justify-content: center;
     align-items: center;
