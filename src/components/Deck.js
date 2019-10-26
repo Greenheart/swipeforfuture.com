@@ -11,7 +11,7 @@ const to = i => ({
     x: 0,
     y: i * -10,
     scale: 1,
-    rot: Math.random() * 5,
+    rot: Math.random() * 2,
     delay: i * 100
 })
 const from = i => ({ rot: 0, scale: 1.5, y: -1000 })
