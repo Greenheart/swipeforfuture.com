@@ -12,7 +12,7 @@ const Container = styled.main`
     height: 100%;
     background: lightslategrey;
     display: grid;
-    grid-template-rows: 100px auto 150px;
+    grid-template-rows: 100px auto 100px;
 `
 
 const Footer = styled.footer`
