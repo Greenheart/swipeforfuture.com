@@ -4,7 +4,7 @@ import { animated, interpolate } from 'react-spring/hooks'
 class Card extends React.Component {
     render() {
         const { i, x, y, rot, scale, trans, bind, cardData } = this.props
-        const { name, age, distance, text, image } = cardData
+        const { name, distance, text, image } = cardData
 
         return (
             <animated.div
