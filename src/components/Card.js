@@ -1,23 +1,39 @@
 import React from 'react'
-import styled from 'styled-components/macro'
+import { animated, interpolate } from 'react-spring/hooks'
 
-const Container = styled.section`
-    width: 80%;
-    max-width: 700px;
-    background: lightgoldenrodyellow;
-    margin: 25px auto;
-`
+class Card extends React.Component {
+    render() {
+        const { i, x, y, rot, scale, trans, bind, cardData } = this.props
+        const { name, age, distance, text, image } = cardData
 
-const Content = styled.div`
-    background: lightgreen;
-`
-
-function Card() {
-    return (
-        <Container>
-            <Content>This is a card</Content>
-        </Container>
-    )
+        return (
+            <animated.div
+                key={i}
+                style={{
+                    transform: interpolate(
+                        [x, y],
+                        (x, y) => `translate3d(${x}px,${y}px,0)`
+                    )
+                }}>
+                <animated.div
+                    {...bind(i)}
+                    style={{
+                        transform: interpolate([rot, scale], trans)
+                    }}>
+                    <div className="card">
+                        <img
+                            src={image ? image : ''}
+                            alt={name}
+                            style={{ width: '100%' }}
+                        />
+                        <h2>{name}</h2>
+                        <h5>{distance}</h5>
+                        <h5>{text}</h5>
+                    </div>
+                </animated.div>
+            </animated.div>
+        )
+    }
 }
 
 export default Card

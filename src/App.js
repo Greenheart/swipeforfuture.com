@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 import Stats from './components/Stats'
-import Card from './components/Card'
+import Deck from './components/Deck'
 
 const Container = styled.main`
     position: absolute;
@@ -28,8 +28,7 @@ function App() {
             <Stats
                 stats={{ environment: 18, people: 58, security: 77, money: 32 }}
             />
-            {/* <div className="decision"></div> */}
-            <Card />
+            <Deck />
             <Footer>
                 <div className="time-remaining"></div>
             </Footer>
