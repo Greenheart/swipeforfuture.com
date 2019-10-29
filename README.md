@@ -31,3 +31,4 @@ Seriously though, no pressure. You got this (we hope...) 😬
 -   [Tianmin Lyu](http://github.com/thecrossed)
 -   [Dimitrios Tsamis](https://github.com/dtsamis)
 -   [Johannes Ridderstedt](https://github.com/johannesl)
+-   [Tobias Holle](https://twitter.com/tobiasrholle)
