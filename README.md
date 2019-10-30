@@ -26,9 +26,13 @@ Seriously though, no pressure. You got this (we hope...) 😬
 
 # Contributors
 
+This game is a community effort, created together with these awesome people:
+
 -   [Marie Dubremetz](https://github.com/mardub1635)
 -   Theresa Weber-Qvarfort
 -   [Tianmin Lyu](http://github.com/thecrossed)
 -   [Dimitrios Tsamis](https://github.com/dtsamis)
 -   [Johannes Ridderstedt](https://github.com/johannesl)
 -   [Tobias Holle](https://twitter.com/tobiasrholle)
+
+Do you have ideas or want to support the development? You're welcome to submit issues and PR:s here on GitHub and tell us more!
