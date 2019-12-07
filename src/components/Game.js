@@ -86,7 +86,9 @@ export default class Game extends Component {
             stat => stat <= 0
         )
         if (isGameLost) {
-            this.setState({ hasEnded: true })
+            window.setTimeout(() => {
+                this.setState({ hasEnded: true })
+            }, 600)
         }
     }
 
