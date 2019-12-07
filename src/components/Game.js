@@ -17,14 +17,18 @@ const DIRECTION = {
 }
 
 export default class Game extends Component {
-    state = {
-        world: {
-            environment: 40,
-            people: 60,
-            security: 75,
-            money: 90
-        },
-        hasEnded: false
+    state = this.getInitialState()
+
+    getInitialState() {
+        return {
+            world: {
+                environment: 40,
+                people: 60,
+                security: 75,
+                money: 90
+            },
+            hasEnded: false
+        }
     }
 
     render() {
@@ -94,15 +98,7 @@ export default class Game extends Component {
 
     findNewWorldToDestroy() {
         window.setTimeout(() => {
-            this.setState({
-                world: {
-                    environment: 40,
-                    people: 60,
-                    security: 75,
-                    money: 90
-                },
-                hasEnded: false
-            })
+            this.setState(this.getInitialState())
         }, 600)
     }
 }
