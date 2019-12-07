@@ -3,7 +3,6 @@ import { useSprings } from 'react-spring/hooks'
 import { useGesture } from 'react-with-gesture'
 
 import Card from './Card'
-import cards from '../data/cards.js'
 
 import './Deck.css'
 
@@ -20,7 +19,7 @@ const trans = (r, s) =>
     `perspective(1500px) rotateX(30deg) rotateY(${r /
         10}deg) rotateZ(${r}deg) scale(${s})`
 
-function Deck() {
+function Deck({ onSwipe, cards }) {
     const [gone] = useState(() => new Set())
 
     const [cardAnimationStates, setCardAnimationState] = useSprings(
@@ -44,7 +43,13 @@ function Deck() {
 
             const dir = xDir < 0 ? -1 : 1
 
-            if (!down && trigger) gone.add(index)
+            if (!down && trigger) {
+                // Hide card
+                gone.add(index)
+
+                // Handle game state updates
+                onSwipe(cards[index], dir)
+            }
 
             setCardAnimationState(i => {
                 if (index !== i) return

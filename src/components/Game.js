@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import Deck from './Deck'
 import Stats from './Stats'
+import cards from '../data/cards.js'
 
 const Footer = styled.footer`
     display: flex;
@@ -24,15 +25,16 @@ export default class Game extends Component {
         return (
             <>
                 <Stats stats={this.state.world} />
-                <Deck />
-                <Footer onClick={this.onSwipe.bind(this)}>
+                <Deck onSwipe={this.onSwipe.bind(this)} cards={cards} />
+                <Footer>
                     <div className="time-remaining"></div>
                 </Footer>
             </>
         )
     }
 
-    onSwipe() {
+    onSwipe(card, direction) {
+        console.log('swipe ', direction, card.name)
         this.updateWorld({
             environment: -35,
             people: 5,
