@@ -18,14 +18,19 @@ export default class Game extends Component {
             people: 60,
             security: 75,
             money: 90
-        }
+        },
+        hasEnded: false
     }
 
     render() {
         return (
             <>
                 <Stats stats={this.state.world} />
-                <Deck onSwipe={this.onSwipe.bind(this)} cards={cards} />
+                {!this.state.hasEnded ? (
+                    <Deck onSwipe={this.onSwipe.bind(this)} cards={cards} />
+                ) : (
+                    ''
+                )}
                 <Footer>
                     <div className="time-remaining"></div>
                 </Footer>
@@ -40,6 +45,8 @@ export default class Game extends Component {
             people: 5,
             money: -50
         })
+
+        this.checkEndgame()
     }
 
     updateWorld(modifier) {
@@ -59,5 +66,14 @@ export default class Game extends Component {
 
         const updated = { world: updatedWorld }
         this.setState(updated)
+    }
+
+    checkEndgame() {
+        const isGameLost = Object.values(this.state.world).some(
+            stat => stat <= 0
+        )
+        if (isGameLost) {
+            this.setState({ hasEnded: true })
+        }
     }
 }
