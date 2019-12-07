@@ -25,10 +25,37 @@ export default class Game extends Component {
             <>
                 <Stats stats={this.state.world} />
                 <Deck />
-                <Footer>
+                <Footer onClick={this.onSwipe.bind(this)}>
                     <div className="time-remaining"></div>
                 </Footer>
             </>
         )
+    }
+
+    onSwipe() {
+        this.updateWorld({
+            environment: -35,
+            people: 5,
+            money: -50
+        })
+    }
+
+    updateWorld(modifier) {
+        const currentWorld = Object.assign({}, this.state.world)
+
+        const updatedWorld = Object.entries(modifier).reduce(
+            (updatedState, [key, value]) => {
+                updatedState[key] = Math.max(
+                    Math.min(value + updatedState[key], 100),
+                    0
+                )
+
+                return updatedState
+            },
+            currentWorld
+        )
+
+        const updated = { world: updatedWorld }
+        this.setState(updated)
     }
 }
