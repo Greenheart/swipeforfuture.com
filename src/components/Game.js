@@ -31,11 +31,15 @@ export default class Game extends Component {
         return (
             <>
                 <Stats stats={this.state.world} />
-                {!this.state.hasEnded ? (
-                    <Deck onSwipe={this.onSwipe.bind(this)} cards={cards} />
-                ) : (
-                    ''
-                )}
+                <Deck
+                    key={this.state.hasEnded}
+                    onSwipe={this.onSwipe.bind(this)}
+                    cards={cards.filter(c =>
+                        this.state.hasEnded
+                            ? c.type === 'endgame'
+                            : c.type === 'decision'
+                    )}
+                />
                 <Footer>
                     <div className="time-remaining"></div>
                 </Footer>
@@ -44,6 +48,10 @@ export default class Game extends Component {
     }
 
     onSwipe(card, direction) {
+        if (card.type === 'endgame') {
+            this.findNewWorldToDestroy()
+            return
+        }
         console.log('swipe ', direction, card.title)
         this.updateWorld(
             direction === DIRECTION.LEFT
@@ -80,5 +88,19 @@ export default class Game extends Component {
         if (isGameLost) {
             this.setState({ hasEnded: true })
         }
+    }
+
+    findNewWorldToDestroy() {
+        window.setTimeout(() => {
+            this.setState({
+                world: {
+                    environment: 40,
+                    people: 60,
+                    security: 75,
+                    money: 90
+                },
+                hasEnded: false
+            })
+        }, 600)
     }
 }
