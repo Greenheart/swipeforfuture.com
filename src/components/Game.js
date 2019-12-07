@@ -11,6 +11,11 @@ const Footer = styled.footer`
     align-items: center;
 `
 
+const DIRECTION = {
+    LEFT: -1,
+    RIGHT: 1
+}
+
 export default class Game extends Component {
     state = {
         world: {
@@ -39,12 +44,12 @@ export default class Game extends Component {
     }
 
     onSwipe(card, direction) {
-        console.log('swipe ', direction, card.name)
-        this.updateWorld({
-            environment: -35,
-            people: 5,
-            money: -50
-        })
+        console.log('swipe ', direction, card.title)
+        this.updateWorld(
+            direction === DIRECTION.LEFT
+                ? card.actions.left.modifier
+                : card.actions.right.modifier
+        )
 
         this.checkEndgame()
     }
