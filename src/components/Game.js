@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 
 import Deck from './Deck'
 import Stats from './Stats'
-import cards from '../data/cards.js'
+import cardList from '../data/cards.js'
 
 const Footer = styled.footer`
     display: flex;
@@ -14,6 +14,10 @@ const Footer = styled.footer`
 const DIRECTION = {
     LEFT: -1,
     RIGHT: 1
+}
+
+const GAMESTATE = {
+    ENDGAME: 'endgame',
 }
 
 export default class Game extends Component {
@@ -27,6 +31,7 @@ export default class Game extends Component {
                 security: 75,
                 money: 90
             },
+            cards: this.generateCards().filter(c => c.type !== GAMESTATE.ENDGAME),
             hasEnded: false
         }
     }
@@ -36,13 +41,8 @@ export default class Game extends Component {
             <>
                 <Stats stats={this.state.world} />
                 <Deck
-                    key={this.state.hasEnded}
                     onSwipe={this.onSwipe.bind(this)}
-                    cards={cards.filter(c =>
-                        this.state.hasEnded
-                            ? c.type === 'endgame'
-                            : c.type === 'decision'
-                    )}
+                    cards={this.state.cards}
                 />
                 <Footer>
                     <div className="time-remaining"></div>
@@ -52,18 +52,32 @@ export default class Game extends Component {
     }
 
     onSwipe(card, direction) {
-        if (card.type === 'endgame') {
+        if (card.type === GAMESTATE.ENDGAME) {
             this.findNewWorldToDestroy()
             return
         }
-        console.log('swipe ', direction, card.title)
-        this.updateWorld(
+
+        const updatedWorld = this.updateWorld(
             direction === DIRECTION.LEFT
                 ? card.actions.left.modifier
                 : card.actions.right.modifier
         )
 
-        this.checkEndgame()
+        const isGameLost = this.checkEndgame(updatedWorld)
+        const cards = this.state.cards.filter(c => c !== card);
+
+        const updatedCards = isGameLost
+            ? this.generateCards().filter(c => c.type === GAMESTATE.ENDGAME)
+            : cards.length === 0
+            ? this.generateCards().filter(c => c.type !== GAMESTATE.ENDGAME)
+            : cards
+
+        const updated = {
+            world: updatedWorld,
+            hasEnded: isGameLost,
+            cards: updatedCards
+        }
+        this.setState(updated)
     }
 
     updateWorld(modifier) {
@@ -81,24 +95,24 @@ export default class Game extends Component {
             currentWorld
         )
 
-        const updated = { world: updatedWorld }
-        this.setState(updated)
+        return updatedWorld;
     }
 
-    checkEndgame() {
-        const isGameLost = Object.values(this.state.world).some(
+    checkEndgame(world) {
+        const isGameLost = Object.values(world).some(
             stat => stat <= 0
         )
-        if (isGameLost) {
-            window.setTimeout(() => {
-                this.setState({ hasEnded: true })
-            }, 600)
-        }
+        return isGameLost;
     }
 
     findNewWorldToDestroy() {
-        window.setTimeout(() => {
-            this.setState(this.getInitialState())
-        }, 600)
+        this.setState(this.getInitialState())
+    }
+
+    generateCards() {
+        return cardList.map((card, index) => ({
+            ...card,
+            id: Date.now() + ":" + index
+        }))
     }
 }
