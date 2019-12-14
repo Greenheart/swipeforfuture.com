@@ -36,8 +36,9 @@ function Card({ i, cardData, onSwipe }) {
             direction: [xDir],
             velocity
         }) => {
-            const trigger = velocity > 0.2
-            const dir = xDir < 0 ? -1 : 1
+            const threshold = Math.min(200, window.innerWidth / 2)
+            const trigger = Math.abs(xDelta) * window.devicePixelRatio > threshold
+            const dir = Math.sign(xDelta)
 
             if (!down && trigger && !isGoneState.isGone) {
                 // Handle game state updates
