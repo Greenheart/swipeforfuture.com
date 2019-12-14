@@ -9,7 +9,7 @@ function Deck({ onSwipe, cards }) {
             {cards.map((card, i) => (
                 <Card
                     i={i}
-                    key={card.title}
+                    key={card.id}
                     cardData={card}
                     onSwipe={onSwipe}
                 />

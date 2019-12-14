@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { animated, interpolate } from 'react-spring/hooks'
 import { useSpring } from 'react-spring/hooks'
 import { useGesture } from 'react-with-gesture'
@@ -25,7 +25,7 @@ function Card({ i, cardData, onSwipe }) {
         })
     )
     
-    const isGone = false;
+    const [isGoneState] = useState({isGone: false});
 
     const bind = useGesture(
         ({
@@ -39,10 +39,14 @@ function Card({ i, cardData, onSwipe }) {
             const trigger = velocity > 0.2
             const dir = xDir < 0 ? -1 : 1
 
-            if (!down && trigger) {
+            if (!down && trigger && !isGoneState.isGone) {
                 // Handle game state updates
-                onSwipe(cardData, dir)
+                isGoneState.isGone = true;
+                window.setTimeout(() => {
+                    onSwipe(cardData, dir)
+                }, 600)
             }
+            const isGone = isGoneState.isGone;
 
             const x = isGone
                     ? (200 + window.innerWidth) * dir

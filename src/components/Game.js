@@ -16,6 +16,10 @@ const DIRECTION = {
     RIGHT: 1
 }
 
+const GAMESTATE = {
+    ENDGAME: 'endgame',
+}
+
 export default class Game extends Component {
     state = this.getInitialState()
 
@@ -27,7 +31,7 @@ export default class Game extends Component {
                 security: 75,
                 money: 90
             },
-            cards: cardList,
+            cards: this.generateCards().filter(c => c.type !== GAMESTATE.ENDGAME),
             hasEnded: false
         }
     }
@@ -38,11 +42,7 @@ export default class Game extends Component {
                 <Stats stats={this.state.world} />
                 <Deck
                     onSwipe={this.onSwipe.bind(this)}
-                    cards={this.state.cards.filter(c =>
-                        this.state.hasEnded
-                            ? c.type === 'endgame'
-                            : c.type === 'decision'
-                    )}
+                    cards={this.state.cards}
                 />
                 <Footer>
                     <div className="time-remaining"></div>
@@ -52,7 +52,7 @@ export default class Game extends Component {
     }
 
     onSwipe(card, direction) {
-        if (card.type === 'endgame') {
+        if (card.type === GAMESTATE.ENDGAME) {
             this.findNewWorldToDestroy()
             return
         }
@@ -64,12 +64,18 @@ export default class Game extends Component {
         )
 
         const isGameLost = this.checkEndgame(updatedWorld)
-
         const cards = this.state.cards.filter(c => c !== card);
+
+        const updatedCards = isGameLost
+            ? this.generateCards().filter(c => c.type === GAMESTATE.ENDGAME)
+            : cards.length === 0
+            ? this.generateCards().filter(c => c.type !== GAMESTATE.ENDGAME)
+            : cards
+
         const updated = {
             world: updatedWorld,
             hasEnded: isGameLost,
-            cards: cards
+            cards: updatedCards
         }
         this.setState(updated)
     }
@@ -100,8 +106,13 @@ export default class Game extends Component {
     }
 
     findNewWorldToDestroy() {
-        window.setTimeout(() => {
-            this.setState(this.getInitialState())
-        }, 600)
+        this.setState(this.getInitialState())
+    }
+
+    generateCards() {
+        return cardList.map((card, index) => ({
+            ...card,
+            id: Date.now() + ":" + index
+        }))
     }
 }
