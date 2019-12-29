@@ -1,31 +1,31 @@
 type WorldState = {}
 
 interface CardDescription {
-    image: string,
-    title: string,
-    text: string,
-    weight: number,
+    image: string
+    title: string
+    text: string
+    weight: number
 }
 
 interface CardActionData {
-    description?: string,
-    modifierType?: "add" | "set" | "replace",
+    description?: string
+    modifierType?: 'add' | 'set' | 'replace'
     modifier?: {
-        environment?: number,
-        people?: number,
-        security?: number,
+        environment?: number
+        people?: number
+        security?: number
         money?: number
-    },
+    }
     flags?: {
         [x: string]: boolean
     }
 }
 
 interface CardData extends CardDescription {
-    isIncludedWhen: WorldQuery[],
+    isAvailableWhen: WorldQuery[]
     actions: {
-        left: CardActionData,
-        right: CardActionData,
+        left: CardActionData
+        right: CardActionData
     }
 }
 
@@ -33,26 +33,23 @@ type WorldStateRange = [number, number]
 
 interface WorldQuery {
     state?: {
-        environment?: WorldStateRange,
-        people?: WorldStateRange,
-        security?: WorldStateRange,
-        money?: WorldStateRange,
-        [x: string]: WorldStateRange,
-    },
+        environment?: WorldStateRange
+        people?: WorldStateRange
+        security?: WorldStateRange
+        money?: WorldStateRange
+        [x: string]: WorldStateRange
+    }
     flags?: {
         [x: string]: boolean
-    },
+    }
 }
-
-
-
 
 // -----------------------------
 
 interface WorldEvent {
-    probability: number,
-    shouldTriggerWhen?: WorldQuery[],
-    initialEventCardId: EventCardId,
+    probability: number
+    shouldTriggerWhen?: WorldQuery[]
+    initialEventCardId: EventCardId
 }
 
 type EventCards = {
@@ -61,7 +58,7 @@ type EventCards = {
 
 interface EventCard extends CardDescription {
     actions: {
-        left: EventCardActionData,
+        left: EventCardActionData
         right: EventCardActionData
     }
 }
@@ -69,6 +66,5 @@ interface EventCard extends CardDescription {
 type EventCardId = string
 
 interface EventCardActionData extends CardActionData {
-    nextEventCardId: EventCardId,
+    nextEventCardId: EventCardId
 }
-
