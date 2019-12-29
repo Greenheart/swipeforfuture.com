@@ -3,7 +3,10 @@ import styled from 'styled-components/macro'
 
 import Deck from './Deck'
 import Stats from './Stats'
-import cardList from '../data/cards.js'
+
+import gameCards from '../data/cards.js'
+import worldEvents from '../data/events.js'
+import eventCards from '../data/event-cards.js'
 
 const Footer = styled.footer`
     display: flex;
@@ -16,32 +19,48 @@ const DIRECTION = {
     RIGHT: 1
 }
 
+const DEFAULT_GAME_WORLD = {
+    state: {
+        environment: 40,
+        people: 60,
+        security: 75,
+        money: 90
+    },
+    flags: {}
+}
+
 export default class Game extends Component {
     state = this.getInitialState()
 
     getInitialState() {
-        const world = {
-            state: {
-                environment: 40,
-                people: 60,
-                security: 75,
-                money: 90
-            },
-            flags: {
-                
-            }
-        }
-
-        const availableCards = this.getAvailableCards(world)
-
         return {
-            world,
-            card: this.selectNextCard(availableCards),
+            world: DEFAULT_GAME_WORLD,
+            card: this.selectNextCard(this.getAvailableCards(DEFAULT_GAME_WORLD)),
         }
     }
 
     getAvailableCards(world) {
-        return cardList.filter(c => c.isIncluded(world))
+        return gameCards.filter(c => c.isIncluded(world))
+    }
+
+    getAvailableEvents(world) {
+        return worldEvents.filter(e => this.hasMatchingWorldQuery(world, e.shouldTriggerWhen))
+    }
+
+    hasMatchingWorldQuery(world, worldQueries) {
+        return worldQueries.some(q => this.isMatchingWorldQuery(world, q))
+    }
+
+    isMatchingWorldQuery(world, { state = {}, flags = {} }) {
+        const hasStateMatch = Object.entries(state)
+            .every(([key, [min, max]]) => (
+                world.state[key] >= min && world.state[key] <= max
+            ))
+        
+        const result = hasStateMatch && Object.entries(flags)
+            .every(([flag, value]) => world.flag[flag] === value)
+        
+        return result;
     }
 
     render() {
@@ -60,32 +79,35 @@ export default class Game extends Component {
     }
 
     onSwipe(card, direction) {
-        const updatedWorld = this.getUpdatedWorld(
-            direction === DIRECTION.LEFT
-                ? card.actions.left
-                : card.actions.right
-        )
-        
-        // get available events
-            // call event.shouldTrigger()
+        const currentAction = direction === DIRECTION.LEFT
+            ? card.actions.left
+            : card.actions.right
+        const updatedWorld = this.getUpdatedWorld(currentAction)
 
-        // if select event of available event
-            // trigger event
-        // else
-            // selectNextCard()
-            
-        const availableCards = this.getAvailableCards(updatedWorld)
-        const selectedCard = this.selectNextCard(availableCards)
+        const availableEvents = this.getAvailableEvents(updatedWorld)
+        const nextEvent = card.type !== "event"
+            ? this.selectNextEvent(availableEvents)
+            : null
+
+        let nextCard
+        if (card.type === "event" && currentAction.nextEventCardId !== undefined) {
+            nextCard = this.selectEventCard(currentAction.nextEventCardId)
+        } else if (nextEvent) {
+            nextCard = this.selectEventCard(nextEvent.initialEventCardId)
+        } else {
+            const availableCards = this.getAvailableCards(updatedWorld)
+            nextCard = this.selectNextCard(availableCards)
+        }
 
         const updated = {
             world: updatedWorld,
-            card: selectedCard
+            card: nextCard
         }
         this.setState(updated)
     }
 
-    getUpdatedWorld({ modifier = {}, flags = {} }) {
-        const updatedWorldState = this.updateWorldState(modifier)
+    getUpdatedWorld({ modifier = {}, flags = {}, modifierType = "add" }) {
+        const updatedWorldState = this.updateWorldState(modifier, modifierType)
         const updatedWorldFlags = this.updateWorldFlags(flags)
         
         return {
@@ -94,15 +116,18 @@ export default class Game extends Component {
         }
     }
 
-    updateWorldState(modifier) {
-        const currentWorldState = Object.assign({}, this.state.world.state)
+    updateWorldState(modifier, modifierType) {
+        const currentWorldState = modifierType === 'replace'
+            ? DEFAULT_GAME_WORLD
+            : Object.assign({}, this.state.world.state)
 
         const updatedWorldState = Object.entries(modifier).reduce(
             (updatedState, [key, value]) => {
-                updatedState[key] = Math.max(
-                    Math.min(value + updatedState[key], 100),
-                    0
-                )
+                const newValue = modifierType === 'set'
+                    ? value
+                    : value + (updatedState[key] || 0)
+                
+                updatedState[key] = Math.min(Math.max(newValue, 0), 100)
 
                 return updatedState
             },
@@ -134,6 +159,21 @@ export default class Game extends Component {
     }
 
     selectNextCard(cards = []) {
-        return cards[Math.floor(Math.random() * cards.length)];
+        return this.selectRandomFrom(cards);
+    }
+
+    selectNextEvent(events = []) {
+        const event = this.selectRandomFrom(events);
+        if (event && Math.random() < event.probability) {
+            return event;
+        }
+    }
+
+    selectRandomFrom(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
+    selectEventCard(cardId) {
+        return eventCards[cardId];
     }
 }
