@@ -6,7 +6,11 @@ export default [
         distance: '4 miles away',
         text: 'Lorem ipsum COALar sit amet consectetur, adipisicing elit.',
         weight: 1,
-        isIncluded: world => true,
+        isAvailableWhen: [
+            { state: { environment: [10, 100], money: [80, 100] } },
+            { state: { people: [10, 100], money: [80, 100] } },
+            { state: { security: [10, 100], money: [80, 100] } }
+        ],
         actions: {
             left: {
                 modifier: {
@@ -14,9 +18,6 @@ export default [
                     people: -100,
                     security: -100,
                     money: -100
-                },
-                flags: {
-                    test: true
                 }
             },
             right: {
@@ -36,7 +37,11 @@ export default [
         distance: '100 miles away',
         text: 'Lorem ipsum SOLAR sit amet consectetur, adipisicing elit.',
         weight: 1,
-        isIncluded: world => true,
+        isAvailableWhen: [
+            { state: { environment: [60, 100], money: [30, 31] } },
+            { state: { people: [60, 100], money: [30, 31] } },
+            { state: { security: [60, 100], money: [30, 31] } }
+        ],
         actions: {
             left: {
                 modifier: {

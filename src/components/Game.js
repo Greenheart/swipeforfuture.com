@@ -66,7 +66,9 @@ export default class Game extends Component {
     }
 
     getAvailableCards(world) {
-        return gameCards.filter(c => c.isIncluded(world))
+        return gameCards.filter(c =>
+            this.hasMatchingWorldQuery(world, c.isAvailableWhen)
+        )
     }
 
     getAvailableEvents(world) {
