@@ -13,8 +13,7 @@ export default {
                 modifier: {
                     environment: 10,
                     people: 10,
-                    security: 10,
-                    money: 10
+                    security: 10
                 },
                 flags: {},
                 nextEventCardId: null
@@ -24,8 +23,7 @@ export default {
                 modifier: {
                     environment: 10,
                     people: 10,
-                    security: 10,
-                    money: 10
+                    security: 10
                 },
                 flags: {},
                 nextEventCardId: null
