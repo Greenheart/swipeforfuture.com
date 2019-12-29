@@ -141,7 +141,7 @@ export default class Game extends Component {
     updateWorldState(modifier, modifierType) {
         const currentWorldState =
             modifierType === 'replace'
-                ? DEFAULT_GAME_WORLD.state
+                ? Object.assign({}, DEFAULT_GAME_WORLD.state)
                 : Object.assign({}, this.state.world.state)
 
         const updatedWorldState = Object.entries(modifier).reduce(
