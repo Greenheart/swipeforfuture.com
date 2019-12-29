@@ -28,7 +28,7 @@ const DIRECTION = {
     RIGHT: 1
 }
 
-const DEFAULT_GAME_WORLD = {
+const DEFAULT_GAME_WORLD = Object.freeze({
     state: {
         environment: 40,
         people: 60,
@@ -36,7 +36,7 @@ const DEFAULT_GAME_WORLD = {
         money: 90
     },
     flags: {}
-}
+})
 
 export default class Game extends Component {
     state = this.getInitialState()
