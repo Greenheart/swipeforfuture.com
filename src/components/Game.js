@@ -41,6 +41,21 @@ const DEFAULT_GAME_WORLD = {
 export default class Game extends Component {
     state = this.getInitialState()
 
+    render() {
+        return (
+            <>
+                <Stats stats={this.state.world.state} />
+                <Deck
+                    onSwipe={this.onSwipe.bind(this)}
+                    cards={[this.addUniqueCardId(this.state.card)]}
+                />
+                <Footer>
+                    <div className="time-remaining"></div>
+                </Footer>
+            </>
+        )
+    }
+
     getInitialState() {
         return {
             world: DEFAULT_GAME_WORLD,
@@ -77,21 +92,6 @@ export default class Game extends Component {
             )
 
         return result
-    }
-
-    render() {
-        return (
-            <>
-                <Stats stats={this.state.world.state} />
-                <Deck
-                    onSwipe={this.onSwipe.bind(this)}
-                    cards={[this.addUniqueCardId(this.state.card)]}
-                />
-                <Footer>
-                    <div className="time-remaining"></div>
-                </Footer>
-            </>
-        )
     }
 
     onSwipe(card, direction) {
