@@ -130,7 +130,7 @@ export default class Game extends Component {
 
     getUpdatedWorld({ modifier = {}, flags = {}, modifierType = 'add' }) {
         const updatedWorldState = this.updateWorldState(modifier, modifierType)
-        const updatedWorldFlags = this.updateWorldFlags(flags)
+        const updatedWorldFlags = this.updateWorldFlags(flags, modifierType)
 
         return {
             state: updatedWorldState,
@@ -147,7 +147,7 @@ export default class Game extends Component {
         const updatedWorldState = Object.entries(modifier).reduce(
             (updatedState, [key, value]) => {
                 const newValue =
-                    modifierType === 'set'
+                    modifierType === 'set' || modifierType === 'replace'
                         ? value
                         : value + (updatedState[key] || 0)
 
@@ -161,11 +161,11 @@ export default class Game extends Component {
         return updatedWorldState
     }
 
-    updateWorldFlags(flags) {
-        const currentWorldFlags = Object.assign(
-            DEFAULT_GAME_WORLD.flags,
-            this.state.world.flags
-        )
+    updateWorldFlags(flags, modifierType) {
+        const currentWorldFlags =
+            modifierType === 'replace'
+                ? Object.assign({}, DEFAULT_GAME_WORLD.flags)
+                : Object.assign({}, this.state.world.flags)
 
         const updatedWorldFlags = Object.keys(flags).reduce(
             (updatedFlags, key) => {
