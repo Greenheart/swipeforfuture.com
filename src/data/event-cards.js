@@ -9,7 +9,7 @@ export default {
         weight: 1000,
         actions: {
             left: {
-                modifierType: "replace",
+                modifierType: 'replace',
                 modifier: {
                     environment: 10,
                     people: 10,
@@ -20,7 +20,7 @@ export default {
                 nextEventCardId: null
             },
             right: {
-                modifierType: "replace",
+                modifierType: 'replace',
                 modifier: {
                     environment: 10,
                     people: 10,
@@ -30,6 +30,6 @@ export default {
                 flags: {},
                 nextEventCardId: null
             }
-        },
+        }
     }
 }

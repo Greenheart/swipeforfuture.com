@@ -6,7 +6,7 @@ export default [
         distance: '4 miles away',
         text: 'Lorem ipsum COALar sit amet consectetur, adipisicing elit.',
         weight: 1,
-        isIncluded: (world) => true,
+        isIncluded: world => true,
         actions: {
             left: {
                 modifier: {
@@ -16,7 +16,7 @@ export default [
                     money: -100
                 },
                 flags: {
-                    test: true,
+                    test: true
                 }
             },
             right: {
@@ -25,7 +25,7 @@ export default [
                     people: 60,
                     security: 75,
                     money: 90
-                },
+                }
             }
         }
     },
@@ -36,7 +36,7 @@ export default [
         distance: '100 miles away',
         text: 'Lorem ipsum SOLAR sit amet consectetur, adipisicing elit.',
         weight: 1,
-        isIncluded: (world) => true,
+        isIncluded: world => true,
         actions: {
             left: {
                 modifier: {
@@ -55,5 +55,5 @@ export default [
                 }
             }
         }
-    },
+    }
 ]
