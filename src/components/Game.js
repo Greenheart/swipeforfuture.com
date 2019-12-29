@@ -3,7 +3,18 @@ import styled from 'styled-components/macro'
 
 import Deck from './Deck'
 import Stats from './Stats'
-import cardList from '../data/cards.js'
+
+
+// -------
+// TODO: Move to data loader module
+
+import gameCards from '../data/cards.js'
+import worldEvents from '../data/events.js'
+import eventCards from '../data/event-cards.js'
+
+eventCards = eventCards.map(c => c.type = 'event')
+
+/// ------
 
 const Footer = styled.footer`
     display: flex;
@@ -16,8 +27,14 @@ const DIRECTION = {
     RIGHT: 1
 }
 
-const GAMESTATE = {
-    ENDGAME: 'endgame',
+const DEFAULT_GAME_WORLD = {
+    state: {
+        environment: 40,
+        people: 60,
+        security: 75,
+        money: 90
+    },
+    flags: {}
 }
 
 export default class Game extends Component {
@@ -25,24 +42,42 @@ export default class Game extends Component {
 
     getInitialState() {
         return {
-            world: {
-                environment: 40,
-                people: 60,
-                security: 75,
-                money: 90
-            },
-            cards: this.generateCards().filter(c => c.type !== GAMESTATE.ENDGAME),
-            hasEnded: false
+            world: DEFAULT_GAME_WORLD,
+            card: this.selectNextCard(this.getAvailableCards(DEFAULT_GAME_WORLD)),
         }
+    }
+
+    getAvailableCards(world) {
+        return gameCards.filter(c => c.isIncluded(world))
+    }
+
+    getAvailableEvents(world) {
+        return worldEvents.filter(e => this.hasMatchingWorldQuery(world, e.shouldTriggerWhen))
+    }
+
+    hasMatchingWorldQuery(world, worldQueries) {
+        return worldQueries.some(q => this.isMatchingWorldQuery(world, q))
+    }
+
+    isMatchingWorldQuery(world, { state = {}, flags = {} }) {
+        const hasStateMatch = Object.entries(state)
+            .every(([key, [min, max]]) => (
+                world.state[key] >= min && world.state[key] <= max
+            ))
+        
+        const result = hasStateMatch && Object.entries(flags)
+            .every(([flag, value]) => world.flag[flag] === value)
+        
+        return result;
     }
 
     render() {
         return (
             <>
-                <Stats stats={this.state.world} />
+                <Stats stats={this.state.world.state} />
                 <Deck
                     onSwipe={this.onSwipe.bind(this)}
-                    cards={this.state.cards}
+                    cards={[this.addUniqueCardId(this.state.card)]}
                 />
                 <Footer>
                     <div className="time-remaining"></div>
@@ -52,67 +87,101 @@ export default class Game extends Component {
     }
 
     onSwipe(card, direction) {
-        if (card.type === GAMESTATE.ENDGAME) {
-            this.findNewWorldToDestroy()
-            return
+        const currentAction = direction === DIRECTION.LEFT
+            ? card.actions.left
+            : card.actions.right
+        const updatedWorld = this.getUpdatedWorld(currentAction)
+
+        const availableEvents = this.getAvailableEvents(updatedWorld)
+        const nextEvent = card.type !== "event"
+            ? this.selectNextEvent(availableEvents)
+            : null
+
+        let nextCard
+        if (card.type === "event" && currentAction.nextEventCardId !== undefined) {
+            nextCard = this.selectEventCard(currentAction.nextEventCardId)
+        } else if (nextEvent) {
+            nextCard = this.selectEventCard(nextEvent.initialEventCardId)
+        } else {
+            const availableCards = this.getAvailableCards(updatedWorld)
+            nextCard = this.selectNextCard(availableCards)
         }
-
-        const updatedWorld = this.updateWorld(
-            direction === DIRECTION.LEFT
-                ? card.actions.left.modifier
-                : card.actions.right.modifier
-        )
-
-        const isGameLost = this.checkEndgame(updatedWorld)
-        const cards = this.state.cards.filter(c => c !== card);
-
-        const updatedCards = isGameLost
-            ? this.generateCards().filter(c => c.type === GAMESTATE.ENDGAME)
-            : cards.length === 0
-            ? this.generateCards().filter(c => c.type !== GAMESTATE.ENDGAME)
-            : cards
 
         const updated = {
             world: updatedWorld,
-            hasEnded: isGameLost,
-            cards: updatedCards
+            card: nextCard
         }
         this.setState(updated)
     }
 
-    updateWorld(modifier) {
-        const currentWorld = Object.assign({}, this.state.world)
+    getUpdatedWorld({ modifier = {}, flags = {}, modifierType = "add" }) {
+        const updatedWorldState = this.updateWorldState(modifier, modifierType)
+        const updatedWorldFlags = this.updateWorldFlags(flags)
+        
+        return {
+            state: updatedWorldState,
+            flags: updatedWorldFlags
+        }
+    }
 
-        const updatedWorld = Object.entries(modifier).reduce(
+    updateWorldState(modifier, modifierType) {
+        const currentWorldState = modifierType === 'replace'
+            ? DEFAULT_GAME_WORLD
+            : Object.assign({}, this.state.world.state)
+
+        const updatedWorldState = Object.entries(modifier).reduce(
             (updatedState, [key, value]) => {
-                updatedState[key] = Math.max(
-                    Math.min(value + updatedState[key], 100),
-                    0
-                )
+                const newValue = modifierType === 'set'
+                    ? value
+                    : value + (updatedState[key] || 0)
+                
+                updatedState[key] = Math.min(Math.max(newValue, 0), 100)
 
                 return updatedState
             },
-            currentWorld
+            currentWorldState
         )
 
-        return updatedWorld;
+        return updatedWorldState;
     }
 
-    checkEndgame(world) {
-        const isGameLost = Object.values(world).some(
-            stat => stat <= 0
+    updateWorldFlags(flags) {
+        const currentWorldFlags = Object.assign({}, this.state.world.flags)
+
+        const updatedWorldFlags = Object.keys(flags).reduce(
+            (updatedFlags, key) => {
+                updatedFlags[key] = flags[key];
+                return updatedFlags
+            },
+            currentWorldFlags
         )
-        return isGameLost;
+
+        return updatedWorldFlags;
     }
 
-    findNewWorldToDestroy() {
-        this.setState(this.getInitialState())
-    }
-
-    generateCards() {
-        return cardList.map((card, index) => ({
+    addUniqueCardId(card, index = 0) {
+        return {
             ...card,
             id: Date.now() + ":" + index
-        }))
+        };
+    }
+
+    selectNextCard(cards = []) {
+        return this.selectRandomFrom(cards);
+    }
+
+    selectNextEvent(events = []) {
+        const event = this.selectRandomFrom(events);
+        if (event && Math.random() < event.probability) {
+            return event;
+        }
+    }
+
+    selectRandomFrom(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
+    selectEventCard(cardId) {
+        return eventCards[cardId];
     }
 }
