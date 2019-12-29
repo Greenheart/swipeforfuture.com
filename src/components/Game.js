@@ -4,9 +4,17 @@ import styled from 'styled-components/macro'
 import Deck from './Deck'
 import Stats from './Stats'
 
+
+// -------
+// TODO: Move to data loader module
+
 import gameCards from '../data/cards.js'
 import worldEvents from '../data/events.js'
 import eventCards from '../data/event-cards.js'
+
+eventCards = eventCards.map(c => c.type = 'event')
+
+/// ------
 
 const Footer = styled.footer`
     display: flex;
