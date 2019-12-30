@@ -10,7 +10,7 @@ export default {
         actions: {
             left: {
                 modifierType: 'replace',
-                modifier: {
+                state: {
                     environment: 10,
                     people: 10,
                     security: 10
@@ -20,7 +20,7 @@ export default {
             },
             right: {
                 modifierType: 'replace',
-                modifier: {
+                state: {
                     environment: 10,
                     people: 10,
                     security: 10

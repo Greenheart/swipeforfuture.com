@@ -13,7 +13,7 @@ export default [
         ],
         actions: {
             left: {
-                modifier: {
+                state: {
                     environment: -100,
                     people: -100,
                     security: -100,
@@ -21,7 +21,7 @@ export default [
                 }
             },
             right: {
-                modifier: {
+                state: {
                     environment: 40,
                     people: 60,
                     security: 75,
@@ -44,7 +44,7 @@ export default [
         ],
         actions: {
             left: {
-                modifier: {
+                state: {
                     environment: -100,
                     people: -100,
                     security: -100,
@@ -52,11 +52,11 @@ export default [
                 }
             },
             right: {
-                modifier: {
+                state: {
                     environment: 40,
                     people: 60,
                     security: 75,
-                    money: 90
+                    money: 0
                 }
             }
         }

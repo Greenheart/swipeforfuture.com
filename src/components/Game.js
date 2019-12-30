@@ -130,9 +130,19 @@ export default class Game extends Component {
         this.setState({ card: nextCard })
     }
 
-    getUpdatedWorld({ modifier = {}, flags = {}, modifierType = 'add' }) {
-        const updatedWorldState = this.updateWorldState(modifier, modifierType)
-        const updatedWorldFlags = this.updateWorldFlags(flags, modifierType)
+    getUpdatedWorld({
+        state: stateModifier = {},
+        flags: flagsModifier = {},
+        modifierType = 'add'
+    }) {
+        const updatedWorldState = this.updateWorldState(
+            stateModifier,
+            modifierType
+        )
+        const updatedWorldFlags = this.updateWorldFlags(
+            flagsModifier,
+            modifierType
+        )
 
         return {
             state: updatedWorldState,
@@ -140,13 +150,13 @@ export default class Game extends Component {
         }
     }
 
-    updateWorldState(modifier, modifierType) {
+    updateWorldState(stateModifier, modifierType) {
         const currentWorldState =
             modifierType === 'replace'
                 ? Object.assign({}, DEFAULT_GAME_WORLD.state)
                 : Object.assign({}, this.state.world.state)
 
-        const updatedWorldState = Object.entries(modifier).reduce(
+        const updatedWorldState = Object.entries(stateModifier).reduce(
             (updatedState, [key, value]) => {
                 const newValue =
                     modifierType === 'set' || modifierType === 'replace'
@@ -163,15 +173,15 @@ export default class Game extends Component {
         return updatedWorldState
     }
 
-    updateWorldFlags(flags, modifierType) {
+    updateWorldFlags(flagsModifier, modifierType) {
         const currentWorldFlags =
             modifierType === 'replace'
                 ? Object.assign({}, DEFAULT_GAME_WORLD.flags)
                 : Object.assign({}, this.state.world.flags)
 
-        const updatedWorldFlags = Object.keys(flags).reduce(
+        const updatedWorldFlags = Object.keys(flagsModifier).reduce(
             (updatedFlags, key) => {
-                updatedFlags[key] = flags[key]
+                updatedFlags[key] = flagsModifier[key]
                 return updatedFlags
             },
             currentWorldFlags
