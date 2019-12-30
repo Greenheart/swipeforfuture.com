@@ -3,6 +3,9 @@ import { animated, interpolate } from 'react-spring/hooks'
 import { useSpring } from 'react-spring/hooks'
 import { useGesture } from 'react-with-gesture'
 
+import { useKeyboardEvent } from '../util/hooks'
+import { SWIPE_DIRECTION } from '../data/constants'
+
 const to = i => ({
     x: 0,
     y: 0,
@@ -25,6 +28,21 @@ function Card({ i, cardData, onSwipe, layer }) {
 
     const [isGoneState] = useState({ isGone: false })
 
+    const handleSwipe = direction => {
+        isGoneState.isGone = true
+        window.setTimeout(() => {
+            onSwipe(cardData, direction)
+        }, 100)
+    }
+
+    // Allow desktop users to easily play the game
+    useKeyboardEvent('ArrowLeft', () => {
+        handleSwipe(SWIPE_DIRECTION.LEFT)
+    })
+    useKeyboardEvent('ArrowRight', () => {
+        handleSwipe(SWIPE_DIRECTION.RIGHT)
+    })
+
     const bind = useGesture(
         ({
             args: [index],
@@ -41,10 +59,7 @@ function Card({ i, cardData, onSwipe, layer }) {
 
             if (!down && trigger && !isGoneState.isGone) {
                 // Handle game state updates
-                isGoneState.isGone = true
-                window.setTimeout(() => {
-                    onSwipe(cardData, dir)
-                }, 100)
+                handleSwipe(dir)
             }
             const isGone = isGoneState.isGone
 
