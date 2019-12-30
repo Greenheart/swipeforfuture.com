@@ -7,8 +7,6 @@ interface CardDescription {
     weight: number
 }
 
-// TODO: decide if these potential changes are wanted or not.
-
 interface GameWorldModifier {
     modifierType?: 'add' | 'set' | 'replace'
     state?: {
