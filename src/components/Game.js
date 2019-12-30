@@ -63,7 +63,7 @@ export default class Game extends Component {
             card: this.selectNextCard(
                 this.getAvailableCards(DEFAULT_GAME_WORLD),
             ),
-            rounds: 0
+            rounds: 0,
         }
     }
 
@@ -104,12 +104,12 @@ export default class Game extends Component {
                 ? card.actions.left
                 : card.actions.right
 
-        const updatedWorld = this.getUpdatedWorld(currentAction)
+        const updatedWorld = this.getUpdatedWorld(currentAction.modifier)
 
         this.setState({
             world: updatedWorld,
             card: this.getNextCard(updatedWorld, card, currentAction),
-            rounds: this.state.rounds + 1
+            rounds: this.state.rounds + 1,
         })
     }
 
