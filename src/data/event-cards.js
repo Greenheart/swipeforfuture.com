@@ -9,23 +9,27 @@ export default {
         weight: 1000,
         actions: {
             left: {
-                modifierType: 'replace',
                 modifier: {
-                    environment: 10,
-                    people: 10,
-                    security: 10
+                    type: 'replace',
+                    state: {
+                        environment: 10,
+                        people: 10,
+                        security: 10
+                    },
+                    flags: {}
                 },
-                flags: {},
                 nextEventCardId: null
             },
             right: {
-                modifierType: 'replace',
                 modifier: {
-                    environment: 10,
-                    people: 10,
-                    security: 10
+                    type: 'replace',
+                    state: {
+                        environment: 10,
+                        people: 10,
+                        security: 10
+                    },
+                    flags: {}
                 },
-                flags: {},
                 nextEventCardId: null
             }
         }

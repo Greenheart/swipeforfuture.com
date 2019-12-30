@@ -7,10 +7,11 @@ interface CardDescription {
     weight: number
 }
 
-interface CardActionData {
-    description?: string
+// TODO: decide if these potential changes are wanted or not.
+
+interface GameWorldModifier {
     modifierType?: 'add' | 'set' | 'replace'
-    modifier?: {
+    state?: {
         environment?: number
         people?: number
         security?: number
@@ -19,6 +20,11 @@ interface CardActionData {
     flags?: {
         [x: string]: boolean
     }
+}
+
+interface CardActionData {
+    description?: string
+    modifier: GameWorldModifier
 }
 
 interface CardData extends CardDescription {

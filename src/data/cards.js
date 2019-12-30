@@ -14,18 +14,24 @@ export default [
         actions: {
             left: {
                 modifier: {
-                    environment: -100,
-                    people: -100,
-                    security: -100,
-                    money: -100
+                    type: 'add',
+                    state: {
+                        environment: -100,
+                        people: -100,
+                        security: -100,
+                        money: -100
+                    }
                 }
             },
             right: {
                 modifier: {
-                    environment: 40,
-                    people: 60,
-                    security: 75,
-                    money: 90
+                    type: 'add',
+                    state: {
+                        environment: 40,
+                        people: 60,
+                        security: 75,
+                        money: 90
+                    }
                 }
             }
         }
@@ -45,18 +51,24 @@ export default [
         actions: {
             left: {
                 modifier: {
-                    environment: -100,
-                    people: -100,
-                    security: -100,
-                    money: -100
+                    type: 'add',
+                    state: {
+                        environment: -100,
+                        people: -100,
+                        security: -100,
+                        money: -100
+                    }
                 }
             },
             right: {
                 modifier: {
-                    environment: 40,
-                    people: 60,
-                    security: 75,
-                    money: 90
+                    type: 'add',
+                    state: {
+                        environment: 40,
+                        people: 60,
+                        security: 75,
+                        money: 90
+                    }
                 }
             }
         }

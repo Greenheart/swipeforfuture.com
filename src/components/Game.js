@@ -63,7 +63,7 @@ export default class Game extends Component {
             card: this.selectNextCard(
                 this.getAvailableCards(DEFAULT_GAME_WORLD)
             ),
-            rounds: 0,
+            rounds: 0
         }
     }
 
@@ -109,7 +109,7 @@ export default class Game extends Component {
         this.setState({
             world: updatedWorld,
             card: this.getNextCard(updatedWorld, card, currentAction),
-            rounds: this.state.rounds + 1,
+            rounds: this.state.rounds + 1
         })
     }
 
@@ -142,9 +142,12 @@ export default class Game extends Component {
         return nextCard
     }
 
-    getUpdatedWorld({ modifier = {}, flags = {}, modifierType = 'add' }) {
-        const updatedWorldState = this.updateWorldState(modifier, modifierType)
-        const updatedWorldFlags = this.updateWorldFlags(flags, modifierType)
+    getUpdatedWorld({ type = 'add', state = {}, flags = {} }) {
+        // get default values for missing props by destructuring the incoming `modifier` and then directly reassembling it
+        // IDEA: Could this all be done in the function declaration, when specifying parameters?
+        const modifier = { type, state, flags }
+        const updatedWorldState = this.updateWorldState(modifier)
+        const updatedWorldFlags = this.updateWorldFlags(modifier)
 
         return {
             state: updatedWorldState,
@@ -152,16 +155,16 @@ export default class Game extends Component {
         }
     }
 
-    updateWorldState(modifier, modifierType) {
+    updateWorldState(modifier) {
         const currentWorldState =
-            modifierType === 'replace'
+            modifier.type === 'replace'
                 ? Object.assign({}, DEFAULT_GAME_WORLD.state)
                 : Object.assign({}, this.state.world.state)
 
-        const updatedWorldState = Object.entries(modifier).reduce(
+        const updatedWorldState = Object.entries(modifier.state).reduce(
             (updatedState, [key, value]) => {
                 const newValue =
-                    modifierType === 'set' || modifierType === 'replace'
+                    modifier.type === 'set' || modifier.type === 'replace'
                         ? value
                         : value + (updatedState[key] || 0)
 
@@ -175,15 +178,15 @@ export default class Game extends Component {
         return updatedWorldState
     }
 
-    updateWorldFlags(flags, modifierType) {
+    updateWorldFlags(modifier) {
         const currentWorldFlags =
-            modifierType === 'replace'
+            modifier.type === 'replace'
                 ? Object.assign({}, DEFAULT_GAME_WORLD.flags)
                 : Object.assign({}, this.state.world.flags)
 
-        const updatedWorldFlags = Object.keys(flags).reduce(
+        const updatedWorldFlags = Object.keys(modifier.flags).reduce(
             (updatedFlags, key) => {
-                updatedFlags[key] = flags[key]
+                updatedFlags[key] = modifier.flags[key]
                 return updatedFlags
             },
             currentWorldFlags
