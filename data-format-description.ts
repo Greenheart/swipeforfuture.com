@@ -8,7 +8,7 @@ interface CardDescription {
 }
 
 interface GameWorldModifier {
-    modifierType?: 'add' | 'set' | 'replace'
+    type?: 'add' | 'set' | 'replace'
     state?: {
         environment?: number
         people?: number
