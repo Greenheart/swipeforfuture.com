@@ -25,7 +25,7 @@ const Footer = styled.footer`
 
 const DIRECTION = {
     LEFT: -1,
-    RIGHT: 1
+    RIGHT: 1,
 }
 
 const DEFAULT_GAME_WORLD = Object.freeze({
@@ -33,9 +33,9 @@ const DEFAULT_GAME_WORLD = Object.freeze({
         environment: 40,
         people: 60,
         security: 75,
-        money: 90
+        money: 90,
     },
-    flags: {}
+    flags: {},
 })
 
 export default class Game extends Component {
@@ -61,7 +61,7 @@ export default class Game extends Component {
         return {
             world: DEFAULT_GAME_WORLD,
             card: this.selectNextCard(
-                this.getAvailableCards(DEFAULT_GAME_WORLD)
+                this.getAvailableCards(DEFAULT_GAME_WORLD),
             ),
             rounds: 0
         }
@@ -69,13 +69,13 @@ export default class Game extends Component {
 
     getAvailableCards(world) {
         return gameCards.filter(c =>
-            this.hasMatchingWorldQuery(world, c.isAvailableWhen)
+            this.hasMatchingWorldQuery(world, c.isAvailableWhen),
         )
     }
 
     getAvailableEvents(world) {
         return worldEvents.filter(e =>
-            this.hasMatchingWorldQuery(world, e.shouldTriggerWhen)
+            this.hasMatchingWorldQuery(world, e.shouldTriggerWhen),
         )
     }
 
@@ -86,13 +86,13 @@ export default class Game extends Component {
     isMatchingWorldQuery(world, { state = {}, flags = {} }) {
         const hasStateMatch = Object.entries(state).every(
             ([key, [min, max]]) =>
-                world.state[key] >= min && world.state[key] <= max
+                world.state[key] >= min && world.state[key] <= max,
         )
 
         const result =
             hasStateMatch &&
             Object.entries(flags).every(
-                ([flag, value]) => world.flag[flag] === value
+                ([flag, value]) => world.flag[flag] === value,
             )
 
         return result
@@ -128,7 +128,7 @@ export default class Game extends Component {
         if (isEventCardWithPointer) {
             if (!eventCards.hasOwnProperty(currentAction.nextEventCardId)) {
                 throw new Error(
-                    `eventCardId "${currentAction.nextEventCardId}" does not exist. Make sure it's spelled correctly`
+                    `eventCardId "${currentAction.nextEventCardId}" does not exist. Make sure it's spelled correctly`,
                 )
             }
             nextCard = this.selectEventCard(currentAction.nextEventCardId)
@@ -151,7 +151,7 @@ export default class Game extends Component {
 
         return {
             state: updatedWorldState,
-            flags: updatedWorldFlags
+            flags: updatedWorldFlags,
         }
     }
 
@@ -172,7 +172,7 @@ export default class Game extends Component {
 
                 return updatedState
             },
-            currentWorldState
+            currentWorldState,
         )
 
         return updatedWorldState
@@ -189,7 +189,7 @@ export default class Game extends Component {
                 updatedFlags[key] = modifier.flags[key]
                 return updatedFlags
             },
-            currentWorldFlags
+            currentWorldFlags,
         )
 
         return updatedWorldFlags
@@ -198,7 +198,7 @@ export default class Game extends Component {
     addUniqueCardId(card, index = 0) {
         return {
             ...card,
-            id: Date.now() + ':' + index
+            id: Date.now() + ':' + index,
         }
     }
 

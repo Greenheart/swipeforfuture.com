@@ -8,7 +8,7 @@ const to = i => ({
     y: 0,
     scale: 1,
     rot: 0,
-    delay: i * 100
+    delay: i * 100,
 })
 const from = i => ({ rot: 0, scale: 1.0, y: 10 })
 
@@ -20,7 +20,7 @@ function Card({ i, cardData, onSwipe, layer }) {
 
     const [cardAnimationState, setCardAnimationState] = useSpring(() => ({
         ...to(i),
-        from: from(i)
+        from: from(i),
     }))
 
     const [isGoneState] = useState({ isGone: false })
@@ -32,7 +32,7 @@ function Card({ i, cardData, onSwipe, layer }) {
             delta: [xDelta],
             distance,
             direction: [xDir],
-            velocity
+            velocity,
         }) => {
             const threshold = Math.min(200, window.innerWidth / 2)
             const trigger =
@@ -64,12 +64,12 @@ function Card({ i, cardData, onSwipe, layer }) {
                 delay: undefined,
                 config: {
                     friction: 50,
-                    tension: down ? 800 : isGone ? 200 : 500
-                }
+                    tension: down ? 800 : isGone ? 200 : 500,
+                },
             }
 
             setCardAnimationState(animationState)
-        }
+        },
     )
 
     const { x, y, rot, scale } = cardAnimationState
@@ -82,16 +82,16 @@ function Card({ i, cardData, onSwipe, layer }) {
                 position: 'absolute',
                 transform: interpolate(
                     [x, y],
-                    (x, y) => `translate3d(${x}px,${y}px,0)`
+                    (x, y) => `translate3d(${x}px,${y}px,0)`,
                 ),
-                zIndex: layer
+                zIndex: layer,
             }}
         >
             <animated.div
                 className="card card-front"
                 {...bind(i)}
                 style={{
-                    transform: interpolate([rot, scale], trans)
+                    transform: interpolate([rot, scale], trans),
                 }}
             >
                 <div className="card-content">

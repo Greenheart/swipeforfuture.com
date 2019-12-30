@@ -9,7 +9,7 @@ export default [
         isAvailableWhen: [
             { state: { environment: [10, 100], money: [80, 100] } },
             { state: { people: [10, 100], money: [80, 100] } },
-            { state: { security: [10, 100], money: [80, 100] } }
+            { state: { security: [10, 100], money: [80, 100] } },
         ],
         actions: {
             left: {
@@ -19,9 +19,9 @@ export default [
                         environment: -100,
                         people: -100,
                         security: -100,
-                        money: -100
-                    }
-                }
+                        money: -100,
+                    },
+                },
             },
             right: {
                 modifier: {
@@ -30,11 +30,11 @@ export default [
                         environment: 40,
                         people: 60,
                         security: 75,
-                        money: 90
-                    }
-                }
-            }
-        }
+                        money: 90,
+                    },
+                },
+            },
+        },
     },
     {
         image:
@@ -46,7 +46,7 @@ export default [
         isAvailableWhen: [
             { state: { environment: [60, 100], money: [30, 31] } },
             { state: { people: [60, 100], money: [30, 31] } },
-            { state: { security: [60, 100], money: [30, 31] } }
+            { state: { security: [60, 100], money: [30, 31] } },
         ],
         actions: {
             left: {
@@ -56,9 +56,9 @@ export default [
                         environment: -100,
                         people: -100,
                         security: -100,
-                        money: -100
-                    }
-                }
+                        money: -100,
+                    },
+                },
             },
             right: {
                 modifier: {
@@ -67,10 +67,10 @@ export default [
                         environment: 40,
                         people: 60,
                         security: 75,
-                        money: 90
-                    }
-                }
-            }
-        }
-    }
+                        money: 90,
+                    },
+                },
+            },
+        },
+    },
 ]

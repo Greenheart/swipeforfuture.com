@@ -24,7 +24,7 @@ function Bar({ value = 100 }) {
             <Value
                 style={{
                     width: `${value}%`,
-                    backgroundColor: getBarColor(value)
+                    backgroundColor: getBarColor(value),
                 }}
             />
         </Container>

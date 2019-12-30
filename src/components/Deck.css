@@ -46,7 +46,7 @@ body {
 .deck-root > .card-container > .card.card-back {
     box-sizing: border-box;
     border: solid 5px #fff;
-    background: url("https://images.unsplash.com/photo-1550537687-c91072c4792d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80");
+    background: url('https://images.unsplash.com/photo-1550537687-c91072c4792d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80');
     background-size: auto 100%;
     background-repeat: repeat;
     background-position: center center;
