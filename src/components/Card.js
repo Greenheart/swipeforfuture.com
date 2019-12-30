@@ -11,10 +11,10 @@ const to = i => ({
     flip: 0,
     delay: i * 100
 })
-const from = i => ({ rot: 0, flip: 180, scale: 1, y: 0 })
+const from = i => ({ rot: 0, flip: 180, scale: 1.1, y: 0 })
 
 const trans = (r, s, f) => 
-    `perspective(1000px) rotate3d(1, 0, 0, 10deg) rotate3d(0, 1, 0, ${f}deg) rotate3d(0, 0, 1, ${r}deg)`
+    `perspective(1500px) rotate3d(1, 0, 0, 30deg) rotate3d(0, 1, 0, ${f}deg) rotate3d(0, 0, 1, ${r}deg) scale(${s})`
 
 const invertFlip = (f) => (Math.sign(f) || 1) * (180 - Math.abs(f))
 const backTrans = (r, s, f) => trans(r, s, (f))
@@ -22,7 +22,7 @@ const visibility = (r) =>
     Math.abs(r) > 90 ? "hidden" : "visible"
 const backVisibility = (r) => visibility(invertFlip(r))
 
-function Card({ i, cardData, onSwipe }) {
+function Card({ i, cardData, onSwipe, layer }) {
     const { title, distance, text, image } = cardData
 
     const [cardAnimationState, setCardAnimationState] = useSpring(() => ({
@@ -51,7 +51,7 @@ function Card({ i, cardData, onSwipe }) {
                 isGoneState.isGone = true;
                 window.setTimeout(() => {
                     onSwipe(cardData, dir)
-                }, 600)
+                }, 100)
             }
             const isGone = isGoneState.isGone;
 
@@ -90,7 +90,8 @@ function Card({ i, cardData, onSwipe }) {
                 transform: interpolate(
                     [x, y],
                     (x, y) => `translate3d(${x}px,${y}px,0)`
-                )
+                ),
+                zIndex: layer
             }}>
             <animated.div
                 className="card card-front"
