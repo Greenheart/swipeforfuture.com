@@ -48,6 +48,7 @@ export default class Game extends Component {
                 <Deck
                     onSwipe={this.onSwipe.bind(this)}
                     cards={[this.addUniqueCardId(this.state.card)]}
+                    tick={this.state.rounds}
                 />
                 <Footer>
                     <div className="time-remaining"></div>
@@ -61,7 +62,8 @@ export default class Game extends Component {
             world: DEFAULT_GAME_WORLD,
             card: this.selectNextCard(
                 this.getAvailableCards(DEFAULT_GAME_WORLD)
-            )
+            ),
+            rounds: 0,
         }
     }
 
@@ -106,7 +108,8 @@ export default class Game extends Component {
 
         this.setState({
             world: updatedWorld,
-            card: this.getNextCard(updatedWorld, card, currentAction)
+            card: this.getNextCard(updatedWorld, card, currentAction),
+            rounds: this.state.rounds + 1,
         })
     }
 
