@@ -5,13 +5,17 @@ import DummyCard from './DummyCard'
 import './Deck.css'
 
 function Deck({ onSwipe, cards, tick = 0 }) {
-    const cardStack = Array.apply(null, Array(5)).map((_, index) => index);
+    const cardStack = Array.apply(null, Array(5)).map((_, index) => index)
     return (
         <div className="deck-root">
             {cardStack.map((key, index, list) => (
                 <DummyCard
                     x={0}
-                    y={10 + list[loopingIndex(index, list.length, tick)] * (50 / list.length)}
+                    y={
+                        10 +
+                        list[loopingIndex(index, list.length, tick)] *
+                            (50 / list.length)
+                    }
                     key={index}
                     r={Math.sin(key * 2345) * 1}
                     layer={list.length - loopingIndex(index, list.length, tick)}
