@@ -11,7 +11,7 @@ function Deck({ onSwipe, cards, tick = 0 }) {
             {cardStack.map((key, index, list) => (
                 <DummyCard
                     x={0}
-                    y={list[loopingIndex(index, list.length, tick)] * (50 / list.length)}
+                    y={10 + list[loopingIndex(index, list.length, tick)] * (50 / list.length)}
                     key={index}
                     r={Math.sin(key * 2345) * 1}
                     layer={list.length - loopingIndex(index, list.length, tick)}

@@ -7,20 +7,13 @@ const to = i => ({
     x: 0,
     y: 0,
     scale: 1,
-    rot: Math.random() * 2,
-    flip: 0,
+    rot: 0,
     delay: i * 100
 })
-const from = i => ({ rot: 0, flip: 180, scale: 1.1, y: 0 })
+const from = i => ({ rot: 0, scale: 1.0, y: 10 })
 
-const trans = (r, s, f) => 
-    `perspective(1500px) rotate3d(1, 0, 0, 30deg) rotate3d(0, 1, 0, ${f}deg) rotate3d(0, 0, 1, ${r}deg) scale(${s})`
-
-const invertFlip = (f) => (Math.sign(f) || 1) * (180 - Math.abs(f))
-const backTrans = (r, s, f) => trans(r, s, (f))
-const visibility = (r) => 
-    Math.abs(r) > 90 ? "hidden" : "visible"
-const backVisibility = (r) => visibility(invertFlip(r))
+const trans = (r, s) => 
+    `perspective(1500px) rotate3d(1, 0, 0, 30deg) rotate3d(0, 0, 1, ${r}deg) scale(${s})`
 
 function Card({ i, cardData, onSwipe, layer }) {
     const { title, distance, text, image } = cardData
@@ -79,7 +72,7 @@ function Card({ i, cardData, onSwipe, layer }) {
         }
     )
 
-    const { x, y, rot, scale, flip } = cardAnimationState
+    const { x, y, rot, scale } = cardAnimationState
 
     return (
         <animated.div
@@ -97,8 +90,7 @@ function Card({ i, cardData, onSwipe, layer }) {
                 className="card card-front"
                 {...bind(i)}
                 style={{
-                    transform: interpolate([rot, scale, flip], trans),
-                    visibility: interpolate([flip], visibility)
+                    transform: interpolate([rot, scale], trans),
                 }}>
                 <div className="card-content">
                     <img
@@ -109,18 +101,6 @@ function Card({ i, cardData, onSwipe, layer }) {
                     <h2>{title}</h2>
                     <h5>{distance}</h5>
                     <h5>{text}</h5>
-                </div>
-            </animated.div>
-            <animated.div
-                className="card card-back"
-                {...bind(i)}
-                style={{
-                    position: "absolute",
-                    transform: interpolate([rot, scale, flip], backTrans),
-                    visibility: interpolate([flip], backVisibility),
-                }}>
-                <div className="card-content">
-                    
                 </div>
             </animated.div>
         </animated.div>
