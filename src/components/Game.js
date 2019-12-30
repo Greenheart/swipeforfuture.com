@@ -3,6 +3,7 @@ import styled from 'styled-components/macro'
 
 import Deck from './Deck'
 import Stats from './Stats'
+import { DEFAULT_GAME_WORLD, SWIPE_DIRECTION } from '../data/constants'
 
 // -------
 // TODO: Move to data loader module
@@ -22,21 +23,6 @@ const Footer = styled.footer`
     justify-content: center;
     align-items: center;
 `
-
-const DIRECTION = {
-    LEFT: -1,
-    RIGHT: 1,
-}
-
-const DEFAULT_GAME_WORLD = Object.freeze({
-    state: {
-        environment: 40,
-        people: 60,
-        security: 75,
-        money: 90,
-    },
-    flags: {},
-})
 
 export default class Game extends Component {
     state = this.getInitialState()
@@ -100,7 +86,7 @@ export default class Game extends Component {
 
     onSwipe(card, direction) {
         const currentAction =
-            direction === DIRECTION.LEFT
+            direction === SWIPE_DIRECTION.LEFT
                 ? card.actions.left
                 : card.actions.right
 
