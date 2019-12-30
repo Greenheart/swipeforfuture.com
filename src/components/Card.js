@@ -5,16 +5,22 @@ import { useGesture } from 'react-with-gesture'
 
 const to = i => ({
     x: 0,
-    y: i * -10,
+    y: 0,
     scale: 1,
     rot: Math.random() * 2,
+    flip: 0,
     delay: i * 100
 })
-const from = i => ({ rot: 0, scale: 1.5, y: -1000 })
+const from = i => ({ rot: 0, flip: 180, scale: 1, y: 0 })
 
-const trans = (r, s) =>
-    `perspective(1500px) rotateX(30deg) rotateY(${r /
-        10}deg) rotateZ(${r}deg) scale(${s})`
+const trans = (r, s, f) => 
+    `perspective(1000px) rotate3d(1, 0, 0, 10deg) rotate3d(0, 1, 0, ${f}deg) rotate3d(0, 0, 1, ${r}deg)`
+
+const invertFlip = (f) => (Math.sign(f) || 1) * (180 - Math.abs(f))
+const backTrans = (r, s, f) => trans(r, s, (f))
+const visibility = (r) => 
+    Math.abs(r) > 90 ? "hidden" : "visible"
+const backVisibility = (r) => visibility(invertFlip(r))
 
 function Card({ i, cardData, onSwipe }) {
     const { title, distance, text, image } = cardData
@@ -73,23 +79,27 @@ function Card({ i, cardData, onSwipe }) {
         }
     )
 
-    const { x, y, rot, scale } = cardAnimationState
+    const { x, y, rot, scale, flip } = cardAnimationState
 
     return (
         <animated.div
+            className="card-container"
             key={i}
             style={{
+                position: "absolute",
                 transform: interpolate(
                     [x, y],
                     (x, y) => `translate3d(${x}px,${y}px,0)`
                 )
             }}>
             <animated.div
+                className="card card-front"
                 {...bind(i)}
                 style={{
-                    transform: interpolate([rot, scale], trans)
+                    transform: interpolate([rot, scale, flip], trans),
+                    visibility: interpolate([flip], visibility)
                 }}>
-                <div className="card">
+                <div className="card-content">
                     <img
                         src={image ? image : ''}
                         alt={title}
@@ -98,6 +108,18 @@ function Card({ i, cardData, onSwipe }) {
                     <h2>{title}</h2>
                     <h5>{distance}</h5>
                     <h5>{text}</h5>
+                </div>
+            </animated.div>
+            <animated.div
+                className="card card-back"
+                {...bind(i)}
+                style={{
+                    position: "absolute",
+                    transform: interpolate([rot, scale, flip], backTrans),
+                    visibility: interpolate([flip], backVisibility),
+                }}>
+                <div className="card-content">
+                    
                 </div>
             </animated.div>
         </animated.div>
