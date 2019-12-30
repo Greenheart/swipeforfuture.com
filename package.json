@@ -18,6 +18,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "predeploy": "yarn build",
+        "prettify": "npx prettier \"src/**/*\" --write",
         "deploy": "gh-pages -d build"
     },
     "eslintConfig": {
