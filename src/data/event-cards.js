@@ -14,11 +14,11 @@ export default {
                     state: {
                         environment: 10,
                         people: 10,
-                        security: 10
+                        security: 10,
                     },
-                    flags: {}
+                    flags: {},
                 },
-                nextEventCardId: null
+                nextEventCardId: null,
             },
             right: {
                 modifier: {
@@ -26,12 +26,12 @@ export default {
                     state: {
                         environment: 10,
                         people: 10,
-                        security: 10
+                        security: 10,
                     },
-                    flags: {}
+                    flags: {},
                 },
-                nextEventCardId: null
-            }
-        }
-    }
+                nextEventCardId: null,
+            },
+        },
+    },
 }
