@@ -118,7 +118,14 @@ export default class Game extends Component {
             card.type === 'event' &&
             typeof currentAction.nextEventCardId === 'string'
 
+        // Only select the next EventCard if a specific one is given
+        // Else cancel the event and continue with normal cards.
         if (isEventCardWithPointer) {
+            if (!eventCards.hasOwnProperty(currentAction.nextEventCardId)) {
+                throw new Error(
+                    `eventCardId "${currentAction.nextEventCardId}" does not exist. Make sure it's spelled correctly`
+                )
+            }
             nextCard = this.selectEventCard(currentAction.nextEventCardId)
         } else if (eventStartingNow) {
             nextCard = this.selectEventCard(eventStartingNow.initialEventCardId)
