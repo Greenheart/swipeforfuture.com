@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 
 import Game from './components/Game'
+import { loadGameWorld } from './game/GameWorld'
 
 const Container = styled.main`
     position: absolute;
@@ -14,12 +15,16 @@ const Container = styled.main`
     grid-template-rows: minmax(50px, 80px) auto minmax(50px, 80px);
 `
 
-function App() {
-    return (
-        <Container>
-            <Game />
-        </Container>
-    )
+function App({ path }) {
+    const [worldData, setWorldData] = useState(null)
+    useEffect(() => {
+        const fetchWorld = async () => {
+            const worldData = await loadGameWorld(path)
+            setWorldData(worldData)
+        }
+        fetchWorld()
+    }, [path, setWorldData])
+    return <Container>{worldData && <Game worldData={worldData} />}</Container>
 }
 
 export default App

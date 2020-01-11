@@ -4,7 +4,7 @@ import { useSpring } from 'react-spring/hooks'
 import { useGesture } from 'react-with-gesture'
 
 import { useKeyboardEvent } from '../util/hooks'
-import { SWIPE_DIRECTION } from '../data/constants'
+import { SWIPE_DIRECTION } from '../util/constants'
 
 const to = i => ({
     x: 0,

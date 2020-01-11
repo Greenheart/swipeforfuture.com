@@ -3,20 +3,7 @@ import styled from 'styled-components/macro'
 
 import Deck from './Deck'
 import Stats from './Stats'
-import { DEFAULT_GAME_WORLD, SWIPE_DIRECTION } from '../data/constants'
-
-// -------
-// TODO: Move to data loader module
-
-import gameCards from '../data/cards.js'
-import worldEvents from '../data/events.js'
-import eventCards from '../data/event-cards.js'
-
-for (const eventCardId of Object.keys(eventCards)) {
-    eventCards[eventCardId].type = 'event'
-}
-
-// ------
+import { SWIPE_DIRECTION } from '../util/constants'
 
 const Footer = styled.footer`
     display: flex;
@@ -28,12 +15,13 @@ export default class Game extends Component {
     state = this.getInitialState()
 
     render() {
+        const card = this.addUniqueCardId(this.state.card)
         return (
             <>
                 <Stats stats={this.state.world.state} />
                 <Deck
                     onSwipe={this.onSwipe.bind(this)}
-                    cards={[this.addUniqueCardId(this.state.card)]}
+                    card={card}
                     tick={this.state.rounds}
                 />
                 <Footer>
@@ -45,22 +33,24 @@ export default class Game extends Component {
 
     getInitialState() {
         return {
-            world: DEFAULT_GAME_WORLD,
+            world: this.props.worldData.defaultState,
             card: this.selectNextCard(
-                this.getAvailableCards(DEFAULT_GAME_WORLD),
+                this.getAvailableCards(this.props.worldData.defaultState),
             ),
             rounds: 0,
         }
     }
 
     getAvailableCards(world) {
-        return gameCards.filter(c =>
+        const { cards } = this.props.worldData
+        return cards.filter(c =>
             this.hasMatchingWorldQuery(world, c.isAvailableWhen),
         )
     }
 
     getAvailableEvents(world) {
-        return worldEvents.filter(e =>
+        const { events } = this.props.worldData
+        return events.filter(e =>
             this.hasMatchingWorldQuery(world, e.shouldTriggerWhen),
         )
     }
@@ -100,6 +90,7 @@ export default class Game extends Component {
     }
 
     getNextCard(updatedWorld, card, currentAction) {
+        const { eventCards } = this.props.worldData
         const availableEvents = this.getAvailableEvents(updatedWorld)
         const eventStartingNow =
             card.type !== 'event' ? this.selectNextEvent(availableEvents) : null
@@ -144,7 +135,7 @@ export default class Game extends Component {
     updateWorldState(modifier) {
         const currentWorldState =
             modifier.type === 'replace'
-                ? Object.assign({}, DEFAULT_GAME_WORLD.state)
+                ? Object.assign({}, this.props.worldData.defaultState.state)
                 : Object.assign({}, this.state.world.state)
 
         const updatedWorldState = Object.entries(modifier.state).reduce(
@@ -167,7 +158,7 @@ export default class Game extends Component {
     updateWorldFlags(modifier) {
         const currentWorldFlags =
             modifier.type === 'replace'
-                ? Object.assign({}, DEFAULT_GAME_WORLD.flags)
+                ? Object.assign({}, this.props.worldData.flags)
                 : Object.assign({}, this.state.world.flags)
 
         const updatedWorldFlags = Object.keys(modifier.flags).reduce(
@@ -204,6 +195,7 @@ export default class Game extends Component {
     }
 
     selectEventCard(cardId) {
+        const { eventCards } = this.props.worldData
         return eventCards[cardId]
     }
 }
