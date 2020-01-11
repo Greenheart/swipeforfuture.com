@@ -4,7 +4,7 @@ import Card from './Card'
 import DummyCard from './DummyCard'
 import './Deck.css'
 
-function Deck({ onSwipe, cards, tick = 0 }) {
+function Deck({ onSwipe, card, tick = 0 }) {
     const cardStack = Array.apply(null, Array(5)).map((_, index) => index)
     return (
         <div className="deck-root">
@@ -21,15 +21,13 @@ function Deck({ onSwipe, cards, tick = 0 }) {
                     layer={list.length - loopingIndex(index, list.length, tick)}
                 />
             ))}
-            {cards.map((card, i) => (
-                <Card
-                    i={i}
-                    key={card.id}
-                    cardData={card}
-                    onSwipe={onSwipe}
-                    layer={cardStack.length + 1}
-                />
-            ))}
+            <Card
+                i={0}
+                key={card.id}
+                cardData={card}
+                onSwipe={onSwipe}
+                layer={cardStack.length + 1}
+            />
         </div>
     )
 }
