@@ -1,15 +1,22 @@
 import { useEffect } from 'react'
 
-export const useKeyboardEvent = (key, callback) => {
+export const useKeyboardEvent = (keys, callback) => {
     useEffect(() => {
-        const handler = function(event) {
-            if (event.key === key) {
-                callback()
+        const downHandler = function(event) {
+            if (keys.includes(event.key)) {
+                callback(true, event.key)
             }
         }
-        window.addEventListener('keydown', handler)
+        const upHandler = function(event) {
+            if (keys.includes(event.key)) {
+                callback(false, event.key)
+            }
+        }
+        window.addEventListener('keydown', downHandler)
+        window.addEventListener('keyup', upHandler)
         return () => {
-            window.removeEventListener('keydown', handler)
+            window.removeEventListener('keydown', downHandler)
+            window.removeEventListener('keyup', upHandler)
         }
     })
 }
