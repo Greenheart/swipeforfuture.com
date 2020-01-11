@@ -18,6 +18,10 @@ const from = i => ({ rot: 0, scale: 1.0, y: 10 })
 const trans = (r, s) =>
     `perspective(1500px) rotate3d(1, 0, 0, 30deg) rotate3d(0, 0, 1, ${r}deg) scale(${s})`
 
+const getDeltaX = () => getThreshold() / window.devicePixelRatio
+
+const getThreshold = () => Math.min(200, window.innerWidth / 2)
+
 function Card({ i, cardData, onSwipe, layer }) {
     const { title, distance, text, image } = cardData
 
@@ -26,66 +30,72 @@ function Card({ i, cardData, onSwipe, layer }) {
         from: from(i),
     }))
 
-    const [isGoneState] = useState({ isGone: false })
+    const [cardState] = useState({ isGone: false, currentKey: null })
 
-    const handleSwipe = direction => {
-        isGoneState.isGone = true
-        window.setTimeout(() => {
-            onSwipe(cardData, direction)
-        }, 100)
+    const gestureControl = ({
+        args: [index],
+        down,
+        delta: [xDelta],
+        distance,
+        direction: [xDir],
+        velocity,
+    }) => {
+        const trigger =
+            Math.abs(xDelta) * window.devicePixelRatio > getThreshold()
+        const dir = Math.sign(xDelta)
+
+        if (!down && trigger && !cardState.isGone) {
+            // Handle game state updates
+            cardState.isGone = true
+            window.setTimeout(() => {
+                onSwipe(cardData, dir)
+                cardState.currentKey = null
+            }, 200)
+        }
+        const isGone = cardState.isGone
+
+        const x = isGone ? (200 + window.innerWidth) * dir : down ? xDelta : 0
+
+        const rot = xDelta / 100 + (isGone ? dir * 10 * velocity : 0)
+        const scale = down ? 1.1 : 1
+
+        const animationState = {
+            x,
+            rot,
+            scale,
+            delay: undefined,
+            config: {
+                friction: 50,
+                tension: down ? 800 : isGone ? 200 : 500,
+            },
+        }
+
+        setCardAnimationState(animationState)
     }
 
-    // Allow desktop users to easily play the game
-    useKeyboardEvent('ArrowLeft', () => {
-        handleSwipe(SWIPE_DIRECTION.LEFT)
+    useKeyboardEvent(['ArrowLeft', 'ArrowRight'], (down, key) => {
+        if (down && !cardState.currentKey) {
+            cardState.currentKey = key
+        }
+        if (cardState.currentKey === key) {
+            const directionX =
+                key === 'ArrowLeft'
+                    ? SWIPE_DIRECTION.LEFT
+                    : SWIPE_DIRECTION.RIGHT
+            gestureControl({
+                down,
+                delta: [directionX * (getDeltaX() + 1), 0],
+                direction: [directionX, 0],
+                args: [0],
+                distance: 0,
+                velocity: 5,
+            })
+        }
     })
-    useKeyboardEvent('ArrowRight', () => {
-        handleSwipe(SWIPE_DIRECTION.RIGHT)
+
+    const bind = useGesture(args => {
+        if (!cardState.currentKey) gestureControl(args)
     })
-
-    const bind = useGesture(
-        ({
-            args: [index],
-            down,
-            delta: [xDelta],
-            distance,
-            direction: [xDir],
-            velocity,
-        }) => {
-            const threshold = Math.min(200, window.innerWidth / 2)
-            const trigger =
-                Math.abs(xDelta) * window.devicePixelRatio > threshold
-            const dir = Math.sign(xDelta)
-
-            if (!down && trigger && !isGoneState.isGone) {
-                // Handle game state updates
-                handleSwipe(dir)
-            }
-            const isGone = isGoneState.isGone
-
-            const x = isGone
-                ? (200 + window.innerWidth) * dir
-                : down
-                ? xDelta
-                : 0
-
-            const rot = xDelta / 100 + (isGone ? dir * 10 * velocity : 0)
-            const scale = down ? 1.1 : 1
-
-            const animationState = {
-                x,
-                rot,
-                scale,
-                delay: undefined,
-                config: {
-                    friction: 50,
-                    tension: down ? 800 : isGone ? 200 : 500,
-                },
-            }
-
-            setCardAnimationState(animationState)
-        },
-    )
 
     const { x, y, rot, scale } = cardAnimationState
 
