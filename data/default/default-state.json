@@ -1,0 +1,9 @@
+{
+    "state": {
+        "environment": 40,
+        "people": 60,
+        "security": 75,
+        "money": 90
+    },
+    "flags": {}
+}
