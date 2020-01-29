@@ -27,9 +27,31 @@ const internalGameWorlds = {
     default: defaultGameWorld,
 }
 
-export async function loadGameWorld(path) {
-    // Load JS representation of worlds for easy development
+async function tryLoadFromLocalStorage(path) {
+    const matchLocal = path.match(/^local:\/\/(.*)/)
+
+    if (matchLocal) {
+        // Import from SFF game world editor hosted on the same domain.
+        // Using localStorage to share data across apps
+        const id = matchLocal[1]
+        const gameWorldId = 'game_world:' + id
+        let gameWorld = {}
+        try {
+            const data = JSON.parse(localStorage.getItem(gameWorldId))
+            if (!data) throw new Error("Could not load data from local storage: " + gameWorldId);
+            gameWorld = data || {}
+        } catch (e) {
+            console.log(e);
+        }
+        return Object.assign({}, defaultGameWorld, gameWorld)
+    }
+
+    return null
+}
+
+async function tryLoadFromInternalData(path) {
     const matchInternal = path.match(/^internal:\/\/(.*)/)
+
     if (matchInternal) {
         const id = matchInternal[1]
         const gameWorld = internalGameWorlds[id]
@@ -38,29 +60,37 @@ export async function loadGameWorld(path) {
             return defaultGameWorld
         }
         return gameWorld
-    } else {
-        // Default: expect a folder to represent a game world and contain specific JSON-files.
-        const cardsPath = path + '/cards.json'
-        const eventsPath = path + '/events.json'
-        const eventCardsPath = path + '/event-cards.json'
-        const defaultStatePath = path + '/default-state.json'
-
-        // IDEA: load data in parallel instead of sequentially too improve performance
-        const cards = await fetchJSON(cardsPath, [])
-        const events = await fetchJSON(eventsPath, [])
-        const eventCards = await fetchJSON(eventCardsPath, {})
-        const defaultState = await fetchJSON(
-            defaultStatePath,
-            DEFAULT_GAME_STATE,
-        )
-
-        return {
-            cards,
-            events,
-            eventCards,
-            defaultState,
-        }
     }
+
+    return null
+}
+
+async function tryLoadFromRestAPI(path) {
+    // Default: expect a folder to represent a game world and contain specific JSON-files.
+    const cardsPath = path + '/cards.json'
+    const eventsPath = path + '/events.json'
+    const eventCardsPath = path + '/event-cards.json'
+    const defaultStatePath = path + '/default-state.json'
+
+    // IDEA: load data in parallel instead of sequentially to improve performance
+    const cards = await fetchJSON(cardsPath, [])
+    const events = await fetchJSON(eventsPath, [])
+    const eventCards = await fetchJSON(eventCardsPath, {})
+    const defaultState = await fetchJSON(
+        defaultStatePath,
+        DEFAULT_GAME_STATE,
+    )
+
+    return {
+        cards,
+        events,
+        eventCards,
+        defaultState,
+    }
+}
+
+export async function loadGameWorld(path) {
+    return (await tryLoadFromInternalData(path)) || (await tryLoadFromLocalStorage(path)) || (await tryLoadFromRestAPI(path))
 }
 
 async function fetchJSON(path, defaultValue) {
