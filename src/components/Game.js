@@ -68,7 +68,7 @@ export default class Game extends Component {
         const result =
             hasStateMatch &&
             Object.entries(flags).every(
-                ([flag, value]) => world.flag[flag] === value,
+                ([flag, value]) => world.flags[flag] === value,
             )
 
         return result
