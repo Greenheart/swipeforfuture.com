@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+
+// This could prove to be a hit in binary size since we require all the icons in each pack. This compromise allows for more dynamic content.
 import * as IoIcons from 'react-icons/io'
 import * as GameIcons from 'react-icons/gi'
+import * as FontAwesomeIcons from 'react-icons/fa'
 
 import Bar from './Bar'
 
@@ -31,17 +34,22 @@ const Icon = styled.div`
     align-items: center;
 `
 
-function Stats({ stats, params }) {
+function Stats({ stats }) {
     return (
         <Container>
-            {params.map(p => {
-                const IconWidget = GameIcons[p.icon] || IoIcons[p.icon]
+            {stats.map(s => {
+                const IconWidget =
+                    GameIcons[s.icon] ||
+                    IoIcons[s.icon] ||
+                    FontAwesomeIcons[s.icon]
+                const iconSize = s.iconSize || '80%'
+                const value = s.value
                 return (
-                    <Stat key={p.id}>
+                    <Stat key={s.id}>
                         <Icon>
-                            <IconWidget size="80%" />
+                            {IconWidget && <IconWidget size={iconSize} />}
                         </Icon>
-                        <Bar value={stats[p.id]} />
+                        <Bar value={value} />
                     </Stat>
                 )
             })}

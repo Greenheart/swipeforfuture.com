@@ -1,0 +1,22 @@
+[
+    {
+        "id": "environment",
+        "name": "Environment",
+        "icon": "GiWheat"
+    },
+    {
+        "id": "people",
+        "name": "People",
+        "icon": "IoIosPeople"
+    },
+    {
+        "id": "security",
+        "name": "Security",
+        "icon": "GiAk47"
+    },
+    {
+        "id": "money",
+        "name": "Money",
+        "icon": "GiMoneyStack"
+    }
+]

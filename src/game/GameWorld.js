@@ -16,7 +16,7 @@ export const DEFAULT_GAME_STATE = Object.freeze({
     flags: {},
 })
 
-const defaultGameParams = [
+const defaultStats = [
     {
         id: 'environment',
         name: 'Environment',
@@ -40,7 +40,7 @@ const defaultGameParams = [
 ]
 
 export const defaultGameWorld = {
-    gameParams: defaultGameParams,
+    stats: defaultStats,
     cards: defaultCards,
     events: defaultEvents,
     eventCards: defaultEventCards,
@@ -76,6 +76,7 @@ async function tryLoadFromLocalStorage(path) {
     return null
 }
 
+// Load GameWorld from data directory of this repository
 async function tryLoadFromInternalData(path) {
     const matchInternal = path.match(/^internal:\/\/(.*)/)
 
@@ -94,21 +95,21 @@ async function tryLoadFromInternalData(path) {
 
 async function tryLoadFromRestAPI(path) {
     // Default: expect a folder to represent a game world and contain specific JSON-files.
-    const paramsPath = path + '/params.json'
+    const statsPath = path + '/stats.json'
     const cardsPath = path + '/cards.json'
     const eventsPath = path + '/events.json'
     const eventCardsPath = path + '/event-cards.json'
     const defaultStatePath = path + '/default-state.json'
 
     // IDEA: load data in parallel instead of sequentially to improve performance
-    const gameParams = await fetchJSON(paramsPath, defaultGameParams)
+    const stats = await fetchJSON(statsPath, defaultStats)
     const cards = await fetchJSON(cardsPath, [])
     const events = await fetchJSON(eventsPath, [])
     const eventCards = await fetchJSON(eventCardsPath, {})
     const defaultState = await fetchJSON(defaultStatePath, DEFAULT_GAME_STATE)
 
     return {
-        gameParams,
+        stats,
         cards,
         events,
         eventCards,
