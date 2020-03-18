@@ -16,12 +16,15 @@ export default class Game extends Component {
 
     render() {
         const card = this.addUniqueCardId(this.state.card)
+        const worldState = this.state.world.state
+        const stats = this.props.worldData.stats.map(stat =>
+            Object.assign({}, stat, {
+                value: worldState[stat.id],
+            }),
+        )
         return (
             <>
-                <Stats
-                    stats={this.state.world.state}
-                    params={this.props.worldData.gameParams}
-                />
+                <Stats stats={stats} />
                 <Deck
                     onSwipe={this.onSwipe.bind(this)}
                     card={card}
