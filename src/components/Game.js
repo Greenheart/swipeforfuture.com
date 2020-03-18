@@ -18,7 +18,10 @@ export default class Game extends Component {
         const card = this.addUniqueCardId(this.state.card)
         return (
             <>
-                <Stats stats={this.state.world.state} />
+                <Stats
+                    stats={this.state.world.state}
+                    params={this.props.worldData.gameParams}
+                />
                 <Deck
                     onSwipe={this.onSwipe.bind(this)}
                     card={card}
