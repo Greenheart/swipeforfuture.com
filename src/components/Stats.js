@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { IoIosPeople } from 'react-icons/io'
-import { GiAk47, GiMoneyStack, GiWheat } from 'react-icons/gi'
+import * as IoIcons from 'react-icons/io'
+import * as GameIcons from 'react-icons/gi'
 
 import Bar from './Bar'
 
@@ -31,33 +31,20 @@ const Icon = styled.div`
     align-items: center;
 `
 
-function Stats({ stats }) {
+function Stats({ stats, params }) {
     return (
         <Container>
-            <Stat>
-                <Icon>
-                    <GiWheat size="80%" />
-                </Icon>
-                <Bar value={stats.environment} />
-            </Stat>
-            <Stat>
-                <Icon>
-                    <IoIosPeople size="80%" />
-                </Icon>
-                <Bar value={stats.people} />
-            </Stat>
-            <Stat>
-                <Icon>
-                    <GiAk47 size="80%" />
-                </Icon>
-                <Bar value={stats.security} />
-            </Stat>
-            <Stat>
-                <Icon>
-                    <GiMoneyStack size="80%" />
-                </Icon>
-                <Bar value={stats.money} />
-            </Stat>
+            {params.map(p => {
+                const IconWidget = GameIcons[p.icon] || IoIcons[p.icon]
+                return (
+                    <Stat key={p.id}>
+                        <Icon>
+                            <IconWidget size="80%" />
+                        </Icon>
+                        <Bar value={stats[p.id]} />
+                    </Stat>
+                )
+            })}
         </Container>
     )
 }

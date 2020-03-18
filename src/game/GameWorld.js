@@ -16,7 +16,31 @@ export const DEFAULT_GAME_STATE = Object.freeze({
     flags: {},
 })
 
+const defaultGameParams = [
+    {
+        id: 'environment',
+        name: 'Environment',
+        icon: 'GiWheat',
+    },
+    {
+        id: 'people',
+        name: 'People',
+        icon: 'IoIosPeople',
+    },
+    {
+        id: 'security',
+        name: 'Security',
+        icon: 'GiAk47',
+    },
+    {
+        id: 'money',
+        name: 'Money',
+        icon: 'GiMoneyStack',
+    },
+]
+
 export const defaultGameWorld = {
+    gameParams: defaultGameParams,
     cards: defaultCards,
     events: defaultEvents,
     eventCards: defaultEventCards,
@@ -38,10 +62,13 @@ async function tryLoadFromLocalStorage(path) {
         let gameWorld = {}
         try {
             const data = JSON.parse(localStorage.getItem(gameWorldId))
-            if (!data) throw new Error("Could not load data from local storage: " + gameWorldId);
+            if (!data)
+                throw new Error(
+                    'Could not load data from local storage: ' + gameWorldId,
+                )
             gameWorld = data || {}
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
         return Object.assign({}, defaultGameWorld, gameWorld)
     }
@@ -67,21 +94,21 @@ async function tryLoadFromInternalData(path) {
 
 async function tryLoadFromRestAPI(path) {
     // Default: expect a folder to represent a game world and contain specific JSON-files.
+    const paramsPath = path + '/params.json'
     const cardsPath = path + '/cards.json'
     const eventsPath = path + '/events.json'
     const eventCardsPath = path + '/event-cards.json'
     const defaultStatePath = path + '/default-state.json'
 
     // IDEA: load data in parallel instead of sequentially to improve performance
+    const gameParams = await fetchJSON(paramsPath, defaultGameParams)
     const cards = await fetchJSON(cardsPath, [])
     const events = await fetchJSON(eventsPath, [])
     const eventCards = await fetchJSON(eventCardsPath, {})
-    const defaultState = await fetchJSON(
-        defaultStatePath,
-        DEFAULT_GAME_STATE,
-    )
+    const defaultState = await fetchJSON(defaultStatePath, DEFAULT_GAME_STATE)
 
     return {
+        gameParams,
         cards,
         events,
         eventCards,
@@ -90,7 +117,11 @@ async function tryLoadFromRestAPI(path) {
 }
 
 export async function loadGameWorld(path) {
-    return (await tryLoadFromInternalData(path)) || (await tryLoadFromLocalStorage(path)) || (await tryLoadFromRestAPI(path))
+    return (
+        (await tryLoadFromInternalData(path)) ||
+        (await tryLoadFromLocalStorage(path)) ||
+        (await tryLoadFromRestAPI(path))
+    )
 }
 
 async function fetchJSON(path, defaultValue) {
