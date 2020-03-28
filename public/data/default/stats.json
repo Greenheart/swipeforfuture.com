@@ -2,7 +2,8 @@
     {
         "id": "environment",
         "name": "Environment",
-        "icon": "GiWheat"
+        "icon": "GiWheat",
+        "iconSize": "70%"
     },
     {
         "id": "people",
@@ -18,5 +19,11 @@
         "id": "money",
         "name": "Money",
         "icon": "GiMoneyStack"
+    },
+    {
+        "id": "popularity",
+        "name": "Popularity",
+        "icon": "FiSmile",
+        "iconSize": "70%"
     }
 ]
