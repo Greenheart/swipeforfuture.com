@@ -4,7 +4,7 @@ import styled from 'styled-components/macro'
 // This could prove to be a hit in binary size since we require all the icons in each pack. This compromise allows for more dynamic content.
 import * as IoIcons from 'react-icons/io'
 import * as GameIcons from 'react-icons/gi'
-import * as FontAwesomeIcons from 'react-icons/fa'
+import * as FeatherIcons from 'react-icons/fi'
 
 import Bar from './Bar'
 
@@ -39,9 +39,7 @@ function Stats({ stats }) {
         <Container>
             {stats.map(s => {
                 const IconWidget =
-                    GameIcons[s.icon] ||
-                    IoIcons[s.icon] ||
-                    FontAwesomeIcons[s.icon]
+                    GameIcons[s.icon] || IoIcons[s.icon] || FeatherIcons[s.icon]
                 const iconSize = s.iconSize || '80%'
                 const value = s.value
                 return (
