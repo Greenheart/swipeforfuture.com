@@ -26,36 +26,36 @@
         "type": "event"
     },
     "welcome": {
-        "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?fit=crop&w=400&q=80",
+        "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?fit=crop&w=800&q=60",
         "title": "Welcome!",
         "distance": "",
-        "text": "Hi! My name is Maria. You must be the new president. Do you want to take a lunch to get up to speed?",
+        "text": "Hi! My name is Maria. You must be the new president. Do you want to take a lunch to get up to speed with your new duties?",
         "weight": 1000,
         "actions": {
             "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {},
+                    "flags": {}
+                },
+                "nextEventCardId": "welcome-loop"
+            },
+            "right": {
                 "modifier": {
                     "type": "add",
                     "state": {},
                     "flags": {}
                 },
                 "nextEventCardId": "welcome-lunch"
-            },
-            "right": {
-                "modifier": {
-                    "type": "add",
-                    "state": {},
-                    "flags": {}
-                },
-                "nextEventCardId": null
             }
         },
         "type": "event"
     },
-    "welcome-lunch": {
-        "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?fit=crop&w=400&q=80",
-        "title": "This is the lunch!",
+    "welcome-loop": {
+        "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?fit=crop&w=800&q=60",
+        "title": "Seriously!",
         "distance": "",
-        "text": "This is the lunch. Now you win. GGWP",
+        "text": "We need to talk! Get your head in the game.",
         "weight": 1000,
         "actions": {
             "left": {
@@ -64,13 +64,49 @@
                     "state": {},
                     "flags": {}
                 },
-                "nextEventCardId": null
+                "nextEventCardId": "welcome-loop"
             },
             "right": {
                 "modifier": {
                     "type": "add",
                     "state": {},
                     "flags": {}
+                },
+                "nextEventCardId": "welcome-lunch"
+            }
+        },
+        "type": "event"
+    },
+    "welcome-lunch": {
+        "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?fit=crop&w=800&q=60",
+        "title": "The lunch meeting",
+        "distance": "",
+        "text": "Really nice lunch! Now your first big decision has come. Should you prioritize the economy (left) or environment (right)?",
+        "weight": 1000,
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "set",
+                    "state": {
+                        "money": 70,
+                        "popularity": 52
+                    },
+                    "flags": {
+                        "needs-init": false
+                    }
+                },
+                "nextEventCardId": null
+            },
+            "right": {
+                "modifier": {
+                    "type": "set",
+                    "state": {
+                        "environment": 70,
+                        "popularity": 65
+                    },
+                    "flags": {
+                        "needs-init": false
+                    }
                 },
                 "nextEventCardId": null
             }
