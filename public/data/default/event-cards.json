@@ -9,11 +9,7 @@
             "left": {
                 "modifier": {
                     "type": "replace",
-                    "state": {
-                        "environment": 10,
-                        "people": 10,
-                        "security": 10
-                    },
+                    "state": {},
                     "flags": {}
                 },
                 "nextEventCardId": null
@@ -21,11 +17,59 @@
             "right": {
                 "modifier": {
                     "type": "replace",
-                    "state": {
-                        "environment": 10,
-                        "people": 10,
-                        "security": 10
-                    },
+                    "state": {},
+                    "flags": {}
+                },
+                "nextEventCardId": null
+            }
+        },
+        "type": "event"
+    },
+    "welcome": {
+        "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?fit=crop&w=400&q=80",
+        "title": "Welcome!",
+        "distance": "",
+        "text": "Hi! My name is Maria. You must be the new president. Do you want to take a lunch to get up to speed?",
+        "weight": 1000,
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {},
+                    "flags": {}
+                },
+                "nextEventCardId": "welcome-lunch"
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {},
+                    "flags": {}
+                },
+                "nextEventCardId": null
+            }
+        },
+        "type": "event"
+    },
+    "welcome-lunch": {
+        "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?fit=crop&w=400&q=80",
+        "title": "This is the lunch!",
+        "distance": "",
+        "text": "This is the lunch. Now you win. GGWP",
+        "weight": 1000,
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {},
+                    "flags": {}
+                },
+                "nextEventCardId": null
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {},
                     "flags": {}
                 },
                 "nextEventCardId": null

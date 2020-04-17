@@ -6,5 +6,7 @@
         "money": 90,
         "popularity": 53
     },
-    "flags": {}
+    "flags": {
+        "needs-init": true
+    }
 }
