@@ -1,10 +1,12 @@
 {
     "state": {
         "environment": 40,
-        "people": 60,
-        "security": 75,
-        "money": 90,
-        "popularity": 53
+        "people": 40,
+        "security": 40,
+        "money": 40,
+        "popularity": 40
     },
-    "flags": {}
+    "flags": {
+        "needs-init": true
+    }
 }

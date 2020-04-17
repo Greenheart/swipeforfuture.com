@@ -38,12 +38,24 @@ export default class Game extends Component {
     }
 
     getInitialState() {
+        const defaultState = this.props.worldData.defaultState
         return {
-            world: this.props.worldData.defaultState,
-            card: this.selectNextCard(
-                this.getAvailableCards(this.props.worldData.defaultState),
-            ),
+            world: defaultState,
+            card: this.getInitialCard(defaultState),
             rounds: 0,
+        }
+    }
+
+    getInitialCard(world) {
+        const availableEvents = this.getAvailableEvents(world)
+        const event = this.selectNextEvent(availableEvents)
+
+        if (event) {
+            return this.selectEventCard(event.initialEventCardId)
+        } else {
+            return this.selectNextCard(
+                this.getAvailableCards(this.props.worldData.defaultState),
+            )
         }
     }
 
