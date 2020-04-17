@@ -104,5 +104,175 @@
                 }
             }
         }
+    },
+    {
+        "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
+        "title": "Look at me! I'm ENVIRONMENT Cat",
+        "distance": "",
+        "text": "Your cat needs some love and tenderness. Try to make time in your busy schedule",
+        "weight": 1,
+        "isAvailableWhen": [
+            {
+                "state": {
+                    "environment": [0, 100]
+                }
+            }
+        ],
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "environment": -10
+                    },
+                    "flags": {}
+                }
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "environment": 10
+                    },
+                    "flags": {}
+                }
+            }
+        }
+    },
+    {
+        "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
+        "title": "Look at me! I'm PEOPLE Cat",
+        "distance": "",
+        "text": "Your cat needs some love and tenderness. Try to make time in your busy schedule",
+        "weight": 1,
+        "isAvailableWhen": [
+            {
+                "state": {
+                    "environment": [0, 100]
+                }
+            }
+        ],
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "people": -10
+                    },
+                    "flags": {}
+                }
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "people": 10
+                    },
+                    "flags": {}
+                }
+            }
+        }
+    },
+    {
+        "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
+        "title": "Look at me! I'm MONEY Cat",
+        "distance": "",
+        "text": "Your cat needs some love and tenderness. Try to make time in your busy schedule",
+        "weight": 1,
+        "isAvailableWhen": [
+            {
+                "state": {
+                    "environment": [0, 100]
+                }
+            }
+        ],
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "money": -10
+                    },
+                    "flags": {}
+                }
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "money": 10
+                    },
+                    "flags": {}
+                }
+            }
+        }
+    },
+    {
+        "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
+        "title": "Look at me! I'm SECURITY Cat",
+        "distance": "",
+        "text": "Your cat needs some love and tenderness. Try to make time in your busy schedule",
+        "weight": 1,
+        "isAvailableWhen": [
+            {
+                "state": {
+                    "environment": [0, 100]
+                }
+            }
+        ],
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "security": -10
+                    },
+                    "flags": {}
+                }
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "security": 10
+                    },
+                    "flags": {}
+                }
+            }
+        }
+    },
+    {
+        "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
+        "title": "Look at me! I'm POPULARITY Cat",
+        "distance": "",
+        "text": "Your cat needs some love and tenderness. Try to make time in your busy schedule",
+        "weight": 1,
+        "isAvailableWhen": [
+            {
+                "state": {
+                    "environment": [0, 100]
+                }
+            }
+        ],
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "popularity": -10
+                    },
+                    "flags": {}
+                }
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "popularity": 10
+                    },
+                    "flags": {}
+                }
+            }
+        }
     }
 ]
