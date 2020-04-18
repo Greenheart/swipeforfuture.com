@@ -134,7 +134,6 @@ export default class Game extends Component {
             nextCard = this.selectNextCard(availableCards)
         }
 
-        console.log(updatedWorld, nextCard)
         return nextCard
     }
 
