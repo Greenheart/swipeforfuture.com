@@ -110,13 +110,13 @@ export default class Game extends Component {
     getNextCard(updatedWorld, card, currentAction) {
         const { eventCards } = this.props.worldData
         const availableEvents = this.getAvailableEvents(updatedWorld)
-        const eventStartingNow =
-            card.type !== 'event' ? this.selectNextEvent(availableEvents) : null
-        let nextCard
-
         const isEventCardWithPointer =
             card.type === 'event' &&
             typeof currentAction.nextEventCardId === 'string'
+        const eventStartingNow = !isEventCardWithPointer
+            ? this.selectNextEvent(availableEvents)
+            : null
+        let nextCard
 
         // Only select the next EventCard if a specific one is given
         // Else cancel the event and continue with normal cards.
@@ -134,6 +134,7 @@ export default class Game extends Component {
             nextCard = this.selectNextCard(availableCards)
         }
 
+        console.log(updatedWorld, nextCard)
         return nextCard
     }
 
@@ -176,7 +177,7 @@ export default class Game extends Component {
     updateWorldFlags(modifier) {
         const currentWorldFlags =
             modifier.type === 'replace'
-                ? Object.assign({}, this.props.worldData.flags)
+                ? Object.assign({}, this.props.worldData.defaultState.flags)
                 : Object.assign({}, this.state.world.flags)
 
         const updatedWorldFlags = Object.keys(modifier.flags).reduce(
@@ -203,7 +204,7 @@ export default class Game extends Component {
 
     selectNextEvent(events = []) {
         const event = this.selectRandomFrom(events)
-        if (event && Math.random() < event.probability) {
+        if (event && Math.random() <= event.probability) {
             return event
         }
     }
