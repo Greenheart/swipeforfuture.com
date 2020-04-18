@@ -7,6 +7,8 @@
         "popularity": 40
     },
     "flags": {
-        "needs-init": true
+        "needs-init": true,
+        "envira-init": false,
+        "infro-init": false
     }
 }

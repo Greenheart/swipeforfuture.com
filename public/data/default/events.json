@@ -35,5 +35,29 @@
             }
         ],
         "initialEventCardId": "welcome"
+    },
+    {
+        "probability": 0.5,
+        "shouldTriggerWhen": [
+            {
+                "flags": {
+                    "needs-init": false,
+                    "envira-init": false
+                }
+            }
+        ],
+        "initialEventCardId": "envira-init"
+    },
+    {
+        "probability": 0.5,
+        "shouldTriggerWhen": [
+            {
+                "flags": {
+                    "needs-init": false,
+                    "infro-init": false
+                }
+            }
+        ],
+        "initialEventCardId": "infro-init"
     }
 ]
