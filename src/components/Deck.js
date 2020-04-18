@@ -2,7 +2,7 @@ import React from 'react'
 
 import Card from './Card'
 import DummyCard from './DummyCard'
-import './Deck.css'
+import './Deck.scss'
 
 function Deck({ onSwipe, card, tick = 0 }) {
     const cardStack = Array.apply(null, Array(5)).map((_, index) => index)

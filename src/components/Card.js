@@ -120,14 +120,18 @@ function Card({ i, cardData, onSwipe, layer }) {
                 }}
             >
                 <div className="card-content">
-                    <img
-                        src={image ? image : ''}
-                        alt={title}
-                        style={{ width: '100%' }}
-                    />
-                    <h2>{title}</h2>
-                    <h5>{distance}</h5>
-                    <h5>{text}</h5>
+                    <div
+                        className="card-image"
+                        style={{
+                            backgroundImage:
+                                'url(' + (image ? image : '') + ')',
+                        }}
+                    ></div>
+                    <div className="card-text">
+                        {distance && <em className="location">{distance}</em>}
+                        <h1 className="title">{title}</h1>
+                        <p className="text">{text}</p>
+                    </div>
                 </div>
             </animated.div>
         </animated.div>
