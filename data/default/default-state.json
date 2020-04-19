@@ -4,9 +4,13 @@
         "people": 40,
         "security": 40,
         "money": 40,
-        "popularity": 40
+        "popularity": 40,
+        "roads-suggested": 0,
+        "road-expansion": 0
     },
     "flags": {
-        "needs-init": true
+        "needs-init": true,
+        "envira-init": false,
+        "infro-init": false
     }
 }
