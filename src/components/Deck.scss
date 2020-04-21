@@ -1,3 +1,5 @@
+$card-width: 40vh;
+
 * {
     box-sizing: border-box;
 }
@@ -12,19 +14,30 @@ body {
     position: fixed;
     overflow: hidden;
 }
-
 .deck-root {
-    overflow: hidden;
+    position: relative;
+    top: -0.1 * $card-width;
     width: 100%;
+    height: 100%;
 }
 
 .deck-root > .card-container {
     position: relative;
-    width: 100vw;
+    width: 100%;
+    min-width: 40vh;
     will-change: transform;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.deck-root > .card-container > .card.card-back {
+    box-sizing: border-box;
+    border: solid 0.035 * $card-width #fff;
+    background: url('https://images.unsplash.com/photo-1550537687-c91072c4792d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80');
+    background-size: auto 100%;
+    background-repeat: repeat;
+    background-position: center center;
 }
 
 .deck-root > .card-container > .card {
@@ -32,43 +45,31 @@ body {
     background-size: auto 85%;
     background-repeat: no-repeat;
     background-position: center center;
-    width: 300px;
-    max-width: 300px;
-    height: 550px;
-    max-height: 570px;
+    width: $card-width;
+    height: 2 * $card-width;
     will-change: transform;
-    border-radius: 10px;
+    border-radius: 0.035 * $card-width;
     box-shadow: 0 12.5px 20px -10px rgba(50, 50, 73, 0.4),
         0 10px 10px -10px rgba(50, 50, 73, 0.3);
     overflow: hidden;
-}
+    font-size: 0.035 * $card-width;
 
-.deck-root > .card-container > .card.card-back {
-    box-sizing: border-box;
-    border: solid 5px #fff;
-    background: url('https://images.unsplash.com/photo-1550537687-c91072c4792d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80');
-    background-size: auto 100%;
-    background-repeat: repeat;
-    background-position: center center;
-}
-
-.card {
-    .card-content {
+    & > .card-content {
         display: block;
         position: relative;
         height: 100%;
 
-        .card-image {
+        & > .card-image {
             width: 100%;
             height: 70%;
             background-repeat: no-repeat;
             background-position: center center;
             background-size: auto 120%;
-            border: solid 10px #fff;
+            border: solid 0.035 * $card-width #fff;
             border-style: solid solid none solid;
         }
 
-        .card-text {
+        & > .card-text {
             position: absolute;
             bottom: 0;
             left: 0;
@@ -76,31 +77,33 @@ body {
             min-height: 30%;
             background: #fff;
 
-            em.location {
+            & > em.location {
                 position: absolute;
-                top: -30px;
+                top: -0.1125 * $card-width;
                 right: 0;
                 display: block;
-                font-size: 14px;
+                font-size: 140%;
                 background: rgba(230, 230, 230, 0.7);
-                border-radius: 5px 0 0 5px;
-                padding: 2px 20px 2px 10px;
+                border-radius: 1vh 0 0 1vh;
+                padding: 0.0125 * $card-width 0.125 * $card-width 0.0125 *
+                    $card-width 0.05 * $card-width;
             }
 
-            h1.title {
-                font-size: 16px;
+            & > h1.title {
+                font-size: 160%;
                 white-space: nowrap;
                 color: #fff;
                 background: #333;
                 display: block;
                 margin: 0;
-                padding: 5px 20px;
+                padding: 0.025 * $card-width 0.0625 * $card-width;
             }
 
-            p.text {
-                font-size: 16px;
+            & > p.text {
+                font-size: 160%;
                 color: #333;
-                padding: 10px 20px 40px 20px;
+                padding: 0.05 * $card-width 0.0625 * $card-width 0.1 *
+                    $card-width 0.0625 * $card-width;
                 margin: 0;
             }
         }
