@@ -6,14 +6,14 @@ import { useGesture } from 'react-with-gesture'
 import { useKeyboardEvent } from '../util/hooks'
 import { SWIPE_DIRECTION } from '../util/constants'
 
-const to = i => ({
+const to = (i) => ({
     x: 0,
     y: 0,
     scale: 1,
     rot: 0,
     delay: i * 100,
 })
-const from = i => ({ rot: 0, scale: 1.0, y: 10 })
+const from = (i) => ({ rot: 0, scale: 1.0, y: 10 })
 
 const trans = (r, s) =>
     `perspective(1500px) rotate3d(1, 0, 0, 30deg) rotate3d(0, 0, 1, ${r}deg) scale(${s})`
@@ -93,7 +93,7 @@ function Card({ i, cardData, onSwipe, layer }) {
         }
     })
 
-    const bind = useGesture(args => {
+    const bind = useGesture((args) => {
         if (!cardState.currentKey) gestureControl(args)
     })
 
