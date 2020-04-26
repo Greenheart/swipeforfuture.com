@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { animated, interpolate } from 'react-spring/hooks'
-import { useSpring } from 'react-spring/hooks'
+import { animated, interpolate } from 'react-spring'
+import { useSpring } from 'react-spring'
 import { useGesture } from 'react-with-gesture'
 
 import { useKeyboardEvent } from '../util/hooks'
