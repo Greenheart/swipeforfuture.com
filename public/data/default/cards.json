@@ -1,5 +1,52 @@
 [
     {
+        "image": "https://images.pexels.com/photos/3044473/pexels-photo-3044473.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=500",
+        "title": "Cheap but dirty brown coal for sale",
+        "distance": "Working class disctrict",
+        "text": "We've got an interesting offer: Buy a modern brown coal power plant cheaply to generate electricity. Deal? Great! (WATCH OUT FOR ENVIRA though...)",
+        "weight": 100,
+        "isAvailableWhen": [
+            {
+                "state": {
+                    "environment": [21, 100],
+                    "money": [15, 100]
+                }
+            }
+        ],
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "environment": 10,
+                        "people": 10,
+                        "security": 15,
+                        "money": -5,
+                        "popularity": 25
+                    },
+                    "flags": {
+                        "brown-coal-plants": 1
+                    }
+                }
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "environment": -20,
+                        "people": -15,
+                        "security": -10,
+                        "money": 20,
+                        "popularity": -20
+                    }
+                },
+                "flags": {
+                    "brown-coal-plants": 1
+                }
+            }
+        }
+    },
+    {
         "image": "https://images.unsplash.com/photo-1529088746738-c4c0a152fb2c?fit=crop&w=800&q=60",
         "title": "Road expansion",
         "distance": "On the phone",

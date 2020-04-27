@@ -7,7 +7,8 @@
         "popularity": 40,
         "roads-suggested": 0,
         "road-expansion": 0,
-        "solar-investment": 0
+        "solar-investment": 0,
+        "brown-coal-plants": 0
     },
     "flags": {
         "needs-init": true,
