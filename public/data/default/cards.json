@@ -288,7 +288,7 @@
                     "roads-suggested": [0, 0]
                 },
                 "flags": {
-                    "infro-init": true
+                    "infran-init": true
                 }
             },
             {
@@ -297,7 +297,7 @@
                     "roads-suggested": [1, 1]
                 },
                 "flags": {
-                    "infro-init": true
+                    "infran-init": true
                 }
             },
             {
@@ -306,7 +306,7 @@
                     "roads-suggested": [2, 2]
                 },
                 "flags": {
-                    "infro-init": true
+                    "infran-init": true
                 }
             }
         ],
