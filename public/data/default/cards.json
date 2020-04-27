@@ -2,14 +2,15 @@
     {
         "image": "https://images.pexels.com/photos/3044473/pexels-photo-3044473.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=500",
         "title": "Cheap but dirty brown coal for sale",
-        "distance": "Working class disctrict",
+        "distance": "Working class district",
         "text": "We've got an interesting offer: Buy a modern brown coal power plant cheaply to generate electricity. Deal? Great! (WATCH OUT FOR ENVIRA though...)",
         "weight": 100,
         "isAvailableWhen": [
             {
                 "state": {
                     "environment": [21, 100],
-                    "money": [15, 100]
+                    "money": [15, 100],
+                    "brown-coal-plants": [0, 0]
                 }
             }
         ],
@@ -22,10 +23,8 @@
                         "people": 10,
                         "security": 15,
                         "money": -5,
-                        "popularity": 25
-                    },
-                    "flags": {
-                        "brown-coal-plants": 1
+                        "popularity": 25,
+                        "brown-coal-plants": 0
                     }
                 }
             },
@@ -36,12 +35,52 @@
                         "environment": -20,
                         "people": -15,
                         "security": -10,
-                        "money": 20,
-                        "popularity": -20
+                        "money": 40,
+                        "popularity": -20,
+                        "brown-coal-plants": 1
                     }
+                }
+            }
+        }
+    },
+    {
+        "image": "https://images.unsplash.com/photo-1546541612-82d19b258cd5?fit=crop&w=800&q=60",
+        "title": "Keep it in the ground!",
+        "distance": "",
+        "text": "This is insane! Are you really investing in this brown coal plant and prioritizing short-term profits over the future of the planet - and your people!?",
+        "weight": 100,
+        "isAvailableWhen": [
+            {
+                "state": {
+                    "brown-coal-plants": [1, 1]
                 },
                 "flags": {
-                    "brown-coal-plants": 1
+                    "envira-init": true
+                }
+            }
+        ],
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "environment": 10,
+                        "people": 10,
+                        "security": 5,
+                        "brown-coal-plants": 100
+                    }
+                }
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "environment": -15,
+                        "people": -15,
+                        "security": -5,
+                        "money": 35,
+                        "brown-coal-plants": 0
+                    }
                 }
             }
         }
