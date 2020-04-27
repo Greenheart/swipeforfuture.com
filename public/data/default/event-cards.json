@@ -55,7 +55,7 @@
         "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?fit=crop&w=800&q=60",
         "title": "Seriously!",
         "distance": "",
-        "text": "We need to talk! Get your head in the game.",
+        "text": "We need to talk! Get your head in the game. Do you want to take a lunch to get up to speed with your new duties?",
         "weight": 1000,
         "actions": {
             "left": {
@@ -117,7 +117,7 @@
         "image": "https://images.unsplash.com/photo-1546541612-82d19b258cd5?fit=crop&w=800&q=60",
         "title": "The activist",
         "distance": "",
-        "text": "Hi. My name is Envira. I am a climate lobbyist and you'll be seing me from time to time. I wish you good luck and I hope we'll have constructive meetings in the future.",
+        "text": "Hi! My name is Envira and I'm a climate lobbyist. You'll see me from time to time. I wish you good luck and I hope we'll have constructive meetings in the future.",
         "weight": 1000,
         "actions": {
             "left": {
@@ -151,14 +151,15 @@
         "image": "https://images.unsplash.com/photo-1529088746738-c4c0a152fb2c?fit=crop&w=800&q=60",
         "title": "The constructor",
         "distance": "",
-        "text": "Hello sir. I'm Infran. I'll be sure to keep you updated on the nations infrastructure. Are we clear?",
+        "text": "Hello sir! I'm Infran. I'll be sure to keep you updated on the nation's infrastructure. Should we get started right away?",
         "weight": 1000,
         "actions": {
             "left": {
                 "modifier": {
                     "type": "add",
                     "state": {
-                        "money": -10
+                        "money": 10,
+                        "popularity": -10
                     },
                     "flags": {
                         "infran-init": true
@@ -170,7 +171,8 @@
                 "modifier": {
                     "type": "add",
                     "state": {
-                        "money": 10
+                        "money": -10,
+                        "popularity": 10
                     },
                     "flags": {
                         "infran-init": true

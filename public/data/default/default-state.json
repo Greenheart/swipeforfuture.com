@@ -6,11 +6,12 @@
         "money": 40,
         "popularity": 40,
         "roads-suggested": 0,
-        "road-expansion": 0
+        "road-expansion": 0,
+        "solar-investment": 0
     },
     "flags": {
         "needs-init": true,
         "envira-init": false,
-        "infro-init": false
+        "infran-init": false
     }
 }
