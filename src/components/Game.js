@@ -198,7 +198,7 @@ export default class Game extends Component {
     }
 
     selectNextCard(cards = []) {
-        return this.selectRandomFrom(cards)
+        return this.selectWeightedRandomFrom(cards)
     }
 
     selectNextEvent(events = []) {
@@ -210,6 +210,20 @@ export default class Game extends Component {
 
     selectRandomFrom(array) {
         return array[Math.floor(Math.random() * array.length)]
+    }
+
+    selectWeightedRandomFrom(array, weightFunc = (element) => element.weight) {
+        const {selectionList, count} = array.reduce((acc, element) => {
+            acc.count += weightFunc(element)
+            acc.selectionList.push(acc.count)
+            return acc
+        }, {count: 0, selectionList: []})
+
+        const selectionPosition = Math.random() * count
+        return array[selectionList.findIndex((max, index, array) => {
+            const min = index > 0 ? array[index - 1] : 0
+            return selectionPosition >= min && selectionPosition <= max
+        })]
     }
 
     selectEventCard(cardId) {
