@@ -1,27 +1,16 @@
 [
     {
-        "image": "https://images.unsplash.com/photo-1561623002-b3520705eccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-        "title": "We need power.",
-        "distance": "",
-        "text": "Lorem ipsum COALar sit amet consectetur, adipisicing elit.",
-        "weight": 1,
+        "image": "https://images.pexels.com/photos/3044473/pexels-photo-3044473.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+        "title": "Cheap but dirty brown coal for sale",
+        "distance": "Working class district",
+        "text": "We've got an interesting offer: Buy a modern brown coal power plant cheaply to generate electricity. Deal? Great! (WATCH OUT FOR ENVIRA though...)",
+        "weight": 100,
         "isAvailableWhen": [
             {
                 "state": {
-                    "environment": [10, 100],
-                    "money": [80, 100]
-                }
-            },
-            {
-                "state": {
-                    "people": [10, 100],
-                    "money": [80, 100]
-                }
-            },
-            {
-                "state": {
-                    "security": [10, 100],
-                    "money": [80, 100]
+                    "environment": [21, 100],
+                    "money": [15, 100],
+                    "brown-coal-plants": [0, 0]
                 }
             }
         ],
@@ -30,11 +19,12 @@
                 "modifier": {
                     "type": "add",
                     "state": {
-                        "environment": -100,
-                        "people": -100,
-                        "security": -100,
-                        "money": -100,
-                        "popularity": -20
+                        "environment": 10,
+                        "people": 10,
+                        "security": 15,
+                        "money": -5,
+                        "popularity": 25,
+                        "brown-coal-plants": 0
                     }
                 }
             },
@@ -42,11 +32,155 @@
                 "modifier": {
                     "type": "add",
                     "state": {
-                        "environment": 40,
-                        "people": 60,
-                        "security": 75,
-                        "money": 90,
-                        "popularity": 20
+                        "environment": -20,
+                        "people": -15,
+                        "security": -10,
+                        "money": 40,
+                        "popularity": -20,
+                        "brown-coal-plants": 1
+                    }
+                }
+            }
+        }
+    },
+    {
+        "image": "https://images.unsplash.com/photo-1546541612-82d19b258cd5?fit=crop&w=800&q=60",
+        "title": "Keep it in the ground!",
+        "distance": "",
+        "text": "This is insane! Are you really investing in this brown coal plant and prioritizing short-term profits over the future of the planet - and your people!?",
+        "weight": 100,
+        "isAvailableWhen": [
+            {
+                "state": {
+                    "brown-coal-plants": [1, 1]
+                },
+                "flags": {
+                    "envira-init": true
+                }
+            }
+        ],
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "environment": 10,
+                        "people": 10,
+                        "security": 5,
+                        "brown-coal-plants": 100
+                    }
+                }
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "environment": -15,
+                        "people": -15,
+                        "security": -5,
+                        "money": 35,
+                        "brown-coal-plants": 0
+                    }
+                }
+            }
+        }
+    },
+    {
+        "image": "https://images.unsplash.com/photo-1529088746738-c4c0a152fb2c?fit=crop&w=800&q=60",
+        "title": "Road expansion",
+        "distance": "On the phone",
+        "text": "The people needs roads to support future market growth. Let me take charge and make this happen.",
+        "weight": 100,
+        "isAvailableWhen": [
+            {
+                "state": {
+                    "people": [50, 100],
+                    "roads-suggested": [0, 0]
+                },
+                "flags": {
+                    "infran-init": true
+                }
+            },
+            {
+                "state": {
+                    "people": [70, 100],
+                    "roads-suggested": [1, 1]
+                },
+                "flags": {
+                    "infran-init": true
+                }
+            },
+            {
+                "state": {
+                    "people": [90, 100],
+                    "roads-suggested": [2, 2]
+                },
+                "flags": {
+                    "infran-init": true
+                }
+            }
+        ],
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "popularity": -10,
+                        "roads-suggested": 1,
+                        "road-expansion": 1
+                    },
+                    "flags": {}
+                }
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "environment": -10,
+                        "money": -10,
+                        "people": 20,
+                        "roads-suggested": 1,
+                        "road-expansion": 1
+                    },
+                    "flags": {}
+                }
+            }
+        }
+    },
+    {
+        "image": "https://images.unsplash.com/photo-1529088746738-c4c0a152fb2c?fit=crop&w=800&q=60",
+        "title": "Invest in solar?",
+        "distance": "In the bathroom",
+        "text": "The Germans are on to us!! We need to invest in solar power. Yay (right) or nay (left)?",
+        "weight": 100,
+        "isAvailableWhen": [
+            {
+                "state": {
+                    "environment": [60, 100],
+                    "money": [30, 100],
+                    "solar-investment": [0, 0]
+                },
+                "flags": {
+                    "infran-init": true
+                }
+            }
+        ],
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "money": -5,
+                        "solar-investment": 100
+                    }
+                }
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "money": -10,
+                        "solar-investment": 1
                     }
                 }
             }
@@ -54,27 +188,17 @@
     },
     {
         "image": "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-        "title": "Invest in solar?",
-        "distance": "",
-        "text": "Lorem ipsum SOLAR sit amet consectetur, adipisicing elit.",
-        "weight": 1,
+        "title": "Our solar project is ready!",
+        "distance": "The greener other side",
+        "text": "Congratulations! We beat the initial German energy expansion ⚡️",
+        "weight": 100,
         "isAvailableWhen": [
             {
                 "state": {
-                    "environment": [60, 100],
-                    "money": [30, 31]
-                }
-            },
-            {
-                "state": {
-                    "people": [60, 100],
-                    "money": [30, 31]
-                }
-            },
-            {
-                "state": {
-                    "security": [60, 100],
-                    "money": [30, 31]
+                    "solar-investment": [1, 1]
+                },
+                "flags": {
+                    "infran-init": true
                 }
             }
         ],
@@ -83,11 +207,12 @@
                 "modifier": {
                     "type": "add",
                     "state": {
-                        "environment": -100,
-                        "people": -100,
-                        "security": -100,
-                        "money": -100,
-                        "popularity": 20
+                        "environment": 30,
+                        "people": 15,
+                        "security": 15,
+                        "money": 5,
+                        "popularity": 20,
+                        "solar-investment": 100
                     }
                 }
             },
@@ -95,11 +220,12 @@
                 "modifier": {
                     "type": "add",
                     "state": {
-                        "environment": 40,
-                        "people": 60,
-                        "security": 75,
-                        "money": 90,
-                        "popularity": -20
+                        "environment": 30,
+                        "people": 15,
+                        "security": 15,
+                        "money": 5,
+                        "popularity": 20,
+                        "solar-investment": 100
                     }
                 }
             }
@@ -288,7 +414,7 @@
                     "roads-suggested": [0, 0]
                 },
                 "flags": {
-                    "infro-init": true
+                    "infran-init": true
                 }
             },
             {
@@ -297,7 +423,7 @@
                     "roads-suggested": [1, 1]
                 },
                 "flags": {
-                    "infro-init": true
+                    "infran-init": true
                 }
             },
             {
@@ -306,7 +432,7 @@
                     "roads-suggested": [2, 2]
                 },
                 "flags": {
-                    "infro-init": true
+                    "infran-init": true
                 }
             }
         ],

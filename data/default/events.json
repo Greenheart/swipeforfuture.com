@@ -54,10 +54,10 @@
             {
                 "flags": {
                     "needs-init": false,
-                    "infro-init": false
+                    "infran-init": false
                 }
             }
         ],
-        "initialEventCardId": "infro-init"
+        "initialEventCardId": "infran-init"
     }
 ]
