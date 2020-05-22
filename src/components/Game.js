@@ -11,13 +11,17 @@ const Footer = styled.footer`
     align-items: center;
 `
 
+// Enable DEV_TOOLS for local development by default to improve DX
+window.DEV_TOOLS_ACTIVE = window.location.hostname.includes('localhost')
+window.DEV_TOOLS = {}
+
 export default class Game extends Component {
     state = this.getInitialState()
 
     render() {
         const card = this.addUniqueCardId(this.state.card)
         const worldState = this.state.world.state
-        const stats = this.props.worldData.stats.map(stat =>
+        const stats = this.props.worldData.stats.map((stat) =>
             Object.assign({}, stat, {
                 value: worldState[stat.id],
             }),
@@ -61,20 +65,20 @@ export default class Game extends Component {
 
     getAvailableCards(world) {
         const { cards } = this.props.worldData
-        return cards.filter(c =>
+        return cards.filter((c) =>
             this.hasMatchingWorldQuery(world, c.isAvailableWhen),
         )
     }
 
     getAvailableEvents(world) {
         const { events } = this.props.worldData
-        return events.filter(e =>
+        return events.filter((e) =>
             this.hasMatchingWorldQuery(world, e.shouldTriggerWhen),
         )
     }
 
     hasMatchingWorldQuery(world, worldQueries) {
-        return worldQueries.some(q => this.isMatchingWorldQuery(world, q))
+        return worldQueries.some((q) => this.isMatchingWorldQuery(world, q))
     }
 
     isMatchingWorldQuery(world, { state = {}, flags = {} }) {
@@ -110,6 +114,8 @@ export default class Game extends Component {
     getNextCard(updatedWorld, card, currentAction) {
         const { eventCards } = this.props.worldData
         const availableEvents = this.getAvailableEvents(updatedWorld)
+        let availableCards = []
+
         const isEventCardWithPointer =
             card.type === 'event' &&
             typeof currentAction.nextEventCardId === 'string'
@@ -130,8 +136,16 @@ export default class Game extends Component {
         } else if (eventStartingNow) {
             nextCard = this.selectEventCard(eventStartingNow.initialEventCardId)
         } else {
-            const availableCards = this.getAvailableCards(updatedWorld)
+            availableCards = this.getAvailableCards(updatedWorld)
             nextCard = this.selectNextCard(availableCards)
+        }
+
+        if (window.DEV_TOOLS_ACTIVE) {
+            window.DEV_TOOLS.availableCards = availableCards
+            window.DEV_TOOLS.availableEvents = availableEvents
+            window.DEV_TOOLS.nextCard = nextCard
+
+            console.log('DEV TOOLS: ', window.DEV_TOOLS)
         }
 
         return nextCard
@@ -213,17 +227,22 @@ export default class Game extends Component {
     }
 
     selectWeightedRandomFrom(array, weightFunc = (element) => element.weight) {
-        const {selectionList, count} = array.reduce((acc, element) => {
-            acc.count += weightFunc(element)
-            acc.selectionList.push(acc.count)
-            return acc
-        }, {count: 0, selectionList: []})
+        const { selectionList, count } = array.reduce(
+            (acc, element) => {
+                acc.count += weightFunc(element)
+                acc.selectionList.push(acc.count)
+                return acc
+            },
+            { count: 0, selectionList: [] },
+        )
 
         const selectionPosition = Math.random() * count
-        return array[selectionList.findIndex((max, index, array) => {
-            const min = index > 0 ? array[index - 1] : 0
-            return selectionPosition >= min && selectionPosition <= max
-        })]
+        return array[
+            selectionList.findIndex((max, index, array) => {
+                const min = index > 0 ? array[index - 1] : 0
+                return selectionPosition >= min && selectionPosition <= max
+            })
+        ]
     }
 
     selectEventCard(cardId) {
