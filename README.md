@@ -38,5 +38,6 @@ This game is a community effort, created together with these awesome people:
 -   Hugo Bille
 -   Amanda Lagos Sallhed
 -   Malin Jansson
+-   Clayton Whittle
 
 Do you have ideas or want to support the development? You're welcome to submit issues and PR:s here on GitHub and tell us more!
