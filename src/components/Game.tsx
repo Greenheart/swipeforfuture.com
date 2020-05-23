@@ -3,7 +3,20 @@ import styled from 'styled-components/macro'
 
 import Deck from './Deck'
 import Stats from './Stats'
-import { SWIPE_DIRECTION } from '../util/constants'
+import { SwipeDirection } from '../util/constants'
+
+import {
+    GameWorld,
+    WorldState,
+    WorldQuery,
+    GameWorldModifier,
+    WorldEvent,
+    CardData,
+    EventCard,
+    CardActionData,
+    EventCardActionData,
+    EventCardId,
+} from '../game/ContentTypes'
 
 const Footer = styled.footer`
     display: flex;
@@ -11,11 +24,32 @@ const Footer = styled.footer`
     align-items: center;
 `
 
+declare global {
+    interface Window {
+        DEV_TOOLS_ACTIVE: Boolean
+        DEV_TOOLS: {
+            availableCards?: CardData[]
+            availableEvents?: WorldEvent[]
+            nextCard?: CardData | EventCard
+        }
+    }
+}
+
 // Enable DEV_TOOLS for local development by default to improve DX
 window.DEV_TOOLS_ACTIVE = window.location.hostname.includes('localhost')
 window.DEV_TOOLS = {}
 
-export default class Game extends Component {
+type GameProps = {
+    worldData: GameWorld
+}
+
+type GameState = {
+    world: WorldState
+    card: CardData | EventCard
+    rounds: number
+}
+
+export default class Game extends Component<GameProps, GameState> {
     state = this.getInitialState()
 
     render() {
@@ -50,7 +84,7 @@ export default class Game extends Component {
         }
     }
 
-    getInitialCard(world) {
+    getInitialCard(world: WorldState): EventCard | CardData {
         const availableEvents = this.getAvailableEvents(world)
         const event = this.selectNextEvent(availableEvents)
 
@@ -63,25 +97,31 @@ export default class Game extends Component {
         }
     }
 
-    getAvailableCards(world) {
+    getAvailableCards(world: WorldState): CardData[] {
         const { cards } = this.props.worldData
         return cards.filter((c) =>
             this.hasMatchingWorldQuery(world, c.isAvailableWhen),
         )
     }
 
-    getAvailableEvents(world) {
+    getAvailableEvents(world: WorldState): WorldEvent[] {
         const { events } = this.props.worldData
         return events.filter((e) =>
             this.hasMatchingWorldQuery(world, e.shouldTriggerWhen),
         )
     }
 
-    hasMatchingWorldQuery(world, worldQueries) {
+    hasMatchingWorldQuery(
+        world: WorldState,
+        worldQueries: WorldQuery[],
+    ): Boolean {
         return worldQueries.some((q) => this.isMatchingWorldQuery(world, q))
     }
 
-    isMatchingWorldQuery(world, { state = {}, flags = {} }) {
+    isMatchingWorldQuery(
+        world: WorldState,
+        { state = {}, flags = {} }: WorldQuery,
+    ): Boolean {
         const hasStateMatch = Object.entries(state).every(
             ([key, [min, max]]) =>
                 world.state[key] >= min && world.state[key] <= max,
@@ -96,9 +136,9 @@ export default class Game extends Component {
         return result
     }
 
-    onSwipe(card, direction) {
+    onSwipe(card: CardData | EventCard, direction: SwipeDirection) {
         const currentAction =
-            direction === SWIPE_DIRECTION.LEFT
+            direction === SwipeDirection.Left
                 ? card.actions.left
                 : card.actions.right
 
@@ -111,28 +151,33 @@ export default class Game extends Component {
         })
     }
 
-    getNextCard(updatedWorld, card, currentAction) {
+    getNextCard(
+        updatedWorld: WorldState,
+        card: CardData | EventCard,
+        currentAction: CardActionData | EventCardActionData,
+    ): CardData | EventCard {
         const { eventCards } = this.props.worldData
         const availableEvents = this.getAvailableEvents(updatedWorld)
-        let availableCards = []
+        let availableCards: CardData[] = []
 
-        const isEventCardWithPointer =
-            card.type === 'event' &&
-            typeof currentAction.nextEventCardId === 'string'
-        const eventStartingNow = !isEventCardWithPointer
+        const nextEventCardId: string | null =
+            card.type === 'event' && 'nextEventCardId' in currentAction
+                ? currentAction.nextEventCardId
+                : null
+        const eventStartingNow = !nextEventCardId
             ? this.selectNextEvent(availableEvents)
             : null
         let nextCard
 
         // Only select the next EventCard if a specific one is given
         // Else cancel the event and continue with normal cards.
-        if (isEventCardWithPointer) {
-            if (!eventCards.hasOwnProperty(currentAction.nextEventCardId)) {
+        if (nextEventCardId) {
+            if (!eventCards.hasOwnProperty(nextEventCardId)) {
                 throw new Error(
-                    `eventCardId "${currentAction.nextEventCardId}" does not exist. Make sure it's spelled correctly`,
+                    `eventCardId "${nextEventCardId}" does not exist. Make sure it's spelled correctly`,
                 )
             }
-            nextCard = this.selectEventCard(currentAction.nextEventCardId)
+            nextCard = this.selectEventCard(nextEventCardId)
         } else if (eventStartingNow) {
             nextCard = this.selectEventCard(eventStartingNow.initialEventCardId)
         } else {
@@ -148,13 +193,18 @@ export default class Game extends Component {
             console.log('DEV TOOLS: ', window.DEV_TOOLS)
         }
 
+        if (!nextCard) throw new Error('Content error. No next card available.')
         return nextCard
     }
 
-    getUpdatedWorld({ type = 'add', state = {}, flags = {} }) {
+    getUpdatedWorld({
+        type = 'add',
+        state = {},
+        flags = {},
+    }: GameWorldModifier): WorldState {
         // get default values for missing props by destructuring the incoming `modifier` and then directly reassembling it
         // IDEA: Could this all be done in the function declaration, when specifying parameters?
-        const modifier = { type, state, flags }
+        const modifier: GameWorldModifier = { type, state, flags }
         const updatedWorldState = this.updateWorldState(modifier)
         const updatedWorldFlags = this.updateWorldFlags(modifier)
 
@@ -164,70 +214,79 @@ export default class Game extends Component {
         }
     }
 
-    updateWorldState(modifier) {
-        const currentWorldState =
+    updateWorldState(modifier: GameWorldModifier): WorldState['state'] {
+        const currentWorldState: WorldState['state'] =
             modifier.type === 'replace'
                 ? Object.assign({}, this.props.worldData.defaultState.state)
                 : Object.assign({}, this.state.world.state)
 
-        const updatedWorldState = Object.entries(modifier.state).reduce(
-            (updatedState, [key, value]) => {
-                const newValue =
-                    modifier.type === 'set' || modifier.type === 'replace'
-                        ? value
-                        : value + (updatedState[key] || 0)
+        const stateModifier = modifier.state || {}
+        const updatedWorldState = Object.entries(stateModifier).reduce<
+            WorldState['state']
+        >((updatedState: WorldState['state'], [key, value]) => {
+            const newValue =
+                modifier.type === 'set' || modifier.type === 'replace'
+                    ? value
+                    : value + (updatedState[key] || 0)
 
-                updatedState[key] = Math.min(Math.max(newValue, 0), 100)
+            updatedState[key] = Math.min(Math.max(newValue, 0), 100)
 
-                return updatedState
-            },
-            currentWorldState,
-        )
+            return updatedState
+        }, currentWorldState)
 
         return updatedWorldState
     }
 
-    updateWorldFlags(modifier) {
-        const currentWorldFlags =
+    updateWorldFlags(modifier: GameWorldModifier): WorldState['flags'] {
+        const currentWorldFlags: WorldState['flags'] =
             modifier.type === 'replace'
                 ? Object.assign({}, this.props.worldData.defaultState.flags)
                 : Object.assign({}, this.state.world.flags)
 
-        const updatedWorldFlags = Object.keys(modifier.flags).reduce(
-            (updatedFlags, key) => {
-                updatedFlags[key] = modifier.flags[key]
-                return updatedFlags
-            },
-            currentWorldFlags,
-        )
+        const flagsModifier = modifier.flags || {}
+        const updatedWorldFlags = Object.entries(flagsModifier).reduce<
+            WorldState['flags']
+        >((updatedFlags, [key, value]) => {
+            updatedFlags[key] = value
+            return updatedFlags
+        }, currentWorldFlags)
 
         return updatedWorldFlags
     }
 
-    addUniqueCardId(card, index = 0) {
+    addUniqueCardId(
+        card: CardData | EventCard,
+        index: number = 0,
+    ): (CardData | EventCard) & { id: string } {
         return {
             ...card,
             id: Date.now() + ':' + index,
         }
     }
 
-    selectNextCard(cards = []) {
+    selectNextCard(cards: CardData[] = []): CardData {
         return this.selectWeightedRandomFrom(cards)
     }
 
-    selectNextEvent(events = []) {
+    selectNextEvent(events: WorldEvent[] = []): WorldEvent | undefined {
         const event = this.selectRandomFrom(events)
         if (event && Math.random() <= event.probability) {
             return event
         }
     }
 
-    selectRandomFrom(array) {
+    selectRandomFrom<T>(array: T[]): T {
         return array[Math.floor(Math.random() * array.length)]
     }
 
-    selectWeightedRandomFrom(array, weightFunc = (element) => element.weight) {
-        const { selectionList, count } = array.reduce(
+    selectWeightedRandomFrom<T extends { weight: number }>(
+        array: T[],
+        weightFunc = (element: T) => element.weight,
+    ): T {
+        const { selectionList, count } = array.reduce<{
+            count: number
+            selectionList: number[]
+        }>(
             (acc, element) => {
                 acc.count += weightFunc(element)
                 acc.selectionList.push(acc.count)
@@ -237,16 +296,21 @@ export default class Game extends Component {
         )
 
         const selectionPosition = Math.random() * count
-        return array[
-            selectionList.findIndex((max, index, array) => {
-                const min = index > 0 ? array[index - 1] : 0
-                return selectionPosition >= min && selectionPosition <= max
-            })
-        ]
+        const selectionIndex = selectionList.findIndex((max, index, array) => {
+            const min = index > 0 ? array[index - 1] : 0
+            return selectionPosition >= min && selectionPosition <= max
+        })
+
+        return array[selectionIndex]
     }
 
-    selectEventCard(cardId) {
+    selectEventCard(cardId: EventCardId): EventCard {
         const { eventCards } = this.props.worldData
-        return eventCards[cardId]
+        const eventCard = eventCards[cardId]
+        if (!eventCard)
+            throw new Error(
+                `ContentError: EventCard with EventCardId "${cardId}" does not exist`,
+            )
+        return eventCard
     }
 }

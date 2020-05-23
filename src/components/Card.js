@@ -4,7 +4,6 @@ import { useSpring } from 'react-spring'
 import { useGesture } from 'react-with-gesture'
 
 import { useKeyboardEvent } from '../util/hooks'
-import { SWIPE_DIRECTION } from '../util/constants'
 
 const to = (i) => ({
     x: 0,
@@ -78,10 +77,8 @@ function Card({ i, cardData, onSwipe, layer }) {
             cardState.currentKey = key
         }
         if (cardState.currentKey === key) {
-            const directionX =
-                key === 'ArrowLeft'
-                    ? SWIPE_DIRECTION.LEFT
-                    : SWIPE_DIRECTION.RIGHT
+            // TODO: Replace with SwipeDirection enum
+            const directionX = key === 'ArrowLeft' ? -1 : 1
             gestureControl({
                 down,
                 delta: [directionX * (getDeltaX() + 1), 0],

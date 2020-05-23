@@ -40,6 +40,7 @@ export interface CardActionData {
 }
 
 export interface CardData extends CardDescription {
+    type: 'card'
     isAvailableWhen: WorldQuery[]
     actions: {
         left: CardActionData
@@ -60,7 +61,7 @@ export interface WorldQuery {
 
 export interface WorldEvent {
     probability: number
-    shouldTriggerWhen?: WorldQuery[]
+    shouldTriggerWhen: WorldQuery[]
     initialEventCardId: EventCardId
 }
 
@@ -69,6 +70,7 @@ export type EventCards = {
 }
 
 export interface EventCard extends CardDescription {
+    type: 'event'
     actions: {
         left: EventCardActionData
         right: EventCardActionData

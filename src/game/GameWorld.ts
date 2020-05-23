@@ -11,11 +11,6 @@ import {
     GameWorld,
 } from './ContentTypes'
 
-type Hack = any
-for (const eventCardId of Object.keys(defaultEventCards)) {
-    ;(defaultEventCards[eventCardId] as Hack).type = 'event'
-}
-
 export const DEFAULT_GAME_STATE: WorldState = Object.freeze({
     state: {
         environment: 40,

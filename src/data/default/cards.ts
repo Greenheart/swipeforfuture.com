@@ -2,6 +2,7 @@ import { CardData } from '../../game/ContentTypes'
 
 export const cards: CardData[] = [
     {
+        type: 'card',
         image:
             'https://images.unsplash.com/photo-1561623002-b3520705eccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
         title: 'We need power.',
@@ -39,6 +40,7 @@ export const cards: CardData[] = [
         },
     },
     {
+        type: 'card',
         image:
             'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
         title: 'Invest in solar?',
