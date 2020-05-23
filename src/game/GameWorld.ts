@@ -1,12 +1,22 @@
-import defaultCards from '../data/default/cards.js'
-import defaultEvents from '../data/default/events.js'
-import defaultEventCards from '../data/default/event-cards.js'
+import { cards as defaultCards } from '../data/default/cards'
+import { events as defaultEvents } from '../data/default/events'
+import { eventCards as defaultEventCards } from '../data/default/event-cards'
 
+import {
+    WorldState,
+    StatDefinition,
+    CardData,
+    EventCards,
+    WorldEvent,
+    GameWorld,
+} from './ContentTypes'
+
+type Hack = any
 for (const eventCardId of Object.keys(defaultEventCards)) {
-    defaultEventCards[eventCardId].type = 'event'
+    ;(defaultEventCards[eventCardId] as Hack).type = 'event'
 }
 
-export const DEFAULT_GAME_STATE = Object.freeze({
+export const DEFAULT_GAME_STATE: WorldState = Object.freeze({
     state: {
         environment: 40,
         people: 60,
@@ -16,7 +26,7 @@ export const DEFAULT_GAME_STATE = Object.freeze({
     flags: {},
 })
 
-const defaultStats = [
+const defaultStats: StatDefinition[] = [
     {
         id: 'environment',
         name: 'Environment',
@@ -39,7 +49,7 @@ const defaultStats = [
     },
 ]
 
-export const defaultGameWorld = {
+export const defaultGameWorld: GameWorld = {
     stats: defaultStats,
     cards: defaultCards,
     events: defaultEvents,
@@ -47,11 +57,15 @@ export const defaultGameWorld = {
     defaultState: DEFAULT_GAME_STATE,
 }
 
-const internalGameWorlds = {
+const internalGameWorlds: {
+    [worldId: string]: GameWorld
+} = {
     default: defaultGameWorld,
 }
 
-async function tryLoadFromLocalStorage(path) {
+async function tryLoadFromLocalStorage(
+    path: string,
+): Promise<GameWorld | null> {
     const matchLocal = path.match(/^local:\/\/(.*)/)
 
     if (matchLocal) {
@@ -61,7 +75,8 @@ async function tryLoadFromLocalStorage(path) {
         const gameWorldId = 'game_world:' + id
         let gameWorld = {}
         try {
-            const data = JSON.parse(localStorage.getItem(gameWorldId))
+            const serializedData = localStorage.getItem(gameWorldId)
+            const data = serializedData ? JSON.parse(serializedData) : null
             if (!data)
                 throw new Error(
                     'Could not load data from local storage: ' + gameWorldId,
@@ -77,7 +92,9 @@ async function tryLoadFromLocalStorage(path) {
 }
 
 // Load GameWorld from data directory of this repository
-async function tryLoadFromInternalData(path) {
+async function tryLoadFromInternalData(
+    path: string,
+): Promise<GameWorld | null> {
     const matchInternal = path.match(/^internal:\/\/(.*)/)
 
     if (matchInternal) {
@@ -93,7 +110,7 @@ async function tryLoadFromInternalData(path) {
     return null
 }
 
-async function tryLoadFromRestAPI(path) {
+async function tryLoadFromRestAPI(path: string): Promise<GameWorld | null> {
     // Default: expect a folder to represent a game world and contain specific JSON-files.
     const statsPath = path + '/stats.json'
     const cardsPath = path + '/cards.json'
@@ -102,11 +119,20 @@ async function tryLoadFromRestAPI(path) {
     const defaultStatePath = path + '/default-state.json'
 
     // IDEA: load data in parallel instead of sequentially to improve performance
-    const stats = await fetchJSON(statsPath, defaultStats)
-    const cards = await fetchJSON(cardsPath, [])
-    const events = await fetchJSON(eventsPath, [])
-    const eventCards = await fetchJSON(eventCardsPath, {})
-    const defaultState = await fetchJSON(defaultStatePath, DEFAULT_GAME_STATE)
+    // Use Promise.all() or similar - https://stackoverflow.com/a/35612484
+    const [stats, cards, events, eventCards, defaultState] = await Promise.all<
+        StatDefinition[],
+        CardData[],
+        WorldEvent[],
+        EventCards,
+        WorldState
+    >([
+        await fetchJSON(statsPath, defaultStats),
+        await fetchJSON(cardsPath, []),
+        await fetchJSON(eventsPath, []),
+        await fetchJSON(eventCardsPath, {}),
+        await fetchJSON(defaultStatePath, DEFAULT_GAME_STATE),
+    ])
 
     return {
         stats,
@@ -117,7 +143,7 @@ async function tryLoadFromRestAPI(path) {
     }
 }
 
-export async function loadGameWorld(path) {
+export async function loadGameWorld(path: string) {
     return (
         (await tryLoadFromInternalData(path)) ||
         (await tryLoadFromLocalStorage(path)) ||
@@ -125,7 +151,7 @@ export async function loadGameWorld(path) {
     )
 }
 
-async function fetchJSON(path, defaultValue) {
+async function fetchJSON<T>(path: string, defaultValue: T): Promise<T> {
     try {
         console.log('fetching path: ', path)
         return await (await window.fetch(path)).json()

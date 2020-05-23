@@ -1,4 +1,6 @@
-export default {
+import { EventCards } from '../../game/ContentTypes'
+
+export const eventCards: EventCards = {
     'end-game': {
         image:
             'https://images.unsplash.com/photo-1497039465987-61d305728610?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',

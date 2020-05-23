@@ -1,4 +1,6 @@
-export default [
+import { CardData } from '../../game/ContentTypes'
+
+export const cards: CardData[] = [
     {
         image:
             'https://images.unsplash.com/photo-1561623002-b3520705eccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',

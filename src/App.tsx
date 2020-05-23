@@ -3,6 +3,7 @@ import styled from 'styled-components/macro'
 
 import Game from './components/Game'
 import { loadGameWorld } from './game/GameWorld'
+import { GameWorld } from './game/ContentTypes'
 
 const Container = styled.main`
     position: absolute;
@@ -14,9 +15,12 @@ const Container = styled.main`
     display: grid;
     grid-template-rows: minmax(50px, 80px) auto minmax(50px, 80px);
 `
+type AppProps = {
+    path: string
+}
 
-function App({ path }) {
-    const [worldData, setWorldData] = useState(null)
+function App({ path }: AppProps) {
+    const [worldData, setWorldData] = useState<GameWorld | null>(null)
     useEffect(() => {
         const fetchWorld = async () => {
             const worldData = await loadGameWorld(path)
