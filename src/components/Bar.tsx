@@ -18,20 +18,22 @@ const Value = styled.div`
     border-radius: 3px;
 `
 
-function Bar({ value = 100 }) {
-    return (
-        <Container>
-            <Value
-                style={{
-                    width: `${value}%`,
-                    backgroundColor: getBarColor(value),
-                }}
-            />
-        </Container>
-    )
+type BarProps = {
+    value: number
 }
 
-function getBarColor(value) {
+const Bar: React.FunctionComponent<BarProps> = ({ value = 100 }) => (
+    <Container>
+        <Value
+            style={{
+                width: `${value}%`,
+                backgroundColor: getBarColor(value),
+            }}
+        />
+    </Container>
+)
+
+function getBarColor(value: number): string {
     if (value <= 30) {
         return '#dd7373'
     } else if (value <= 70) {
