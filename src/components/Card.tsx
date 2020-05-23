@@ -1,37 +1,68 @@
 import React, { useState } from 'react'
 import { animated, interpolate } from 'react-spring'
 import { useSpring } from 'react-spring'
-import { useGesture } from 'react-with-gesture'
+import { useGesture, GestureState } from 'react-with-gesture'
 
 import { useKeyboardEvent } from '../util/hooks'
+import { CardData, EventCard } from '../game/ContentTypes'
+import { SwipeDirection } from '../util/constants'
 
-const to = (i) => ({
+type InterpolationTypeHack = any
+type AnimationState = {
+    x: number
+    y: number
+    scale: number
+    rot: number
+    delay?: number
+}
+
+const to = (i: number): AnimationState => ({
     x: 0,
     y: 0,
     scale: 1,
     rot: 0,
     delay: i * 100,
 })
-const from = (i) => ({ rot: 0, scale: 1.0, y: 10 })
+const from = (): AnimationState => ({ rot: 0, scale: 1.0, y: 10, x: 0 })
 
-const trans = (r, s) =>
+const trans = (r: number, s: number) =>
     `perspective(1500px) rotate3d(1, 0, 0, 30deg) rotate3d(0, 0, 1, ${r}deg) scale(${s})`
 
 const getDeltaX = () => getThreshold() / window.devicePixelRatio
 
 const getThreshold = () => Math.min(200, window.innerWidth / 2)
 
-function Card({ i, cardData, onSwipe, layer }) {
+type CardProps = {
+    i: number
+    cardData: CardData | EventCard
+    onSwipe: (card: CardData | EventCard, direction: SwipeDirection) => void
+    layer: number
+}
+
+const Card: React.FunctionComponent<CardProps> = ({
+    i,
+    cardData,
+    onSwipe,
+    layer,
+}) => {
     const { title, distance, text, image } = cardData
 
     const [cardAnimationState, setCardAnimationState] = useSpring(() => ({
         ...to(i),
-        from: from(i),
+        from: from(),
     }))
 
-    const [cardState] = useState({ isGone: false, currentKey: null })
+    const [cardState] = useState<{
+        isGone: boolean
+        currentKey: string | null
+    }>({ isGone: false, currentKey: null })
 
-    const gestureControl = ({
+    const gestureControl: (
+        state: Pick<
+            GestureState,
+            'args' | 'down' | 'delta' | 'distance' | 'direction' | 'velocity'
+        >,
+    ) => void = ({
         args: [index],
         down,
         delta: [xDelta],
@@ -77,8 +108,8 @@ function Card({ i, cardData, onSwipe, layer }) {
             cardState.currentKey = key
         }
         if (cardState.currentKey === key) {
-            // TODO: Replace with SwipeDirection enum
-            const directionX = key === 'ArrowLeft' ? -1 : 1
+            const directionX =
+                key === 'ArrowLeft' ? SwipeDirection.Left : SwipeDirection.Right
             gestureControl({
                 down,
                 delta: [directionX * (getDeltaX() + 1), 0],
@@ -113,7 +144,12 @@ function Card({ i, cardData, onSwipe, layer }) {
                 className="card card-front"
                 {...bind(i)}
                 style={{
-                    transform: interpolate([rot, scale], trans),
+                    // TODO: Upgrade to raect-spring to v9 and replace react-with-gesture with react-use-gesture
+                    // Then, also fix this hack
+                    transform: interpolate(
+                        [rot, scale as InterpolationTypeHack],
+                        trans,
+                    ),
                 }}
             >
                 <div className="card-content">

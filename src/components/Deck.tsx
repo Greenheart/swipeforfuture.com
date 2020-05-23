@@ -4,7 +4,19 @@ import Card from './Card'
 import DummyCard from './DummyCard'
 import './Deck.scss'
 
-function Deck({ onSwipe, card, tick = 0 }) {
+import { CardData, EventCard } from '../game/ContentTypes'
+import { SwipeDirection } from '../util/constants'
+
+type DeckProps = {
+    onSwipe: (card: CardData | EventCard, direction: SwipeDirection) => void
+    card: (CardData | EventCard) & { id: string }
+    tick: number
+}
+const Deck: React.FunctionComponent<DeckProps> = ({
+    onSwipe,
+    card,
+    tick = 0,
+}) => {
     const cardStack = Array.apply(null, Array(5)).map((_, index) => index)
     return (
         <div className="deck-root">
@@ -32,7 +44,7 @@ function Deck({ onSwipe, card, tick = 0 }) {
     )
 }
 
-function loopingIndex(index, length, tick) {
+function loopingIndex(index: number, length: number, tick: number) {
     const result = (length + index - (tick % length)) % length
     return result
 }

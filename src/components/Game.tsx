@@ -136,7 +136,7 @@ export default class Game extends Component<GameProps, GameState> {
         return result
     }
 
-    onSwipe(card: CardData | EventCard, direction: SwipeDirection) {
+    onSwipe(card: CardData | EventCard, direction: SwipeDirection): void {
         const currentAction =
             direction === SwipeDirection.Left
                 ? card.actions.left

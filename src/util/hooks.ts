@@ -1,13 +1,16 @@
 import { useEffect } from 'react'
 
-export const useKeyboardEvent = (keys, callback) => {
+export const useKeyboardEvent = (
+    keys: string[],
+    callback: (down: boolean, key: string) => void,
+) => {
     useEffect(() => {
-        const downHandler = function(event) {
+        const downHandler = function (event: KeyboardEvent) {
             if (keys.includes(event.key)) {
                 callback(true, event.key)
             }
         }
-        const upHandler = function(event) {
+        const upHandler = function (event: KeyboardEvent) {
             if (keys.includes(event.key)) {
                 callback(false, event.key)
             }
