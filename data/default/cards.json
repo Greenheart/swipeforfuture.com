@@ -1,5 +1,6 @@
 [
     {
+        "type": "card",
         "image": "https://images.pexels.com/photos/3044473/pexels-photo-3044473.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
         "title": "Cheap but dirty brown coal for sale",
         "distance": "Working class district",
@@ -44,6 +45,7 @@
         }
     },
     {
+        "type": "card",
         "image": "https://images.unsplash.com/photo-1546541612-82d19b258cd5?fit=crop&w=800&q=60",
         "title": "Keep it in the ground!",
         "distance": "",
@@ -86,6 +88,7 @@
         }
     },
     {
+        "type": "card",
         "image": "https://images.unsplash.com/photo-1529088746738-c4c0a152fb2c?fit=crop&w=800&q=60",
         "title": "Road expansion",
         "distance": "On the phone",
@@ -148,6 +151,7 @@
         }
     },
     {
+        "type": "card",
         "image": "https://images.unsplash.com/photo-1529088746738-c4c0a152fb2c?fit=crop&w=800&q=60",
         "title": "Invest in solar?",
         "distance": "In the bathroom",
@@ -187,6 +191,7 @@
         }
     },
     {
+        "type": "card",
         "image": "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
         "title": "Our solar project is ready!",
         "distance": "The greener other side",
@@ -232,6 +237,7 @@
         }
     },
     {
+        "type": "card",
         "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
         "title": "Look at me! I'm ENVIRONMENT Cat",
         "distance": "",
@@ -300,6 +306,7 @@
         }
     },
     {
+        "type": "card",
         "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
         "title": "Look at me! I'm MONEY Cat",
         "distance": "",
@@ -334,6 +341,7 @@
         }
     },
     {
+        "type": "card",
         "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
         "title": "Look at me! I'm SECURITY Cat",
         "distance": "",
@@ -361,102 +369,6 @@
                     "type": "add",
                     "state": {
                         "security": 10
-                    },
-                    "flags": {}
-                }
-            }
-        }
-    },
-    {
-        "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
-        "title": "Look at me! I'm POPULARITY Cat",
-        "distance": "",
-        "text": "Your cat needs some love and tenderness. Try to make time in your busy schedule",
-        "weight": 1,
-        "isAvailableWhen": [
-            {
-                "state": {
-                    "environment": [0, 100]
-                }
-            }
-        ],
-        "actions": {
-            "left": {
-                "modifier": {
-                    "type": "add",
-                    "state": {
-                        "popularity": -10
-                    },
-                    "flags": {}
-                }
-            },
-            "right": {
-                "modifier": {
-                    "type": "add",
-                    "state": {
-                        "popularity": 10
-                    },
-                    "flags": {}
-                }
-            }
-        }
-    },
-    {
-        "image": "https://images.unsplash.com/photo-1529088746738-c4c0a152fb2c?fit=crop&w=800&q=60",
-        "title": "Road expansion",
-        "distance": "",
-        "text": "The people needs roads to support future market growth. Let me take charge and make this happen.",
-        "weight": 100,
-        "isAvailableWhen": [
-            {
-                "state": {
-                    "people": [50, 100],
-                    "roads-suggested": [0, 0]
-                },
-                "flags": {
-                    "infran-init": true
-                }
-            },
-            {
-                "state": {
-                    "people": [70, 100],
-                    "roads-suggested": [1, 1]
-                },
-                "flags": {
-                    "infran-init": true
-                }
-            },
-            {
-                "state": {
-                    "people": [90, 100],
-                    "roads-suggested": [2, 2]
-                },
-                "flags": {
-                    "infran-init": true
-                }
-            }
-        ],
-        "actions": {
-            "left": {
-                "modifier": {
-                    "type": "add",
-                    "state": {
-                        "popularity": -10,
-                        "roads-suggested": 1,
-                        "road-expansion": 1
-                    },
-                    "flags": {}
-                }
-            },
-            "right": {
-                "modifier": {
-                    "type": "add",
-                    "state": {
-                        "environment": -10,
-                        "money": -10,
-                        "people": 20,
-                        "roads-suggested": 1,
-                        "road-expansion": 1
                     },
                     "flags": {}
                 }
