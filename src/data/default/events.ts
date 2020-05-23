@@ -1,4 +1,6 @@
-export default [
+import { WorldEvent } from '../../game/ContentTypes'
+
+export const events: WorldEvent[] = [
     {
         probability: 1,
         shouldTriggerWhen: [
