@@ -107,7 +107,7 @@ export default class Game extends Component<GameProps, GameState> {
     getAvailableEvents(world: WorldState): WorldEvent[] {
         const { events } = this.props.worldData
         return events.filter((e) =>
-            this.hasMatchingWorldQuery(world, e.shouldTriggerWhen),
+            this.hasMatchingWorldQuery(world, e.isAvailableWhen),
         )
     }
 

@@ -3,7 +3,7 @@ import { WorldEvent } from '../../game/ContentTypes'
 export const events: WorldEvent[] = [
     {
         probability: 1,
-        shouldTriggerWhen: [
+        isAvailableWhen: [
             { state: { environment: [0, 0] } },
             { state: { security: [0, 0] } },
             { state: { money: [0, 0] } },

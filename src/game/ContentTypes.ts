@@ -26,7 +26,7 @@ export interface CardDescription {
     image: string
     title: string
     text: string
-    distance: string
+    location: string
     weight: number
 }
 
@@ -61,7 +61,7 @@ export interface WorldQuery {
 
 export interface WorldEvent {
     probability: number
-    shouldTriggerWhen: WorldQuery[]
+    isAvailableWhen: WorldQuery[]
     initialEventCardId: EventCardId
 }
 
