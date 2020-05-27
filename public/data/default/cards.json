@@ -3,7 +3,7 @@
         "type": "card",
         "image": "https://images.pexels.com/photos/3044473/pexels-photo-3044473.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
         "title": "Cheap but dirty brown coal for sale",
-        "distance": "Working class district",
+        "location": "Working class district",
         "text": "We've got an interesting offer: Buy a modern brown coal power plant cheaply to generate electricity. Deal? Great! (WATCH OUT FOR ENVIRA though...)",
         "weight": 100,
         "isAvailableWhen": [
@@ -48,7 +48,7 @@
         "type": "card",
         "image": "https://images.unsplash.com/photo-1546541612-82d19b258cd5?fit=crop&w=800&q=60",
         "title": "Keep it in the ground!",
-        "distance": "",
+        "location": "",
         "text": "This is insane! Are you really investing in this brown coal plant and prioritizing short-term profits over the future of the planet - and your people!?",
         "weight": 100,
         "isAvailableWhen": [
@@ -91,7 +91,7 @@
         "type": "card",
         "image": "https://images.unsplash.com/photo-1529088746738-c4c0a152fb2c?fit=crop&w=800&q=60",
         "title": "Road expansion",
-        "distance": "On the phone",
+        "location": "On the phone",
         "text": "The people needs roads to support future market growth. Let me take charge and make this happen.",
         "weight": 100,
         "isAvailableWhen": [
@@ -154,7 +154,7 @@
         "type": "card",
         "image": "https://images.unsplash.com/photo-1529088746738-c4c0a152fb2c?fit=crop&w=800&q=60",
         "title": "Invest in solar?",
-        "distance": "In the bathroom",
+        "location": "In the bathroom",
         "text": "The Germans are on to us!! We need to invest in solar power. Yay (right) or nay (left)?",
         "weight": 100,
         "isAvailableWhen": [
@@ -194,7 +194,7 @@
         "type": "card",
         "image": "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
         "title": "Our solar project is ready!",
-        "distance": "The greener other side",
+        "location": "The greener other side",
         "text": "Congratulations! We beat the initial German energy expansion ⚡️",
         "weight": 100,
         "isAvailableWhen": [
@@ -240,7 +240,7 @@
         "type": "card",
         "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
         "title": "Look at me! I'm ENVIRONMENT Cat",
-        "distance": "",
+        "location": "",
         "text": "Your cat needs some love and tenderness. Try to make time in your busy schedule",
         "weight": 1,
         "isAvailableWhen": [
@@ -274,7 +274,7 @@
     {
         "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
         "title": "Look at me! I'm PEOPLE Cat",
-        "distance": "",
+        "location": "",
         "text": "Your cat needs some love and tenderness. Try to make time in your busy schedule",
         "weight": 1,
         "isAvailableWhen": [
@@ -309,7 +309,7 @@
         "type": "card",
         "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
         "title": "Look at me! I'm MONEY Cat",
-        "distance": "",
+        "location": "",
         "text": "Your cat needs some love and tenderness. Try to make time in your busy schedule",
         "weight": 1,
         "isAvailableWhen": [
@@ -344,7 +344,7 @@
         "type": "card",
         "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=60",
         "title": "Look at me! I'm SECURITY Cat",
-        "distance": "",
+        "location": "",
         "text": "Your cat needs some love and tenderness. Try to make time in your busy schedule",
         "weight": 1,
         "isAvailableWhen": [

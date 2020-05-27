@@ -45,7 +45,7 @@ const Card: React.FunctionComponent<CardProps> = ({
     onSwipe,
     layer,
 }) => {
-    const { title, distance, text, image } = cardData
+    const { title, location, text, image } = cardData
 
     const [cardAnimationState, setCardAnimationState] = useSpring(() => ({
         ...to(i),
@@ -161,7 +161,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                         }}
                     ></div>
                     <div className="card-text">
-                        {distance && <em className="location">{distance}</em>}
+                        {location && <em className="location">{location}</em>}
                         <h1 className="title">{title}</h1>
                         <p className="text">{text}</p>
                     </div>

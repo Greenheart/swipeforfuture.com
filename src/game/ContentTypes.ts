@@ -26,7 +26,7 @@ export interface CardDescription {
     image: string
     title: string
     text: string
-    distance: string
+    location: string
     weight: number
 }
 
