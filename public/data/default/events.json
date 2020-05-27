@@ -1,7 +1,7 @@
 [
     {
         "probability": 1,
-        "shouldTriggerWhen": [
+        "isAvailableWhen": [
             {
                 "state": {
                     "environment": [0, 0]
@@ -27,7 +27,7 @@
     },
     {
         "probability": 1,
-        "shouldTriggerWhen": [
+        "isAvailableWhen": [
             {
                 "flags": {
                     "needs-init": true
@@ -38,7 +38,7 @@
     },
     {
         "probability": 0.5,
-        "shouldTriggerWhen": [
+        "isAvailableWhen": [
             {
                 "flags": {
                     "needs-init": false,
@@ -50,7 +50,7 @@
     },
     {
         "probability": 0.5,
-        "shouldTriggerWhen": [
+        "isAvailableWhen": [
             {
                 "flags": {
                     "needs-init": false,

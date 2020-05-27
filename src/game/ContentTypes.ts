@@ -61,7 +61,7 @@ export interface WorldQuery {
 
 export interface WorldEvent {
     probability: number
-    shouldTriggerWhen: WorldQuery[]
+    isAvailableWhen: WorldQuery[]
     initialEventCardId: EventCardId
 }
 
