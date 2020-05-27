@@ -65,5 +65,6 @@ const catastrophicCards = stats.map<CardData>((stat) => {
     return createCardFromTemplate(cardTemplates.cat, partial)
 })
 
-console.log(catastrophicCards)
-console.log('"default" scenario was built!')
+export function run() {
+    return catastrophicCards
+}
