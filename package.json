@@ -26,7 +26,8 @@
         "eject": "react-scripts eject",
         "predeploy": "yarn build",
         "prettify": "npx prettier \"src/**/*\" --write",
-        "deploy": "gh-pages -d build"
+        "deploy": "gh-pages -d build",
+        "scenario": "ts-node scripts/scenarios/${ID:-default}.ts"
     },
     "eslintConfig": {
         "extends": "react-app"
