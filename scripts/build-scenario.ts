@@ -5,8 +5,6 @@
 
 const id = process.argv.length >= 3 ? process.argv[2] : 'default'
 
-console.log(`/scenarios/${id}.ts`)
-
 // HACK: export this internal interface to count this as an ES module, which is required to run this
 export interface Scenario {
     run: () => void
