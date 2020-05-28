@@ -1,13 +1,10 @@
 import { CardData } from '../../../src/game/ContentTypes'
 import { worldQuery, addAction } from '../../content-utils'
-import {
-    ENVIRONMENT,
-    MONEY,
-    VARS,
-    PEOPLE,
-    SECURITY,
-    POPULARITY,
-} from './common'
+import { ENVIRONMENT, MONEY, PEOPLE, SECURITY, POPULARITY } from './common'
+
+export const VARS = {
+    BROWN_COAL_PLANT: 'brown-coal-plant',
+}
 
 export const otherCards: CardData[] = [
     {

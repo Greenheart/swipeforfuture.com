@@ -15,6 +15,7 @@ import { catastrophicCards } from './cat'
 import { enviraCards } from './envira'
 import { infranCards } from './infran'
 import { otherCards } from './cards'
+import { mariaEventCards } from './maria'
 
 export const builder: ScenarioBuilder = {
     run() {
@@ -28,7 +29,9 @@ export const builder: ScenarioBuilder = {
                 ...otherCards,
             ],
             events: [],
-            eventCards: {},
+            eventCards: {
+                ...mariaEventCards,
+            },
             defaultState: {
                 state: {
                     [ENVIRONMENT]: 40,

@@ -13,8 +13,4 @@ export const SECURITY = STATS.security.id
 export const MONEY = STATS.money.id
 export const POPULARITY = STATS.popularity.id
 
-export const VARS = {
-    BROWN_COAL_PLANT: 'brown-coal-plant',
-}
-
 export const statIds = Object.values(STATS).map((stat) => stat.id)
