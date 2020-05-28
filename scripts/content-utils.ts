@@ -4,6 +4,11 @@
 
 import { CardData, CardActionData } from '../src/game/ContentTypes'
 
+export interface Scenario {}
+export interface ScenarioBuilder {
+    run: () => Scenario
+}
+
 /**
  * Create a card template to be use to construct additional cards
  * Templates are used to create partial cards
