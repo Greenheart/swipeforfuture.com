@@ -7,10 +7,12 @@ import {
     addAction,
     setAction,
     eventCardAction,
+    event,
+    worldQuery,
 } from '../../content-utils'
 import { POPULARITY, MONEY, ENVIRONMENT } from './common'
 
-const FLAGS = {
+export const FLAGS = {
     NEEDS_INIT: propRef('needs-init'),
 }
 
@@ -22,6 +24,11 @@ export const mariaTemplate = createCardTemplate({
 
 const welcomeLoop = cardRef('welcome-loop')
 const welcomeLunch = cardRef('welcome-lunch')
+
+export const mariaEvents = [
+    event(welcomeLoop, [worldQuery({}, { [FLAGS.NEEDS_INIT]: true })]),
+]
+
 export const mariaEventCards = {
     welcome: createEventCardFromTemplate(mariaTemplate, {
         title: 'Welcome!',
