@@ -17,6 +17,8 @@ import {
     CardActionData,
     WorldQuery,
     EventCardActionData,
+    WorldEvent,
+    EventCardId,
 } from '../src/game/ContentTypes'
 
 /**
@@ -215,6 +217,28 @@ export function eventCardAction(
     return {
         ...action,
         nextEventCardId: eventCardId,
+    }
+}
+
+/**
+ * Create a WorldEvent
+ *
+ * WorldEvents start with a specified card and then offer full control to show specific EventCards in a specific order.
+ * This makes WorldEvents great for story where you as a scenario creator want more control.
+ *
+ * @param initialEventCardId Used to find the EventCard to start the event with
+ * @param isAvailableWhen An array of WorldQueries that should match when this event should trigger
+ * @param probability When the WorldQueries match, this probability defines how likely this event will trigger.
+ */
+export function event(
+    initialEventCardId: EventCardId,
+    isAvailableWhen: WorldQuery[],
+    probability = 1,
+): WorldEvent {
+    return {
+        isAvailableWhen,
+        initialEventCardId,
+        probability,
     }
 }
 
