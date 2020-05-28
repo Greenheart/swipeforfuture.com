@@ -2,6 +2,13 @@
 // GOAL: export JSON
 // GOAL: Save game world scenario to specific folder
 
+/*
+    IDEA: User stories
+
+    As a card developer I would like to:
+    - Create convenience function for creating a card that only should trigger once (using a unique flag)
+*/
+
 import {
     CardData,
     EventCard,
@@ -12,10 +19,16 @@ import {
     EventCardActionData,
 } from '../src/game/ContentTypes'
 
+/**
+ * This type defines the shape of Scenarios created with this Content API
+ */
 export type Scenario = {
     id: string
 } & GameWorld
 
+/**
+ * This interface defines how Scenarios are executed and built
+ */
 export interface ScenarioBuilder {
     run: () => Scenario
 }
@@ -98,16 +111,11 @@ export function createCardFromTemplate(
     }
 }
 
-/*
-    IDEA: User stories
-
-    As a card developer I would like to:
-    - Use card templates in order to reduce work duplication
-    - Use worldquery templates
-    - Use action templates
-    - Create convenience function for creating a card that only should trigger once (using a unique flag)
-*/
-
+/**
+ * Get the unsplash image URL for a given id
+ *
+ * @param id The unsplash image id
+ */
 export function unsplashImage(id: string): string {
     return `https://images.unsplash.com/photo-${id}?fit=crop&w=800&q=60`
 }
@@ -124,6 +132,14 @@ function slugify(text: string): string {
         .replace(/-+$/, '') // Trim - from end of text
 }
 
+/**
+ * Create a WorldQuery.
+ *
+ * WorldQueries are used to define when cards should be available, or when events should trigger.
+ *
+ * @param state A set of WorldStateRanges that need to exist when this query should match
+ * @param flags A set of flags that need to exist when this query should match
+ */
 export function worldQuery(
     state: WorldQuery['state'] = {},
     flags: WorldQuery['flags'] = {},
@@ -134,10 +150,41 @@ export function worldQuery(
     }
 }
 
+/**
+ * Easily create an action with the set modifier
+ *
+ * Actions are used to modify the game state and flags
+ *
+ * @param state The state to modify
+ * @param flags The flags to modify
+ */
 export const setAction = action('set')
+
+/**
+ * Easily create an action with the add modifier
+ *
+ * Actions are used to modify the game state and flags
+ *
+ * @param state The state to modify
+ * @param flags The flags to modify
+ */
 export const addAction = action('add')
+
+/**
+ * Easily create an action with the replace modifier
+ *
+ * Actions are used to modify the game state and flags
+ *
+ * @param state The state to modify
+ * @param flags The flags to modify
+ */
 export const replaceAction = action('replace')
 
+/**
+ * Create an action factory
+ *
+ * @param type The modifier type to use
+ */
 export function action(
     type: CardActionData['modifier']['type'],
 ): (
@@ -200,6 +247,13 @@ function createRefFactory(type: string) {
     }
 }
 
+/**
+ * Create a reusable StatDefinition. This is useful to acoid hard coded strings.
+ *
+ * @param name Display name to show represent the stat in UI and text
+ * @param icon Icon code to use. Represents an icon component name from `react-icons`
+ * @param iconSize A CSS size unit to change icon size
+ */
 export function stat(
     name: string,
     icon: string,
