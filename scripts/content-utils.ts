@@ -7,6 +7,7 @@ import {
     GameWorld,
     StatDefinition,
     CardActionData,
+    WorldQuery,
 } from '../src/game/ContentTypes'
 
 export type Scenario = {
@@ -84,6 +85,16 @@ function slugify(text) {
         .replace(/\-\-+/g, '-') // Replace multiple - with single -
         .replace(/^-+/, '') // Trim - from start of text
         .replace(/-+$/, '') // Trim - from end of text
+}
+
+export function worldQuery(
+    state: WorldQuery['state'] = {},
+    flags: WorldQuery['flags'] = {},
+): WorldQuery {
+    return {
+        state,
+        flags,
+    }
 }
 
 export const setAction = action('set')
