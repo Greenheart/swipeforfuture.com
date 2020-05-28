@@ -8,11 +8,18 @@ import { ScenarioBuilder } from './content-utils'
 const id = process.argv.length >= 3 ? process.argv[2] : 'default'
 
 async function buildScenario(id: string) {
-    const builder: ScenarioBuilder = await import(`./scenarios/${id}.ts`)
-    const scenario = builder.run()
+    try {
+        const builder: ScenarioBuilder = (
+            await import(`./scenarios/${id}/index.ts`)
+        ).builder
 
-    console.log(scenario)
-    console.log(`"${id}" scenario was built!`)
+        const scenario = builder.run()
+
+        console.log(scenario)
+        console.log(`"${id}" scenario was built!`)
+    } catch (e) {
+        console.error(`Error: Failed to build scenario ${id}`, e)
+    }
 }
 
 buildScenario(id)

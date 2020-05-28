@@ -1,7 +1,7 @@
 // GOAL: Recreate the default game world from the JSON data folder, using content-utils
 // With this goal, we will know what content-utils we need to develop to create a good developer experience
 
-import { CardData } from '../../src/game/ContentTypes'
+import { CardData } from '../../../src/game/ContentTypes'
 import {
     createCardTemplate,
     createCardFromTemplate,
@@ -11,7 +11,7 @@ import {
     ScenarioBuilder,
     Scenario,
     worldQuery,
-} from '../content-utils'
+} from '../../content-utils'
 
 const STATS = {
     environment: stat('Environment', 'GiWheat', '70%'),
@@ -68,11 +68,11 @@ const catastrophicCards = statIds.map<CardData>((stat) => {
     return createCardFromTemplate(cardTemplates.cat, partial)
 })
 
-const enviraCards = []
+const enviraCards: CardData[] = []
 
-const infranCards = []
+const infranCards: CardData[] = []
 
-const otherCards = [
+const otherCards: CardData[] = [
     {
         type: 'card',
         image:
@@ -110,7 +110,7 @@ const otherCards = [
     },
 ]
 
-const builder: ScenarioBuilder = {
+export const builder: ScenarioBuilder = {
     run() {
         const scenario: Scenario = {
             id: 'default',
@@ -132,5 +132,3 @@ const builder: ScenarioBuilder = {
         return scenario
     },
 }
-
-export default builder
