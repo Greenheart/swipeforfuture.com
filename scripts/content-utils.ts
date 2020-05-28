@@ -2,9 +2,12 @@
 // GOAL: export JSON
 // GOAL: Save game world scenario to specific folder
 
-import { CardData, CardActionData } from '../src/game/ContentTypes'
+import { CardData, GameWorld, StatDefinition } from '../src/game/ContentTypes'
 
-export interface Scenario {}
+export type Scenario = {
+    id: string
+} & GameWorld
+
 export interface ScenarioBuilder {
     run: () => Scenario
 }
@@ -63,4 +66,29 @@ export function createCardFromTemplate(
 
 export function unsplashImage(id: string): string {
     return `https://images.unsplash.com/photo-${id}?fit=crop&w=800&q=60`
+}
+
+// Credit: https://gist.github.com/mathewbyrne/1280286
+function slugify(text) {
+    return text
+        .toString()
+        .toLowerCase()
+        .replace(/\s+/g, '-') // Replace spaces with -
+        .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+        .replace(/\-\-+/g, '-') // Replace multiple - with single -
+        .replace(/^-+/, '') // Trim - from start of text
+        .replace(/-+$/, '') // Trim - from end of text
+}
+
+export function stat(
+    name: string,
+    icon: string,
+    iconSize?: string,
+): StatDefinition {
+    return {
+        id: slugify(name),
+        name,
+        icon,
+        iconSize,
+    }
 }

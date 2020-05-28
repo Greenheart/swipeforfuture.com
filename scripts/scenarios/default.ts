@@ -6,7 +6,23 @@ import {
     createCardTemplate,
     createCardFromTemplate,
     unsplashImage,
+    stat,
+    ScenarioBuilder,
+    Scenario,
 } from '../content-utils'
+
+const STATS = {
+    environment: stat('Environment', 'GiWheat', '70%'),
+    people: stat('People', 'IoIosPeople'),
+    security: stat('Security', 'GiAk47'),
+    money: stat('Money', 'GiMoneyStack'),
+    popularity: stat('Popularity', 'FiSmile', '70%'),
+}
+const ENVIRONMENT = STATS.environment.id
+const PEOPLE = STATS.people.id
+const SECURITY = STATS.security.id
+const MONEY = STATS.money.id
+const POPULARITY = STATS.popularity.id
 
 const cardTemplates: { [id: string]: CardData } = {
     infran: createCardTemplate({
@@ -26,9 +42,8 @@ const cardTemplates: { [id: string]: CardData } = {
     }),
 }
 
-const stats = ['environment', 'people', 'security', 'money', 'popularity']
-
-const catastrophicCards = stats.map<CardData>((stat) => {
+const statIds = Object.values(STATS).map((stat) => stat.id)
+const catastrophicCards = statIds.map<CardData>((stat) => {
     const partial: Partial<CardData> = {
         title: `Look at me! I'm ${stat.toUpperCase()} Cat`,
         location: '',
@@ -65,6 +80,27 @@ const catastrophicCards = stats.map<CardData>((stat) => {
     return createCardFromTemplate(cardTemplates.cat, partial)
 })
 
-export function run() {
-    return catastrophicCards
+const builder: ScenarioBuilder = {
+    run() {
+        const scenario: Scenario = {
+            id: 'default',
+            stats: Object.values(STATS),
+            cards: [...catastrophicCards],
+            events: [],
+            eventCards: {},
+            defaultState: {
+                state: {
+                    [ENVIRONMENT]: 40,
+                    [PEOPLE]: 60,
+                    [SECURITY]: 75,
+                    [MONEY]: 90,
+                    [POPULARITY]: 53,
+                },
+                flags: {},
+            },
+        }
+        return scenario
+    },
 }
+
+export default builder
