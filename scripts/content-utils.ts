@@ -118,6 +118,19 @@ export function action(
     }
 }
 
+/**
+ * Generate a unique cardRef to identify cards
+ *
+ * @param debugHint A string to identify the cardRef and help debugging
+ */
+export const cardRef: (debugHint: string) => string = (() => {
+    let ticker = 0
+    return (debugHint: string) => {
+        const prefix = slugify(debugHint)
+        return prefix + ':' + ticker++
+    }
+})()
+
 export function stat(
     name: string,
     icon: string,
