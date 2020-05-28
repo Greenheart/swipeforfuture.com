@@ -15,8 +15,10 @@ import { catastrophicCards } from './cat'
 import { enviraCards } from './envira'
 import { infranCards } from './infran'
 import { otherCards } from './cards'
+import { endGameEventCards, endGameEvents } from './endgame'
 import { mariaEventCards, mariaEvents, FLAGS } from './maria'
 
+// IDEA: Use [].flat() instead of repeated `...` to reduce typing when adding more content
 export const builder: ScenarioBuilder = {
     run() {
         const scenario: Scenario = {
@@ -28,9 +30,10 @@ export const builder: ScenarioBuilder = {
                 ...infranCards,
                 ...otherCards,
             ],
-            events: [...mariaEvents],
+            events: [...mariaEvents, ...endGameEvents],
             eventCards: {
                 ...mariaEventCards,
+                ...endGameEventCards,
             },
             defaultState: {
                 state: {
