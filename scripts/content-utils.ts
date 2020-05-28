@@ -2,7 +2,12 @@
 // GOAL: export JSON
 // GOAL: Save game world scenario to specific folder
 
-import { CardData, GameWorld, StatDefinition } from '../src/game/ContentTypes'
+import {
+    CardData,
+    GameWorld,
+    StatDefinition,
+    CardActionData,
+} from '../src/game/ContentTypes'
 
 export type Scenario = {
     id: string
@@ -56,12 +61,13 @@ export function createCardFromTemplate(
 }
 
 /*
-    User stories
+    IDEA: User stories
 
     As a card developer I would like to:
     - Use card templates in order to reduce work duplication
     - Use worldquery templates
     - Use action templates
+    - Create convenience function for creating a card that only should trigger once (using a unique flag)
 */
 
 export function unsplashImage(id: string): string {
@@ -78,6 +84,27 @@ function slugify(text) {
         .replace(/\-\-+/g, '-') // Replace multiple - with single -
         .replace(/^-+/, '') // Trim - from start of text
         .replace(/-+$/, '') // Trim - from end of text
+}
+
+export const setAction = action('set')
+export const addAction = action('add')
+export const replaceAction = action('replace')
+
+export function action(
+    type: CardActionData['modifier']['type'],
+): (
+    state?: CardActionData['modifier']['state'],
+    flags?: CardActionData['modifier']['flags'],
+) => CardActionData {
+    return (state = {}, flags: {}) => {
+        return {
+            modifier: {
+                type,
+                state,
+                flags,
+            },
+        }
+    }
 }
 
 export function stat(
