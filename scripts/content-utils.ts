@@ -9,6 +9,7 @@ import {
     StatDefinition,
     CardActionData,
     WorldQuery,
+    EventCardActionData,
 } from '../src/game/ContentTypes'
 
 export type Scenario = {
@@ -151,6 +152,22 @@ export function action(
                 flags,
             },
         }
+    }
+}
+
+/**
+ * Create an EventCard action to modify the state & flags and possibly point to another EventCard.
+ *
+ * @param action The action to trigger upon swipe.
+ * @param eventCardId The next EventCard to trigger, or null to stop the event.
+ */
+export function eventCardAction(
+    action: CardActionData,
+    eventCardId: EventCardActionData['nextEventCardId'] = null,
+): EventCardActionData {
+    return {
+        ...action,
+        nextEventCardId: eventCardId,
     }
 }
 
