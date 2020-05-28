@@ -6,6 +6,7 @@ import {
     propRef,
     addAction,
     setAction,
+    eventCardAction,
 } from '../../content-utils'
 import { POPULARITY, MONEY, ENVIRONMENT } from './common'
 
@@ -27,14 +28,8 @@ export const mariaEventCards = {
         text:
             'Hi! My name is Maria. You must be the new president. Do you want to take a lunch to get up to speed with your new duties?',
         actions: {
-            left: {
-                ...addAction(),
-                nextEventCardId: welcomeLoop,
-            },
-            right: {
-                ...addAction(),
-                nextEventCardId: welcomeLunch,
-            },
+            left: eventCardAction(addAction(), welcomeLoop),
+            right: eventCardAction(addAction(), welcomeLunch),
         },
     }),
     [welcomeLoop]: createEventCardFromTemplate(mariaTemplate, {
@@ -42,14 +37,8 @@ export const mariaEventCards = {
         text:
             'We need to talk! Get your head in the game. Do you want to take a lunch to get up to speed with your new duties?',
         actions: {
-            left: {
-                ...addAction({}),
-                nextEventCardId: welcomeLoop,
-            },
-            right: {
-                ...addAction(),
-                nextEventCardId: welcomeLunch,
-            },
+            left: eventCardAction(addAction(), welcomeLoop),
+            right: eventCardAction(addAction(), welcomeLunch),
         },
     }),
     [welcomeLunch]: createEventCardFromTemplate(mariaTemplate, {
@@ -57,20 +46,20 @@ export const mariaEventCards = {
         text:
             'Really nice lunch! Now your first big decision has come. Should you prioritize the economy (left) or environment (right)?',
         actions: {
-            left: {
-                ...setAction(
+            left: eventCardAction(
+                setAction(
                     { [MONEY]: 70, [POPULARITY]: 52 },
                     { [FLAGS.NEEDS_INIT]: false },
                 ),
-                nextEventCardId: null,
-            },
-            right: {
-                ...setAction(
+                null,
+            ),
+            right: eventCardAction(
+                setAction(
                     { [ENVIRONMENT]: 70, [POPULARITY]: 65 },
                     { [FLAGS.NEEDS_INIT]: false },
                 ),
-                nextEventCardId: null,
-            },
+                null,
+            ),
         },
     }),
 }
