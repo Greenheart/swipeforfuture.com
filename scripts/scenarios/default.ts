@@ -6,6 +6,7 @@ import {
     createCardTemplate,
     createCardFromTemplate,
     unsplashImage,
+    addAction,
     stat,
     ScenarioBuilder,
     Scenario,
@@ -57,24 +58,8 @@ const catastrophicCards = statIds.map<CardData>((stat) => {
             },
         ],
         actions: {
-            left: {
-                modifier: {
-                    type: 'add',
-                    state: {
-                        [stat]: -10,
-                    },
-                    flags: {},
-                },
-            },
-            right: {
-                modifier: {
-                    type: 'add',
-                    state: {
-                        [stat]: 10,
-                    },
-                    flags: {},
-                },
-            },
+            left: addAction({ [stat]: -10 }),
+            right: addAction({ [stat]: 10 }),
         },
     }
     return createCardFromTemplate(cardTemplates.cat, partial)
