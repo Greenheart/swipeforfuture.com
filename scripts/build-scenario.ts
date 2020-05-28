@@ -15,7 +15,7 @@ async function buildScenario(id: string) {
 
         const scenario = builder.run()
 
-        console.log(scenario)
+        console.log(JSON.stringify(scenario, null, 2))
         console.log(`"${id}" scenario was built!`)
     } catch (e) {
         console.error(`Error: Failed to build scenario ${id}`, e)

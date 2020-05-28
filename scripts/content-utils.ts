@@ -4,6 +4,7 @@
 
 import {
     CardData,
+    EventCard,
     GameWorld,
     StatDefinition,
     CardActionData,
@@ -42,6 +43,41 @@ export function createCardTemplate(
             left: { modifier: {} },
             right: { modifier: {} },
         },
+    }
+}
+
+/**
+ * Create an event card based on a template, to avoid repetition
+ *
+ * @param template The card template to extend
+ * @param override Fields to override
+ */
+export function createEventCardFromTemplate(
+    { image, title, text, location, weight }: CardData,
+    override: Partial<EventCard>,
+): EventCard {
+    const eventCard: EventCard = {
+        image,
+        title,
+        text,
+        location,
+        weight,
+        type: 'event',
+        actions: {
+            left: {
+                ...addAction({}),
+                nextEventCardId: null,
+            },
+            right: {
+                ...addAction({}),
+                nextEventCardId: null,
+            },
+        },
+    }
+
+    return {
+        ...eventCard,
+        ...override,
     }
 }
 
@@ -123,13 +159,29 @@ export function action(
  *
  * @param debugHint A string to identify the cardRef and help debugging
  */
-export const cardRef: (debugHint: string) => string = (() => {
+export const cardRef: (debugHint: string) => string = createRefFactory('card')
+
+/**
+ * Generate a unique propRef to identify properties
+ *
+ * @param debugHint A string to identify the propRef and help debugging
+ */
+export const propRef: (debugHint: string) => string = createRefFactory('prop')
+
+/**
+ * Generate a reference factory in order to use separate reference contexts
+ *
+ * @param type A string to identify the type of reference to create
+ */
+function createRefFactory(type: string) {
+    const typeSlug = slugify(type)
     let ticker = 0
+
     return (debugHint: string) => {
         const prefix = slugify(debugHint)
-        return prefix + ':' + ticker++
+        return `${prefix}:${typeSlug}:${ticker++}`
     }
-})()
+}
 
 export function stat(
     name: string,
