@@ -76,7 +76,7 @@ export function unsplashImage(id: string): string {
 }
 
 // Credit: https://gist.github.com/mathewbyrne/1280286
-function slugify(text) {
+function slugify(text: string): string {
     return text
         .toString()
         .toLowerCase()
@@ -107,7 +107,7 @@ export function action(
     state?: CardActionData['modifier']['state'],
     flags?: CardActionData['modifier']['flags'],
 ) => CardActionData {
-    return (state = {}, flags: {}) => {
+    return (state = {}, flags = {}) => {
         return {
             modifier: {
                 type,
