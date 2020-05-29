@@ -122,6 +122,15 @@ export function unsplashImage(id: string): string {
     return `https://images.unsplash.com/photo-${id}?fit=crop&w=800&q=60`
 }
 
+/**
+ * Get the Pexels image URL for a given id
+ *
+ * @param id The pexels image id
+ */
+export function pexelsImage(id: string): string {
+    return `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300`
+}
+
 // Credit: https://gist.github.com/mathewbyrne/1280286
 function slugify(text: string): string {
     return text

@@ -8,4 +8,5 @@ import { propRef } from '../../content-utils'
  */
 export const VARS = {
     BROWN_COAL_PLANTS: propRef('brown-coal-plant'),
+    SOLAR_INVESTMENTS: propRef('solar-investments'),
 }
