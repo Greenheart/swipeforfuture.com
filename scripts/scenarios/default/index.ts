@@ -13,7 +13,7 @@ import {
 
 import { catastrophicCards } from './cat'
 import { enviraCards, enviraEventCards } from './envira'
-import { infranCards } from './infran'
+import { infranCards, infranEventCards, infranEvents } from './infran'
 import { otherCards } from './cards'
 import { endGameEventCards, endGameEvents } from './endgame'
 import { mariaEventCards, mariaEvents, mariaFlags } from './maria'
@@ -30,11 +30,17 @@ export const builder: ScenarioBuilder = {
                 ...infranCards,
                 ...otherCards,
             ],
-            events: [...mariaEvents, ...endGameEvents],
+            events: [
+                ...mariaEvents,
+                ...endGameEvents,
+                ...infranEvents,
+                ...mariaEvents,
+            ],
             eventCards: {
                 ...mariaEventCards,
                 ...endGameEventCards,
                 ...enviraEventCards,
+                ...infranEventCards,
             },
             defaultState: {
                 state: {

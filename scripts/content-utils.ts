@@ -220,6 +220,10 @@ export function eventCardAction(
     }
 }
 
+// NOTE: The event() helper was added mainly for documentation purposes, since the intellisense will give plenty of useful information through the docstring.
+// However, it might also just be easier and more straightforward to use the WorldEvent type as guidance directly.
+// Consider removing this.
+
 /**
  * Create a WorldEvent
  *
