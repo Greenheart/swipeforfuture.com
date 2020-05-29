@@ -12,11 +12,11 @@ import {
 } from './common'
 
 import { catastrophicCards } from './cat'
-import { enviraCards } from './envira'
+import { enviraCards, enviraEventCards } from './envira'
 import { infranCards } from './infran'
 import { otherCards } from './cards'
 import { endGameEventCards, endGameEvents } from './endgame'
-import { mariaEventCards, mariaEvents, FLAGS } from './maria'
+import { mariaEventCards, mariaEvents, mariaFlags } from './maria'
 
 // IDEA: Use [].flat() instead of repeated `...` to reduce typing when adding more content
 export const builder: ScenarioBuilder = {
@@ -34,6 +34,7 @@ export const builder: ScenarioBuilder = {
             eventCards: {
                 ...mariaEventCards,
                 ...endGameEventCards,
+                ...enviraEventCards,
             },
             defaultState: {
                 state: {
@@ -43,7 +44,7 @@ export const builder: ScenarioBuilder = {
                     [MONEY]: 90,
                     [POPULARITY]: 53,
                 },
-                flags: { [FLAGS.NEEDS_INIT]: true },
+                flags: { [mariaFlags.NEEDS_INIT]: true },
             },
         }
         return scenario

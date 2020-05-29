@@ -12,7 +12,7 @@ import {
 } from '../../content-utils'
 import { POPULARITY, MONEY, ENVIRONMENT } from './common'
 
-export const FLAGS = {
+export const mariaFlags = {
     NEEDS_INIT: propRef('needs-init'),
 }
 
@@ -26,7 +26,7 @@ const welcomeLoop = cardRef('welcome-loop')
 const welcomeLunch = cardRef('welcome-lunch')
 
 export const mariaEvents = [
-    event(welcomeLoop, [worldQuery({}, { [FLAGS.NEEDS_INIT]: true })]),
+    event(welcomeLoop, [worldQuery({}, { [mariaFlags.NEEDS_INIT]: true })]),
 ]
 
 export const mariaEventCards = {
@@ -56,14 +56,14 @@ export const mariaEventCards = {
             left: eventCardAction(
                 setAction(
                     { [MONEY]: 70, [POPULARITY]: 52 },
-                    { [FLAGS.NEEDS_INIT]: false },
+                    { [mariaFlags.NEEDS_INIT]: false },
                 ),
                 null,
             ),
             right: eventCardAction(
                 setAction(
                     { [ENVIRONMENT]: 70, [POPULARITY]: 65 },
-                    { [FLAGS.NEEDS_INIT]: false },
+                    { [mariaFlags.NEEDS_INIT]: false },
                 ),
                 null,
             ),
