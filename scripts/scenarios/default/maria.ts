@@ -22,15 +22,16 @@ export const mariaTemplate = createCardTemplate({
     weight: 1,
 })
 
+const welcome = cardRef('welcome')
 const welcomeLoop = cardRef('welcome-loop')
 const welcomeLunch = cardRef('welcome-lunch')
 
 export const mariaEvents = [
-    event(welcomeLoop, [worldQuery({}, { [mariaFlags.NEEDS_INIT]: true })]),
+    event(welcome, [worldQuery({}, { [mariaFlags.NEEDS_INIT]: true })]),
 ]
 
 export const mariaEventCards = {
-    welcome: createEventCardFromTemplate(mariaTemplate, {
+    [welcome]: createEventCardFromTemplate(mariaTemplate, {
         title: 'Welcome!',
         text:
             'Hi! My name is Maria. You must be the new president. Do you want to take a lunch to get up to speed with your new duties?',
