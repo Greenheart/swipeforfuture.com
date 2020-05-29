@@ -6,7 +6,7 @@ import {
     replaceAction,
     eventCardAction,
 } from '../../content-utils'
-import { ENVIRONMENT, PEOPLE, MONEY, POPULARITY, SECURITY } from './common'
+import { ENVIRONMENT, PEOPLE, MONEY, POPULARITY, SECURITY } from './stats'
 import { EventCards } from '../../../src/game/ContentTypes'
 
 const endGame = cardRef('end-game')

@@ -10,11 +10,8 @@ import {
     event,
     worldQuery,
 } from '../../content-utils'
-import { POPULARITY, MONEY, ENVIRONMENT } from './common'
-
-export const mariaFlags = {
-    NEEDS_INIT: propRef('needs-init'),
-}
+import { POPULARITY, MONEY, ENVIRONMENT } from './stats'
+import { FLAGS } from './flags'
 
 export const mariaTemplate = createCardTemplate({
     image: unsplashImage('1573497019940-1c28c88b4f3e'),
@@ -27,7 +24,9 @@ const welcomeLoop = cardRef('welcome-loop')
 const welcomeLunch = cardRef('welcome-lunch')
 
 export const mariaEvents = [
-    event(welcome, [worldQuery({}, { [mariaFlags.NEEDS_INIT]: true })]),
+    event(welcome, [
+        worldQuery({}, { [FLAGS.LUNCH_MEETING_COMPLETED]: false }),
+    ]),
 ]
 
 export const mariaEventCards = {
@@ -57,13 +56,13 @@ export const mariaEventCards = {
             left: eventCardAction(
                 setAction(
                     { [MONEY]: 70, [POPULARITY]: 52 },
-                    { [mariaFlags.NEEDS_INIT]: false },
+                    { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
                 ),
             ),
             right: eventCardAction(
                 setAction(
                     { [ENVIRONMENT]: 70, [POPULARITY]: 65 },
-                    { [mariaFlags.NEEDS_INIT]: false },
+                    { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
                 ),
             ),
         },

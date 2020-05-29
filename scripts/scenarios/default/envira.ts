@@ -14,8 +14,8 @@ import {
     EventCards,
     WorldEvent,
 } from '../../../src/game/ContentTypes'
-import { ENVIRONMENT } from './common'
-import { mariaFlags } from './maria'
+import { ENVIRONMENT } from './stats'
+import { FLAGS } from './flags'
 
 export const enviraTemplate = createCardTemplate({
     image: unsplashImage('1546541612-82d19b258cd5'),
@@ -39,7 +39,7 @@ export const enviraEvents: WorldEvent[] = [
                 {},
                 {
                     [enviraFlags.ENVIRA_INIT]: false,
-                    [mariaFlags.NEEDS_INIT]: false,
+                    [FLAGS.LUNCH_MEETING_COMPLETED]: true,
                 },
             ),
         ],
