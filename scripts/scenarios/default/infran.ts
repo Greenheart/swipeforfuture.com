@@ -3,7 +3,6 @@ import {
     unsplashImage,
     cardRef,
     worldQuery,
-    propRef,
     createEventCardFromTemplate,
     eventCardAction,
     addAction,
@@ -22,10 +21,6 @@ export const infranTemplate = createCardTemplate({
     weight: 1000,
 })
 
-const infranFlags = {
-    INFRAN_INIT: propRef('infran-init'),
-}
-
 const infranIntro = cardRef('infran-intro')
 
 export const infranCards: CardData[] = []
@@ -38,7 +33,7 @@ export const infranEvents: WorldEvent[] = [
                 {},
                 {
                     [FLAGS.LUNCH_MEETING_COMPLETED]: true,
-                    [infranFlags.INFRAN_INIT]: false,
+                    [FLAGS.INFRAN_INIT]: false,
                 },
             ),
         ],
@@ -54,13 +49,13 @@ export const infranEventCards: EventCards = {
             left: eventCardAction(
                 addAction(
                     { [MONEY]: 10, [POPULARITY]: -10 },
-                    { [infranFlags.INFRAN_INIT]: true },
+                    { [FLAGS.INFRAN_INIT]: true },
                 ),
             ),
             right: eventCardAction(
                 addAction(
                     { [MONEY]: -10, [POPULARITY]: 10 },
-                    { [infranFlags.INFRAN_INIT]: true },
+                    { [FLAGS.INFRAN_INIT]: true },
                 ),
             ),
         },
