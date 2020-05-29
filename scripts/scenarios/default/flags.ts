@@ -7,7 +7,7 @@ import { propRef } from '../../content-utils'
  * Only add to these global flags when using multiple files.
  */
 export const FLAGS = {
-    LUNCH_MEETING_COMPLETED: propRef('needs-init'),
+    LUNCH_MEETING_COMPLETED: propRef('lunch-meeting-completed'),
     ENVIRA_INIT: propRef('envira-init'),
     INFRAN_INIT: propRef('infran-init'),
 }
