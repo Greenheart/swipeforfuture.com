@@ -42,6 +42,8 @@ export const builder: ScenarioBuilder = {
                 ...enviraEventCards,
                 ...infranEventCards,
             },
+            // TODO: add full default state
+            // Also find good way to re-use variables and flags across different parts of the scenario.
             defaultState: {
                 state: {
                     [ENVIRONMENT]: 40,
