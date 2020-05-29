@@ -2,7 +2,6 @@ import {
     createCardTemplate,
     unsplashImage,
     cardRef,
-    propRef,
     addAction,
     eventCardAction,
     createEventCardFromTemplate,

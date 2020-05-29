@@ -54,7 +54,11 @@ export const builder: ScenarioBuilder = {
                     [POPULARITY]: 53,
                     [VARS.BROWN_COAL_PLANTS]: 0,
                 },
-                flags: { [FLAGS.LUNCH_MEETING_COMPLETED]: false },
+                flags: {
+                    [FLAGS.LUNCH_MEETING_COMPLETED]: false,
+                    [FLAGS.ENVIRA_INIT]: false,
+                    [FLAGS.INFRAN_INIT]: false,
+                },
             },
         }
         return scenario
