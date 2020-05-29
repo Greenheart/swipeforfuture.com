@@ -14,7 +14,7 @@ import {
     EventCards,
 } from '../../../src/game/ContentTypes'
 import { FLAGS } from './flags'
-import { POPULARITY, MONEY, ENVIRONMENT } from './stats'
+import { POPULARITY, MONEY, ENVIRONMENT, PEOPLE } from './stats'
 import { VARS } from './vars'
 
 export const infranTemplate = createCardTemplate({
@@ -46,6 +46,39 @@ export const infranCards: CardData[] = [
         actions: {
             left: addAction({ [MONEY]: -5, [VARS.SOLAR_INVESTMENTS]: 100 }),
             right: addAction({ [MONEY]: -10, [VARS.SOLAR_INVESTMENTS]: 1 }),
+        },
+    }),
+    createCardFromTemplate(infranTemplate, {
+        title: 'Road expansion',
+        text:
+            'The people needs roads to support future market growth. Let me take charge and make this happen.',
+        isAvailableWhen: [
+            worldQuery(
+                { [PEOPLE]: [50, 100], [VARS.ROADS_SUGGESTED]: [0, 0] },
+                { [FLAGS.INFRAN_INIT]: true },
+            ),
+            worldQuery(
+                { [PEOPLE]: [70, 100], [VARS.ROADS_SUGGESTED]: [1, 1] },
+                { [FLAGS.INFRAN_INIT]: true },
+            ),
+            worldQuery(
+                { [PEOPLE]: [90, 100], [VARS.ROADS_SUGGESTED]: [2, 2] },
+                { [FLAGS.INFRAN_INIT]: true },
+            ),
+        ],
+        actions: {
+            left: addAction({
+                [POPULARITY]: -10,
+                [VARS.ROADS_SUGGESTED]: 1,
+                [VARS.ROAD_EXPANSION]: 1,
+            }),
+            right: addAction({
+                [ENVIRONMENT]: -10,
+                [MONEY]: -10,
+                [PEOPLE]: 20,
+                [VARS.ROADS_SUGGESTED]: 1,
+                [VARS.ROAD_EXPANSION]: 1,
+            }),
         },
     }),
 ]
