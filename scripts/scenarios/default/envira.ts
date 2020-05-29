@@ -6,7 +6,6 @@ import {
     addAction,
     eventCardAction,
     createEventCardFromTemplate,
-    event,
     worldQuery,
 } from '../../content-utils'
 import {
@@ -32,9 +31,9 @@ const enviraIntro = cardRef('envira-intro')
 export const enviraCards: CardData[] = []
 
 export const enviraEvents: WorldEvent[] = [
-    event(
-        enviraIntro,
-        [
+    {
+        initialEventCardId: enviraIntro,
+        isAvailableWhen: [
             worldQuery(
                 {},
                 {
@@ -43,8 +42,8 @@ export const enviraEvents: WorldEvent[] = [
                 },
             ),
         ],
-        0.5,
-    ),
+        probability: 0.5,
+    },
 ]
 
 export const enviraEventCards: EventCards = {

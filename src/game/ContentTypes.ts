@@ -59,10 +59,18 @@ export interface WorldQuery {
     }
 }
 
+/**
+ * WorldEvents start with a specific card and then offer full control to show EventCards in any order you like.
+ * This makes WorldEvents great for story where you as a scenario creator want more control.
+ *
+ * @param initialEventCardId Used to find the EventCard to start the event with
+ * @param isAvailableWhen An array of WorldQueries. If any of them match, the event is available for selection.
+ * @param probability When any WorldQuery match and makes this event available, this probability defines how likely this event will trigger.
+ */
 export interface WorldEvent {
-    probability: number
-    isAvailableWhen: WorldQuery[]
     initialEventCardId: EventCardId
+    isAvailableWhen: WorldQuery[]
+    probability: number
 }
 
 export type EventCards = {
