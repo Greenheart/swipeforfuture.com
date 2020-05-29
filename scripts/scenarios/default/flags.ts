@@ -8,4 +8,5 @@ import { propRef } from '../../content-utils'
  */
 export const FLAGS = {
     LUNCH_MEETING_COMPLETED: propRef('needs-init'),
+    ENVIRA_INIT: propRef('envira-init'),
 }
