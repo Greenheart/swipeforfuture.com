@@ -5,7 +5,7 @@ import {
     unsplashImage,
     createCardTemplate,
 } from '../../content-utils'
-import { statIds } from './common'
+import { statIds } from './stats'
 import { CardData } from '../../../src/game/ContentTypes'
 
 export const catTemplate = createCardTemplate({

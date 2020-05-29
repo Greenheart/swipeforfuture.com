@@ -1,10 +1,7 @@
 import { CardData } from '../../../src/game/ContentTypes'
 import { worldQuery, addAction } from '../../content-utils'
-import { ENVIRONMENT, MONEY, PEOPLE, SECURITY, POPULARITY } from './common'
-
-export const VARS = {
-    BROWN_COAL_PLANT: 'brown-coal-plant',
-}
+import { ENVIRONMENT, MONEY, PEOPLE, SECURITY, POPULARITY } from './stats'
+import { VARS } from './vars'
 
 export const otherCards: CardData[] = [
     {
@@ -20,7 +17,7 @@ export const otherCards: CardData[] = [
             worldQuery({
                 [ENVIRONMENT]: [21, 100],
                 [MONEY]: [15, 100],
-                [VARS.BROWN_COAL_PLANT]: [0, 0],
+                [VARS.BROWN_COAL_PLANTS]: [0, 0],
             }),
         ],
         actions: {
@@ -30,7 +27,7 @@ export const otherCards: CardData[] = [
                 [SECURITY]: 15,
                 [MONEY]: -5,
                 [POPULARITY]: 25,
-                [VARS.BROWN_COAL_PLANT]: 0,
+                [VARS.BROWN_COAL_PLANTS]: 0,
             }),
             right: addAction({
                 [ENVIRONMENT]: -20,
@@ -38,7 +35,7 @@ export const otherCards: CardData[] = [
                 [SECURITY]: -10,
                 [MONEY]: 40,
                 [POPULARITY]: -20,
-                [VARS.BROWN_COAL_PLANT]: 1,
+                [VARS.BROWN_COAL_PLANTS]: 1,
             }),
         },
     },

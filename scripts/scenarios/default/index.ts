@@ -9,16 +9,18 @@ import {
     MONEY,
     POPULARITY,
     STATS,
-} from './common'
+} from './stats'
+
+import { VARS } from './vars'
+import { FLAGS } from './flags'
 
 import { catastrophicCards } from './cat'
 import { enviraCards, enviraEventCards } from './envira'
 import { infranCards, infranEventCards, infranEvents } from './infran'
 import { otherCards } from './cards'
 import { endGameEventCards, endGameEvents } from './endgame'
-import { mariaEventCards, mariaEvents, mariaFlags } from './maria'
+import { mariaEventCards, mariaEvents } from './maria'
 
-// IDEA: Use [].flat() instead of repeated `...` to reduce typing when adding more content
 export const builder: ScenarioBuilder = {
     run() {
         const scenario: Scenario = {
@@ -43,16 +45,16 @@ export const builder: ScenarioBuilder = {
                 ...infranEventCards,
             },
             // TODO: add full default state
-            // Also find good way to re-use variables and flags across different parts of the scenario.
             defaultState: {
                 state: {
                     [ENVIRONMENT]: 40,
                     [PEOPLE]: 60,
                     [SECURITY]: 75,
-                    [MONEY]: 90,
+                    [MONEY]: 55,
                     [POPULARITY]: 53,
+                    [VARS.BROWN_COAL_PLANTS]: 0,
                 },
-                flags: { [mariaFlags.NEEDS_INIT]: true },
+                flags: { [FLAGS.LUNCH_MEETING_COMPLETED]: false },
             },
         }
         return scenario

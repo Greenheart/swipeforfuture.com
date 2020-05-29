@@ -14,8 +14,8 @@ import {
     WorldEvent,
     EventCards,
 } from '../../../src/game/ContentTypes'
-import { mariaFlags } from './maria'
-import { ENVIRONMENT, POPULARITY, MONEY } from './common'
+import { FLAGS } from './flags'
+import { POPULARITY, MONEY } from './stats'
 
 export const infranTemplate = createCardTemplate({
     image: unsplashImage('1529088746738-c4c0a152fb2c'),
@@ -38,7 +38,7 @@ export const infranEvents: WorldEvent[] = [
             worldQuery(
                 {},
                 {
-                    [mariaFlags.NEEDS_INIT]: false,
+                    [FLAGS.LUNCH_MEETING_COMPLETED]: true,
                     [infranFlags.INFRAN_INIT]: false,
                 },
             ),
