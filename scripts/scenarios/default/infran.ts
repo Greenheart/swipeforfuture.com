@@ -1,7 +1,6 @@
 import {
     createCardTemplate,
     unsplashImage,
-    event,
     cardRef,
     worldQuery,
     propRef,
@@ -32,9 +31,9 @@ const infranIntro = cardRef('infran-intro')
 export const infranCards: CardData[] = []
 
 export const infranEvents: WorldEvent[] = [
-    event(
-        infranIntro,
-        [
+    {
+        initialEventCardId: infranIntro,
+        isAvailableWhen: [
             worldQuery(
                 {},
                 {
@@ -43,8 +42,8 @@ export const infranEvents: WorldEvent[] = [
                 },
             ),
         ],
-        0.5,
-    ),
+        probability: 0.5,
+    },
 ]
 
 export const infranEventCards: EventCards = {

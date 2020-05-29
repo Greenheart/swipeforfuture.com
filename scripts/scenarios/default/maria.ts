@@ -3,15 +3,14 @@ import {
     createEventCardFromTemplate,
     unsplashImage,
     cardRef,
-    propRef,
     addAction,
     setAction,
     eventCardAction,
-    event,
     worldQuery,
 } from '../../content-utils'
 import { POPULARITY, MONEY, ENVIRONMENT } from './stats'
 import { FLAGS } from './flags'
+import { WorldEvent } from '../../../src/game/ContentTypes'
 
 export const mariaTemplate = createCardTemplate({
     image: unsplashImage('1573497019940-1c28c88b4f3e'),
@@ -23,10 +22,14 @@ const welcome = cardRef('welcome')
 const welcomeLoop = cardRef('welcome-loop')
 const welcomeLunch = cardRef('welcome-lunch')
 
-export const mariaEvents = [
-    event(welcome, [
-        worldQuery({}, { [FLAGS.LUNCH_MEETING_COMPLETED]: false }),
-    ]),
+export const mariaEvents: WorldEvent[] = [
+    {
+        initialEventCardId: welcome,
+        isAvailableWhen: [
+            worldQuery({}, { [FLAGS.LUNCH_MEETING_COMPLETED]: false }),
+        ],
+        probability: 1,
+    },
 ]
 
 export const mariaEventCards = {
