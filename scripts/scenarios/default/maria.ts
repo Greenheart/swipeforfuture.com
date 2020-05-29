@@ -59,14 +59,12 @@ export const mariaEventCards = {
                     { [MONEY]: 70, [POPULARITY]: 52 },
                     { [mariaFlags.NEEDS_INIT]: false },
                 ),
-                null,
             ),
             right: eventCardAction(
                 setAction(
                     { [ENVIRONMENT]: 70, [POPULARITY]: 65 },
                     { [mariaFlags.NEEDS_INIT]: false },
                 ),
-                null,
             ),
         },
     }),
