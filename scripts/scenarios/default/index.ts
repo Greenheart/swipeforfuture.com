@@ -1,6 +1,3 @@
-// GOAL: Recreate the default game world from the JSON data folder, using content-utils
-// With this goal, we will know what content-utils we need to develop to create a good developer experience
-
 import { ScenarioBuilder, Scenario } from '../../content-utils'
 import {
     ENVIRONMENT,
@@ -44,7 +41,6 @@ export const builder: ScenarioBuilder = {
                 ...enviraEventCards,
                 ...infranEventCards,
             },
-            // TODO: add full default state
             defaultState: {
                 state: {
                     [ENVIRONMENT]: 40,
