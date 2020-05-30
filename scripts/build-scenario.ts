@@ -3,10 +3,12 @@
 // Usage: `yarn scenario [ID]`
 // ID = name of scenario script OR 'default' if no ID provided
 
-import { ScenarioBuilder, Scenario } from './content-utils'
+import { join } from 'path'
 import { promises } from 'fs'
-import { GameWorld } from '../src/game/ContentTypes'
 const { writeFile, mkdir } = promises
+
+import { ScenarioBuilder, Scenario } from './content-utils'
+import { GameWorld } from '../src/game/ContentTypes'
 
 const id = process.argv.length >= 3 ? process.argv[2] : 'default'
 
@@ -44,14 +46,15 @@ async function exportScenario(id: string, scenario: Scenario) {
         stats: 'stats',
     }
 
+    const outputDir = join(__dirname, 'build', id)
+
     // Create the necessary directories if they are missing
-    const outputDir = `${__dirname}/build/${id}`
     await mkdir(outputDir, { recursive: true })
 
     await Promise.all(
         Object.entries(scenarioParts).map(([part, fileName]) =>
             writeFile(
-                `${outputDir}/${fileName}.json`,
+                join(outputDir, `${fileName}.json`),
                 JSON.stringify(scenario[part as keyof GameWorld], null, 4),
             ),
         ),
