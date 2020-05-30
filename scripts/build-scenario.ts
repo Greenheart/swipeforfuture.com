@@ -46,7 +46,7 @@ async function exportScenario(id: string, scenario: Scenario) {
         stats: 'stats',
     }
 
-    const outputDir = join(__dirname, 'build', id)
+    const outputDir = join(__dirname, '..', 'public', 'data', 'scenarios', id)
 
     // Create the necessary directories if they are missing
     await mkdir(outputDir, { recursive: true })
