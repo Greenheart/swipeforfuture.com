@@ -24,21 +24,6 @@ const Footer = styled.footer`
     align-items: center;
 `
 
-declare global {
-    interface Window {
-        DEV_TOOLS_ACTIVE: Boolean
-        DEV_TOOLS: {
-            availableCards?: CardData[]
-            availableEvents?: WorldEvent[]
-            nextCard?: CardData | EventCard
-        }
-    }
-}
-
-// Enable DEV_TOOLS for local development by default to improve DX
-window.DEV_TOOLS_ACTIVE = window.location.hostname.includes('localhost')
-window.DEV_TOOLS = {}
-
 type GameProps = {
     worldData: GameWorld
 }
@@ -48,6 +33,22 @@ type GameState = {
     card: CardData | EventCard
     rounds: number
 }
+
+declare global {
+    interface Window {
+        DEV_TOOLS_ACTIVE: Boolean
+        DEV_TOOLS: {
+            availableCards?: CardData[]
+            availableEvents?: WorldEvent[]
+            nextCard?: CardData | EventCard
+            game?: GameState
+        }
+    }
+}
+
+// Enable DEV_TOOLS for local development by default to improve DX
+window.DEV_TOOLS_ACTIVE = window.location.hostname.includes('localhost')
+window.DEV_TOOLS = {}
 
 export default class Game extends Component<GameProps, GameState> {
     state = this.getInitialState()
@@ -186,9 +187,14 @@ export default class Game extends Component<GameProps, GameState> {
         }
 
         if (window.DEV_TOOLS_ACTIVE) {
+            window.DEV_TOOLS.game = {
+                world: this.state.world,
+                rounds: this.state.rounds,
+                card: this.state.card,
+            }
+
             window.DEV_TOOLS.availableCards = availableCards
             window.DEV_TOOLS.availableEvents = availableEvents
-            window.DEV_TOOLS.nextCard = nextCard
 
             console.log('DEV TOOLS: ', window.DEV_TOOLS)
         }
