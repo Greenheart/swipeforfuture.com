@@ -20,7 +20,7 @@ import { VARS } from './vars'
 export const enviraTemplate = createCardTemplate({
     image: unsplashImage('1546541612-82d19b258cd5'),
     location: 'Outside parliament',
-    weight: 1000,
+    weight: 100,
 })
 
 // NOTE: These card refs might be hard to track. Could be nice to group them together in an object, to easily know that they are card refs.
@@ -32,7 +32,6 @@ export const enviraCards: CardData[] = [
         title: 'Keep it in the ground!',
         text:
             'This is insane! Are you really investing in this brown coal plant and prioritizing short-term profits over the future of the planet - and your people!?',
-        weight: 100,
         isAvailableWhen: [
             worldQuery(
                 { [VARS.BROWN_COAL_PLANTS]: [1, 1] },
@@ -78,6 +77,7 @@ export const enviraEvents: WorldEvent[] = [
 
 export const enviraEventCards: EventCards = {
     [enviraIntro]: createEventCardFromTemplate(enviraTemplate, {
+        title: 'The activist',
         text:
             "Hi! My name is Envira and I'm a climate lobbyist. You'll see me from time to time. I wish you good luck and I hope we'll have constructive meetings in the future.",
         actions: {

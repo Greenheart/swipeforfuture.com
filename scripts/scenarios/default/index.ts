@@ -12,7 +12,7 @@ import { VARS } from './vars'
 import { FLAGS } from './flags'
 
 import { catastrophicCards } from './cat'
-import { enviraCards, enviraEventCards } from './envira'
+import { enviraCards, enviraEventCards, enviraEvents } from './envira'
 import { infranCards, infranEventCards, infranEvents } from './infran'
 import { otherCards } from './cards'
 import { endGameEventCards, endGameEvents } from './endgame'
@@ -33,7 +33,7 @@ export const builder: ScenarioBuilder = {
                 ...mariaEvents,
                 ...endGameEvents,
                 ...infranEvents,
-                ...mariaEvents,
+                ...enviraEvents,
             ],
             eventCards: {
                 ...mariaEventCards,
@@ -49,6 +49,9 @@ export const builder: ScenarioBuilder = {
                     [MONEY]: 55,
                     [POPULARITY]: 53,
                     [VARS.BROWN_COAL_PLANTS]: 0,
+                    [VARS.ROADS_SUGGESTED]: 0,
+                    [VARS.ROAD_EXPANSION]: 0,
+                    [VARS.SOLAR_INVESTMENTS]: 0,
                 },
                 flags: {
                     [FLAGS.LUNCH_MEETING_COMPLETED]: false,
