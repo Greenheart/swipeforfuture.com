@@ -33,7 +33,7 @@ This game is a community effort, created together with these awesome people:
 -   [Tianmin Lyu](http://github.com/thecrossed)
 -   [Dimitrios Tsamis](https://github.com/dtsamis)
 -   [Johannes Ridderstedt](https://github.com/johannesl)
--   [Tobias Holle](https://twitter.com/tobiasrholle)
+-   [Tobias Holle](https://twitter.com/tobias_holle)
 -   [Mattias Nyberg](https://github.com/Muthaias)
 -   Hugo Bille
 -   Amanda Lagos Sallhed
