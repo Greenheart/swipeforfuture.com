@@ -113,8 +113,6 @@ async function tryLoadFromRestAPI(path: string): Promise<GameWorld | null> {
     const eventCardsPath = path + '/event-cards.json'
     const defaultStatePath = path + '/default-state.json'
 
-    // IDEA: load data in parallel instead of sequentially to improve performance
-    // Use Promise.all() or similar - https://stackoverflow.com/a/35612484
     const [stats, cards, events, eventCards, defaultState] = await Promise.all<
         StatDefinition[],
         CardData[],
@@ -122,11 +120,11 @@ async function tryLoadFromRestAPI(path: string): Promise<GameWorld | null> {
         EventCards,
         WorldState
     >([
-        await fetchJSON(statsPath, defaultStats),
-        await fetchJSON(cardsPath, []),
-        await fetchJSON(eventsPath, []),
-        await fetchJSON(eventCardsPath, {}),
-        await fetchJSON(defaultStatePath, DEFAULT_GAME_STATE),
+        fetchJSON(statsPath, defaultStats),
+        fetchJSON(cardsPath, []),
+        fetchJSON(eventsPath, []),
+        fetchJSON(eventCardsPath, {}),
+        fetchJSON(defaultStatePath, DEFAULT_GAME_STATE),
     ])
 
     return {
