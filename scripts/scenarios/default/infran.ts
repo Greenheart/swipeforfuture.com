@@ -101,6 +101,7 @@ export const infranEvents: WorldEvent[] = [
 
 export const infranEventCards: EventCards = {
     [infranIntro]: createEventCardFromTemplate(infranTemplate, {
+        title: 'The constructor',
         text:
             "Hello sir! I'm Infran. I'll be sure to keep you updated on the nation's infrastructure. Should we get started right away?",
         actions: {
