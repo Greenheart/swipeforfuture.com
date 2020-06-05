@@ -27,7 +27,7 @@
         "predeploy": "yarn build",
         "prettify": "npx prettier \"src/**/*\" --write",
         "deploy": "gh-pages -d build",
-        "scenario": "ts-node scripts/build-scenario.ts"
+        "scenario": "ts-node --project scripts/tsconfig.json scripts/build-scenario.ts"
     },
     "eslintConfig": {
         "extends": "react-app"
