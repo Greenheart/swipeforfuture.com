@@ -99,6 +99,10 @@ export function getUpdatedState(
     card: CardData | EventCard,
     direction: SwipeDirection,
 ): GameState {
+    // IDEA: consider extracting this logic from the core GameScenario module, and simply pass in an `action` that should be used to update the gamge state.
+    // This would allow us to use more actions than just left + right in the future. Why not up/down too?
+    // It would also make it very clear that this function and this module ONLY is responsible for simulating game scenarios based on the minimum required inputs.
+    // User interactions could be handled by the game client, or by testing or by an AI.
     const currentAction =
         direction === SwipeDirection.Left
             ? card.actions.left
