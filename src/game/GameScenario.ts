@@ -19,33 +19,29 @@ type GameState = {
     rounds: number
 }
 
-interface IGameScenario {
-    // IDEA: Use Scenario type instead of GameWorld, to add full context with the Scenario ID too.
-    // Could make debugging easier since the scenario could know it's ID.
-    // Porentially, this could also allow us to remove the GameWorld Type and replace it with Scenario, which is much easier to understand.
-    scenario: GameWorld
-    state: GameState
-}
-
 // TODO: break out dev tools and global state from this module, so the Game component itself handles that based on state
 // The new functional approach with this module will allow us to get deeper insights into how the game runs.
 // This hopefully should make it easier to separate dev tools from the GameScenario module.
 
-declare global {
-    interface Window {
-        DEV_TOOLS_ACTIVE: Boolean
-        DEV_TOOLS: {
-            availableCards?: CardData[]
-            availableEvents?: WorldEvent[]
-            nextCard?: CardData | EventCard
-            game?: GameState
-        }
-    }
-}
+// declare global {
+//     interface Window {
+//         DEV_TOOLS_ACTIVE: Boolean
+//         DEV_TOOLS: {
+//             availableCards?: CardData[]
+//             availableEvents?: WorldEvent[]
+//             nextCard?: CardData | EventCard
+//             game?: GameState
+//         }
+//     }
+// }
 
-// Enable DEV_TOOLS for local development by default to improve DX
-window.DEV_TOOLS_ACTIVE = window.location.hostname.includes('localhost')
-window.DEV_TOOLS = {}
+// // Enable DEV_TOOLS for local development by default to improve DX
+// window.DEV_TOOLS_ACTIVE = window.location.hostname.includes('localhost')
+// window.DEV_TOOLS = {}
+
+// IDEA: Use Scenario type instead of GameWorld, to add full context with the Scenario ID too.
+// Could make debugging easier since the scenario could know it's ID.
+// Porentially, this could also allow us to remove the GameWorld Type and replace it with Scenario, which is much easier to understand.
 
 // IDEA: Keep React state separate from actual scenario
 // IDEA: Refactor into a set of pure functions that take can simulate a scenario deterministically. Maybe not use a class, but rather a set of functions
@@ -80,6 +76,95 @@ export function getInitialState(scenario: GameWorld): GameState {
     }
 }
 
+export function getUpdatedState(
+    scenario: GameWorld,
+    prevState: GameState,
+    card: CardData | EventCard,
+    direction: SwipeDirection,
+): GameState {
+    const currentAction =
+        direction === SwipeDirection.Left
+            ? card.actions.left
+            : card.actions.right
+
+    const updatedWorld = getUpdatedWorld(
+        scenario,
+        currentAction.modifier,
+        prevState.world,
+    )
+
+    return {
+        world: updatedWorld,
+        card: getNextCard(scenario, updatedWorld, card, currentAction),
+        rounds: prevState.rounds + 1,
+    }
+}
+
+function getUpdatedWorld(
+    scenario: GameWorld,
+    { type = 'add', state = {}, flags = {} }: GameWorldModifier,
+    world: WorldState,
+): WorldState {
+    // get default values for missing props by destructuring the incoming `modifier` and then directly reassembling it
+    // IDEA: Could this all be done in the function declaration, when specifying parameters?
+    const modifier: GameWorldModifier = { type, state, flags }
+    const updatedWorldState = updateWorldState(scenario, modifier, world)
+    const updatedWorldFlags = updateWorldFlags(scenario, modifier, world)
+
+    return {
+        state: updatedWorldState,
+        flags: updatedWorldFlags,
+    }
+}
+
+function updateWorldState(
+    scenario: GameWorld,
+    modifier: GameWorldModifier,
+    world: WorldState,
+): WorldState['state'] {
+    const currentWorldState: WorldState['state'] =
+        modifier.type === 'replace'
+            ? Object.assign({}, scenario.defaultState.state)
+            : Object.assign({}, world.state)
+
+    const stateModifier = modifier.state || {}
+    const updatedWorldState = Object.entries(stateModifier).reduce<
+        WorldState['state']
+    >((updatedState: WorldState['state'], [key, value]) => {
+        const newValue =
+            modifier.type === 'set' || modifier.type === 'replace'
+                ? value
+                : value + (updatedState[key] || 0)
+
+        updatedState[key] = Math.min(Math.max(newValue, 0), 100)
+
+        return updatedState
+    }, currentWorldState)
+
+    return updatedWorldState
+}
+
+function updateWorldFlags(
+    scenario: GameWorld,
+    modifier: GameWorldModifier,
+    world: WorldState,
+): WorldState['flags'] {
+    const currentWorldFlags: WorldState['flags'] =
+        modifier.type === 'replace'
+            ? Object.assign({}, scenario.defaultState.flags)
+            : Object.assign({}, world.flags)
+
+    const flagsModifier = modifier.flags || {}
+    const updatedWorldFlags = Object.entries(flagsModifier).reduce<
+        WorldState['flags']
+    >((updatedFlags, [key, value]) => {
+        updatedFlags[key] = value
+        return updatedFlags
+    }, currentWorldFlags)
+
+    return updatedWorldFlags
+}
+
 function getInitialCard(scenario: GameWorld): EventCard | CardData {
     const availableEvents = getAvailableEvents(scenario, scenario.defaultState)
     const event = selectNextEvent(availableEvents)
@@ -91,6 +176,62 @@ function getInitialCard(scenario: GameWorld): EventCard | CardData {
             getAvailableCards(scenario, scenario.defaultState),
         )
     }
+}
+
+function getNextCard(
+    scenario: GameWorld,
+    updatedWorld: WorldState,
+    card: CardData | EventCard,
+    currentAction: CardActionData | EventCardActionData,
+): CardData | EventCard {
+    const { eventCards } = scenario
+    const availableEvents = getAvailableEvents(scenario, updatedWorld)
+    let availableCards: CardData[] = []
+
+    const nextEventCardId: string | null =
+        card.type === 'event' && 'nextEventCardId' in currentAction
+            ? currentAction.nextEventCardId
+            : null
+    const eventStartingNow = !nextEventCardId
+        ? selectNextEvent(availableEvents)
+        : null
+    let nextCard
+
+    // Only select the next EventCard if a specific one is given
+    // Else cancel the event and continue with normal cards.
+    if (nextEventCardId) {
+        if (!eventCards.hasOwnProperty(nextEventCardId)) {
+            throw new Error(
+                `eventCardId "${nextEventCardId}" does not exist. Make sure it's spelled correctly`,
+            )
+        }
+        nextCard = selectEventCard(scenario, nextEventCardId)
+    } else if (eventStartingNow) {
+        nextCard = selectEventCard(
+            scenario,
+            eventStartingNow.initialEventCardId,
+        )
+    } else {
+        availableCards = getAvailableCards(scenario, updatedWorld)
+        nextCard = selectNextCard(availableCards)
+    }
+
+    // TODO: break out dev tools from this module and add it to the Game Component instead. See comments up top for details.
+    // if (window.DEV_TOOLS_ACTIVE) {
+    //     window.DEV_TOOLS.game = {
+    //         world: this.state.world,
+    //         rounds: this.state.rounds,
+    //         card: this.state.card,
+    //     }
+
+    //     window.DEV_TOOLS.availableCards = availableCards
+    //     window.DEV_TOOLS.availableEvents = availableEvents
+
+    //     console.log('DEV TOOLS: ', window.DEV_TOOLS)
+    // }
+
+    if (!nextCard) throw new Error('Content error. No next card available.')
+    return nextCard
 }
 
 function getAvailableEvents(
@@ -180,136 +321,15 @@ function selectWeightedRandomFrom<T extends { weight: number }>(
     return array[selectionIndex]
 }
 
-export default class GameScenario implements IGameScenario {
-    // IDEA: Maybe replace this method if we want to go for an approach with pure functions rather than OOP.
-    onSwipe(card: CardData | EventCard, direction: SwipeDirection): void {
-        const currentAction =
-            direction === SwipeDirection.Left
-                ? card.actions.left
-                : card.actions.right
+// NOTE: We might not need this function anymore since content will have unique id:s
+// IDEA: Move this to the Game component or perhaps even better - the GameWorld module - instead of keeping it here.
 
-        const updatedWorld = this.getUpdatedWorld(currentAction.modifier)
-
-        this.state.world = updatedWorld
-        this.state.card = this.getNextCard(updatedWorld, card, currentAction)
-        this.state.rounds = this.state.rounds + 1
-    }
-
-    getNextCard(
-        updatedWorld: WorldState,
-        card: CardData | EventCard,
-        currentAction: CardActionData | EventCardActionData,
-    ): CardData | EventCard {
-        const { eventCards } = this.scenario
-        const availableEvents = this.getAvailableEvents(updatedWorld)
-        let availableCards: CardData[] = []
-
-        const nextEventCardId: string | null =
-            card.type === 'event' && 'nextEventCardId' in currentAction
-                ? currentAction.nextEventCardId
-                : null
-        const eventStartingNow = !nextEventCardId
-            ? this.selectNextEvent(availableEvents)
-            : null
-        let nextCard
-
-        // Only select the next EventCard if a specific one is given
-        // Else cancel the event and continue with normal cards.
-        if (nextEventCardId) {
-            if (!eventCards.hasOwnProperty(nextEventCardId)) {
-                throw new Error(
-                    `eventCardId "${nextEventCardId}" does not exist. Make sure it's spelled correctly`,
-                )
-            }
-            nextCard = this.selectEventCard(nextEventCardId)
-        } else if (eventStartingNow) {
-            nextCard = this.selectEventCard(eventStartingNow.initialEventCardId)
-        } else {
-            availableCards = this.getAvailableCards(updatedWorld)
-            nextCard = this.selectNextCard(availableCards)
-        }
-
-        if (window.DEV_TOOLS_ACTIVE) {
-            window.DEV_TOOLS.game = {
-                world: this.state.world,
-                rounds: this.state.rounds,
-                card: this.state.card,
-            }
-
-            window.DEV_TOOLS.availableCards = availableCards
-            window.DEV_TOOLS.availableEvents = availableEvents
-
-            console.log('DEV TOOLS: ', window.DEV_TOOLS)
-        }
-
-        if (!nextCard) throw new Error('Content error. No next card available.')
-        return nextCard
-    }
-
-    getUpdatedWorld({
-        type = 'add',
-        state = {},
-        flags = {},
-    }: GameWorldModifier): WorldState {
-        // get default values for missing props by destructuring the incoming `modifier` and then directly reassembling it
-        // IDEA: Could this all be done in the function declaration, when specifying parameters?
-        const modifier: GameWorldModifier = { type, state, flags }
-        const updatedWorldState = this.updateWorldState(modifier)
-        const updatedWorldFlags = this.updateWorldFlags(modifier)
-
-        return {
-            state: updatedWorldState,
-            flags: updatedWorldFlags,
-        }
-    }
-
-    updateWorldState(modifier: GameWorldModifier): WorldState['state'] {
-        const currentWorldState: WorldState['state'] =
-            modifier.type === 'replace'
-                ? Object.assign({}, this.scenario.defaultState.state)
-                : Object.assign({}, this.state.world.state)
-
-        const stateModifier = modifier.state || {}
-        const updatedWorldState = Object.entries(stateModifier).reduce<
-            WorldState['state']
-        >((updatedState: WorldState['state'], [key, value]) => {
-            const newValue =
-                modifier.type === 'set' || modifier.type === 'replace'
-                    ? value
-                    : value + (updatedState[key] || 0)
-
-            updatedState[key] = Math.min(Math.max(newValue, 0), 100)
-
-            return updatedState
-        }, currentWorldState)
-
-        return updatedWorldState
-    }
-
-    updateWorldFlags(modifier: GameWorldModifier): WorldState['flags'] {
-        const currentWorldFlags: WorldState['flags'] =
-            modifier.type === 'replace'
-                ? Object.assign({}, this.scenario.defaultState.flags)
-                : Object.assign({}, this.state.world.flags)
-
-        const flagsModifier = modifier.flags || {}
-        const updatedWorldFlags = Object.entries(flagsModifier).reduce<
-            WorldState['flags']
-        >((updatedFlags, [key, value]) => {
-            updatedFlags[key] = value
-            return updatedFlags
-        }, currentWorldFlags)
-
-        return updatedWorldFlags
-    }
-
-    addUniqueCardId(
-        card: CardData | EventCard,
-        index: number = 0,
-    ): (CardData | EventCard) & { id: string } {
-        return {
-            ...card,
-            id: Date.now() + ':' + index,
-        }
+export function addUniqueCardId(
+    card: CardData | EventCard,
+    index: number = 0,
+): (CardData | EventCard) & { id: string } {
+    return {
+        ...card,
+        id: Date.now() + ':' + index,
     }
 }
