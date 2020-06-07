@@ -68,6 +68,11 @@ state = getUpdatedState(scenario, state, card, direction)
 // IDEA: Ensure functions are pure by making copies of objects instead of passing by reference.
 //       This is especially important when using the default data `scenario` which shouldn't be mutated.
 
+/**
+ * Get the initial state for a given scenario.
+ *
+ * @param scenario The scenario default data which holds all cards, events and similar
+ */
 export function getInitialState(scenario: GameWorld): GameState {
     return {
         world: scenario.defaultState,
@@ -76,6 +81,18 @@ export function getInitialState(scenario: GameWorld): GameState {
     }
 }
 
+/**
+ * Get the updated state for a scenario based on previous state and the action taken to move forward.
+ *
+ * Since all dependencies are clearly stated throughout all child functions,
+ * it's really easy to change partial data and state to get a different updated state.
+ * This could be really useful for testing, or perhaps even some kind of AI to find the optimal actions/strategy
+ *
+ * @param scenario The scenario default data which holds all cards, events and similar
+ * @param prevState The state before this update
+ * @param card The currently visible card that the player is acting upon
+ * @param direction Swipe direction used to determine the player's choosen action for how to move forward in the game
+ */
 export function getUpdatedState(
     scenario: GameWorld,
     prevState: GameState,
