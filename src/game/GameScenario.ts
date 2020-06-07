@@ -43,6 +43,12 @@ declare global {
 window.DEV_TOOLS_ACTIVE = window.location.hostname.includes('localhost')
 window.DEV_TOOLS = {}
 
+// IDEA: Keep React state separate from actual scenario
+// IDEA: Refactor into a set of pure functions that take can simulate a scenario deterministically. Maybe not use a class, but rather a set of functions
+// IDEA: Replace Math.random() usage and require all user code to pass in the random selection function, to ensure this module is deterministic.
+// IDEA: By keeping the GameScenario stateless, it will be easy to use both in game and in tests.
+// IDEA: Stateless It could also allow other uses, like training an AI to find the optimal endgame conditions, and the strategies used to get there.
+
 export default class GameScenario implements IGameScenario {
     scenario: GameWorld
     state: GameState
@@ -50,29 +56,6 @@ export default class GameScenario implements IGameScenario {
     constructor(worldData: GameWorld) {
         this.scenario = worldData
         this.state = this.getInitialState()
-    }
-
-    render() {
-        const card = this.addUniqueCardId(this.state.card)
-        const worldState = this.state.world.state
-        const stats = this.scenario.stats.map((stat) =>
-            Object.assign({}, stat, {
-                value: worldState[stat.id],
-            }),
-        )
-        return (
-            <>
-                <Stats stats={stats} />
-                <Deck
-                    onSwipe={this.onSwipe.bind(this)}
-                    card={card}
-                    tick={this.state.rounds}
-                />
-                <Footer>
-                    <div className="time-remaining"></div>
-                </Footer>
-            </>
-        )
     }
 
     getInitialState(): GameState {
@@ -136,6 +119,7 @@ export default class GameScenario implements IGameScenario {
         return result
     }
 
+    // IDEA: Maybe replace this method if we want to go for an approach with pure functions rather than OOP.
     onSwipe(card: CardData | EventCard, direction: SwipeDirection): void {
         const currentAction =
             direction === SwipeDirection.Left
