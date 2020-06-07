@@ -49,6 +49,22 @@ window.DEV_TOOLS = {}
 // IDEA: By keeping the GameScenario stateless, it will be easy to use both in game and in tests.
 // IDEA: Stateless It could also allow other uses, like training an AI to find the optimal endgame conditions, and the strategies used to get there.
 
+/* ----------------------- /*
+
+// IDEA: example usage for GameScenario
+import { getInitialState, getUpdatedState } from './GameScenario'
+
+// Raw data for current scenario
+const scenario: GameWorld = worldData
+
+// get initial state for the scenario
+let state = getInitialState(scenario)
+
+// Update state onSwipe. Then use new state however you want, either with setState() or directly in tests or similar.
+state = getUpdatedState(scenario, state, card, direction)
+
+/* ----------------------- */
+
 export default class GameScenario implements IGameScenario {
     scenario: GameWorld
     state: GameState
