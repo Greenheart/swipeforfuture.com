@@ -27,6 +27,10 @@ interface IGameScenario {
     state: GameState
 }
 
+// TODO: break out dev tools and global state from this module, so the Game component itself handles that based on state
+// The new functional approach with this module will allow us to get deeper insights into how the game runs.
+// This hopefully should make it easier to separate dev tools from the GameScenario module.
+
 declare global {
     interface Window {
         DEV_TOOLS_ACTIVE: Boolean
@@ -65,76 +69,118 @@ state = getUpdatedState(scenario, state, card, direction)
 
 /* ----------------------- */
 
+// IDEA: Ensure functions are pure by making copies of objects instead of passing by reference.
+//       This is especially important when using the default data `scenario` which shouldn't be mutated.
+
+export function getInitialState(scenario: GameWorld): GameState {
+    return {
+        world: scenario.defaultState,
+        card: getInitialCard(scenario),
+        rounds: 0,
+    }
+}
+
+function getInitialCard(scenario: GameWorld): EventCard | CardData {
+    const availableEvents = getAvailableEvents(scenario, scenario.defaultState)
+    const event = selectNextEvent(availableEvents)
+
+    if (event) {
+        return selectEventCard(scenario, event.initialEventCardId)
+    } else {
+        return selectNextCard(
+            getAvailableCards(scenario, scenario.defaultState),
+        )
+    }
+}
+
+function getAvailableEvents(
+    scenario: GameWorld,
+    world: WorldState,
+): WorldEvent[] {
+    const { events } = scenario
+    return events.filter((e) => hasMatchingWorldQuery(world, e.isAvailableWhen))
+}
+
+function getAvailableCards(scenario: GameWorld, world: WorldState): CardData[] {
+    const { cards } = scenario
+    return cards.filter((c) => hasMatchingWorldQuery(world, c.isAvailableWhen))
+}
+
+function hasMatchingWorldQuery(
+    world: WorldState,
+    worldQueries: WorldQuery[],
+): Boolean {
+    return worldQueries.some((q) => isMatchingWorldQuery(world, q))
+}
+
+function isMatchingWorldQuery(
+    world: WorldState,
+    { state = {}, flags = {} }: WorldQuery,
+): Boolean {
+    const hasStateMatch = Object.entries(state).every(
+        ([key, [min, max]]) =>
+            world.state[key] >= min && world.state[key] <= max,
+    )
+
+    const result =
+        hasStateMatch &&
+        Object.entries(flags).every(
+            ([flag, value]) => world.flags[flag] === value,
+        )
+
+    return result
+}
+
+function selectNextEvent(events: WorldEvent[] = []): WorldEvent | undefined {
+    const event = selectRandomFrom(events)
+    if (event && Math.random() <= event.probability) {
+        return event
+    }
+}
+
+function selectEventCard(scenario: GameWorld, cardId: EventCardId): EventCard {
+    const eventCard = scenario.eventCards[cardId]
+    if (!eventCard)
+        throw new Error(
+            `ContentError: EventCard with EventCardId "${cardId}" does not exist`,
+        )
+    return eventCard
+}
+
+function selectRandomFrom<T>(array: T[]): T {
+    return array[Math.floor(Math.random() * array.length)]
+}
+
+function selectNextCard(cards: CardData[] = []): CardData {
+    return selectWeightedRandomFrom(cards)
+}
+
+function selectWeightedRandomFrom<T extends { weight: number }>(
+    array: T[],
+    weightFunc = (element: T) => element.weight,
+): T {
+    const { selectionList, count } = array.reduce<{
+        count: number
+        selectionList: number[]
+    }>(
+        (acc, element) => {
+            acc.count += weightFunc(element)
+            acc.selectionList.push(acc.count)
+            return acc
+        },
+        { count: 0, selectionList: [] },
+    )
+
+    const selectionPosition = Math.random() * count
+    const selectionIndex = selectionList.findIndex((max, index, array) => {
+        const min = index > 0 ? array[index - 1] : 0
+        return selectionPosition >= min && selectionPosition <= max
+    })
+
+    return array[selectionIndex]
+}
+
 export default class GameScenario implements IGameScenario {
-    scenario: GameWorld
-    state: GameState
-
-    constructor(worldData: GameWorld) {
-        this.scenario = worldData
-        this.state = this.getInitialState()
-    }
-
-    getInitialState(): GameState {
-        const defaultState = this.scenario.defaultState
-        return {
-            world: defaultState,
-            card: this.getInitialCard(defaultState),
-            rounds: 0,
-        }
-    }
-
-    getInitialCard(world: WorldState): EventCard | CardData {
-        const availableEvents = this.getAvailableEvents(world)
-        const event = this.selectNextEvent(availableEvents)
-
-        if (event) {
-            return this.selectEventCard(event.initialEventCardId)
-        } else {
-            return this.selectNextCard(
-                this.getAvailableCards(this.scenario.defaultState),
-            )
-        }
-    }
-
-    getAvailableCards(world: WorldState): CardData[] {
-        const { cards } = this.scenario
-        return cards.filter((c) =>
-            this.hasMatchingWorldQuery(world, c.isAvailableWhen),
-        )
-    }
-
-    getAvailableEvents(world: WorldState): WorldEvent[] {
-        const { events } = this.scenario
-        return events.filter((e) =>
-            this.hasMatchingWorldQuery(world, e.isAvailableWhen),
-        )
-    }
-
-    hasMatchingWorldQuery(
-        world: WorldState,
-        worldQueries: WorldQuery[],
-    ): Boolean {
-        return worldQueries.some((q) => this.isMatchingWorldQuery(world, q))
-    }
-
-    isMatchingWorldQuery(
-        world: WorldState,
-        { state = {}, flags = {} }: WorldQuery,
-    ): Boolean {
-        const hasStateMatch = Object.entries(state).every(
-            ([key, [min, max]]) =>
-                world.state[key] >= min && world.state[key] <= max,
-        )
-
-        const result =
-            hasStateMatch &&
-            Object.entries(flags).every(
-                ([flag, value]) => world.flags[flag] === value,
-            )
-
-        return result
-    }
-
     // IDEA: Maybe replace this method if we want to go for an approach with pure functions rather than OOP.
     onSwipe(card: CardData | EventCard, direction: SwipeDirection): void {
         const currentAction =
@@ -265,55 +311,5 @@ export default class GameScenario implements IGameScenario {
             ...card,
             id: Date.now() + ':' + index,
         }
-    }
-
-    selectNextCard(cards: CardData[] = []): CardData {
-        return this.selectWeightedRandomFrom(cards)
-    }
-
-    selectNextEvent(events: WorldEvent[] = []): WorldEvent | undefined {
-        const event = this.selectRandomFrom(events)
-        if (event && Math.random() <= event.probability) {
-            return event
-        }
-    }
-
-    selectRandomFrom<T>(array: T[]): T {
-        return array[Math.floor(Math.random() * array.length)]
-    }
-
-    selectWeightedRandomFrom<T extends { weight: number }>(
-        array: T[],
-        weightFunc = (element: T) => element.weight,
-    ): T {
-        const { selectionList, count } = array.reduce<{
-            count: number
-            selectionList: number[]
-        }>(
-            (acc, element) => {
-                acc.count += weightFunc(element)
-                acc.selectionList.push(acc.count)
-                return acc
-            },
-            { count: 0, selectionList: [] },
-        )
-
-        const selectionPosition = Math.random() * count
-        const selectionIndex = selectionList.findIndex((max, index, array) => {
-            const min = index > 0 ? array[index - 1] : 0
-            return selectionPosition >= min && selectionPosition <= max
-        })
-
-        return array[selectionIndex]
-    }
-
-    selectEventCard(cardId: EventCardId): EventCard {
-        const { eventCards } = this.scenario
-        const eventCard = eventCards[cardId]
-        if (!eventCard)
-            throw new Error(
-                `ContentError: EventCard with EventCardId "${cardId}" does not exist`,
-            )
-        return eventCard
     }
 }
