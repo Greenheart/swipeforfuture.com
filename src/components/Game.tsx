@@ -6,6 +6,7 @@ import Stats from './Stats'
 import { SwipeDirection } from '../util/constants'
 import { getInitialState, getUpdatedState } from '../game/GameScenario'
 import { GameWorld, CardData, EventCard } from '../game/ContentTypes'
+import { GameState } from '../game/GameTypes'
 
 const Footer = styled.footer`
     display: flex;
@@ -16,15 +17,15 @@ const Footer = styled.footer`
 // IDEA: Rename `worldData` to `scenario` to clarify the purpose of this data.
 // It would make it easier to understand how game scenarios simply define the default data, while `GameState` is used during runtime.
 type GameProps = {
-    worldData: GameWorld
+    scenario: GameWorld
 }
 
-const Game: React.FunctionComponent<GameProps> = ({ worldData }) => {
-    const [state, setState] = useState(getInitialState(worldData))
+const Game: React.FunctionComponent<GameProps> = ({ scenario }) => {
+    const [state, setState] = useState<GameState>(getInitialState(scenario))
 
     const card = addUniqueCardId(state.card)
     const worldState = state.world.state
-    const stats = worldData.stats.map((stat) =>
+    const stats = scenario.stats.map((stat) =>
         Object.assign({}, stat, {
             value: worldState[stat.id],
         }),
@@ -34,7 +35,7 @@ const Game: React.FunctionComponent<GameProps> = ({ worldData }) => {
         card: CardData | EventCard,
         direction: SwipeDirection,
     ): void {
-        setState(getUpdatedState(worldData, state, card, direction))
+        setState(getUpdatedState(scenario, state, card, direction))
     }
 
     return (

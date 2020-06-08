@@ -43,27 +43,10 @@ type GameState = {
 // Could make debugging easier since the scenario could know it's ID.
 // Porentially, this could also allow us to remove the GameWorld Type and replace it with Scenario, which is much easier to understand.
 
-// IDEA: Keep React state separate from actual scenario
 // IDEA: Refactor into a set of pure functions that take can simulate a scenario deterministically. Maybe not use a class, but rather a set of functions
 // IDEA: Replace Math.random() usage and require all user code to pass in the random selection function, to ensure this module is deterministic.
 // IDEA: By keeping the GameScenario stateless, it will be easy to use both in game and in tests.
 // IDEA: Stateless It could also allow other uses, like training an AI to find the optimal endgame conditions, and the strategies used to get there.
-
-/* ----------------------- /*
-
-// IDEA: example usage for GameScenario
-import { getInitialState, getUpdatedState } from './GameScenario'
-
-// Raw data for current scenario
-const scenario: GameWorld = worldData
-
-// get initial state for the scenario
-let state = getInitialState(scenario)
-
-// Update state onSwipe. Then use new state however you want, either with setState() or directly in tests or similar.
-state = getUpdatedState(scenario, state, card, direction)
-
-/* ----------------------- */
 
 // IDEA: Ensure functions are pure by making copies of objects instead of passing by reference.
 //       This is especially important when using the default data `scenario` which shouldn't be mutated.
