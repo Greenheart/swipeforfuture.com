@@ -1,3 +1,5 @@
+// ContentTypes are used to describe the format and structure for game scenarios and content.
+
 export type GameWorld = {
     stats: StatDefinition[]
     cards: CardData[]

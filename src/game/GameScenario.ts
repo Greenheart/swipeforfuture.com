@@ -1,3 +1,4 @@
+import { GameState } from './GameTypes'
 import {
     GameWorld,
     WorldState,
@@ -9,13 +10,7 @@ import {
     CardActionData,
     EventCardActionData,
     EventCardId,
-} from '../game/ContentTypes'
-
-type GameState = {
-    world: WorldState
-    card: CardData | EventCard
-    rounds: number
-}
+} from './ContentTypes'
 
 // TODO: break out dev tools and global state from this module, so the Game component itself handles that based on state
 // The new functional approach with this module will allow us to get deeper insights into how the game runs.
