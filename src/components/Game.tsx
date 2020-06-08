@@ -35,7 +35,12 @@ const Game: React.FunctionComponent<GameProps> = ({ scenario }) => {
         card: CardData | EventCard,
         direction: SwipeDirection,
     ): void {
-        setState(getUpdatedState(scenario, state, card, direction))
+        const action =
+            direction === SwipeDirection.Left
+                ? card.actions.left
+                : card.actions.right
+
+        setState(getUpdatedState(scenario, state, card, action))
     }
 
     return (

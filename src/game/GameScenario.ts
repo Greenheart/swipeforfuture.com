@@ -1,5 +1,3 @@
-import { SwipeDirection } from '../util/constants'
-
 import {
     GameWorld,
     WorldState,
@@ -74,32 +72,23 @@ export function getInitialState(scenario: GameWorld): GameState {
  * @param scenario The scenario default data which holds all cards, events and similar
  * @param prevState The state before this update
  * @param card The currently visible card that the player is acting upon
- * @param direction Swipe direction used to determine the player's choosen action for how to move forward in the game
+ * @param action The player's choosen action for how to move forward in the game
  */
 export function getUpdatedState(
     scenario: GameWorld,
     prevState: GameState,
     card: CardData | EventCard,
-    direction: SwipeDirection,
+    action: CardActionData | EventCardActionData,
 ): GameState {
-    // IDEA: consider extracting this logic from the core GameScenario module, and simply pass in an `action` that should be used to update the gamge state.
-    // This would allow us to use more actions than just left + right in the future. Why not up/down too?
-    // It would also make it very clear that this function and this module ONLY is responsible for simulating game scenarios based on the minimum required inputs.
-    // User interactions could be handled by the game client, or by testing or by an AI.
-    const currentAction =
-        direction === SwipeDirection.Left
-            ? card.actions.left
-            : card.actions.right
-
     const updatedWorld = getUpdatedWorld(
         scenario,
-        currentAction.modifier,
+        action.modifier,
         prevState.world,
     )
 
     return {
         world: updatedWorld,
-        card: getNextCard(scenario, updatedWorld, card, currentAction),
+        card: getNextCard(scenario, updatedWorld, card, action),
         rounds: prevState.rounds + 1,
     }
 }
@@ -186,15 +175,15 @@ function getNextCard(
     scenario: GameWorld,
     updatedWorld: WorldState,
     card: CardData | EventCard,
-    currentAction: CardActionData | EventCardActionData,
+    action: CardActionData | EventCardActionData,
 ): CardData | EventCard {
     const { eventCards } = scenario
     const availableEvents = getAvailableEvents(scenario, updatedWorld)
     let availableCards: CardData[] = []
 
     const nextEventCardId: string | null =
-        card.type === 'event' && 'nextEventCardId' in currentAction
-            ? currentAction.nextEventCardId
+        card.type === 'event' && 'nextEventCardId' in action
+            ? action.nextEventCardId
             : null
     const eventStartingNow = !nextEventCardId
         ? selectNextEvent(availableEvents)
