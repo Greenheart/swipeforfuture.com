@@ -341,16 +341,3 @@ function selectWeightedRandomFrom<T extends { weight: number }>(
 
     return array[selectionIndex]
 }
-
-// NOTE: We might not need this function anymore since content will have unique id:s
-// IDEA: Move this to the Game component or perhaps even better - the GameWorld module - instead of keeping it here.
-
-export function addUniqueCardId(
-    card: CardData | EventCard,
-    index: number = 0,
-): (CardData | EventCard) & { id: string } {
-    return {
-        ...card,
-        id: Date.now() + ':' + index,
-    }
-}

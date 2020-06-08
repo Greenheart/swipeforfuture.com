@@ -1,18 +1,11 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
 import Deck from './Deck'
 import Stats from './Stats'
 import { SwipeDirection } from '../util/constants'
-import GameScenario from '../game/GameScenario'
-
-import {
-    GameWorld,
-    WorldState,
-    CardData,
-    EventCard,
-    WorldEvent,
-} from '../game/ContentTypes'
+import { getInitialState, getUpdatedState } from '../game/GameScenario'
+import { GameWorld, CardData, EventCard } from '../game/ContentTypes'
 
 const Footer = styled.footer`
     display: flex;
@@ -20,75 +13,49 @@ const Footer = styled.footer`
     align-items: center;
 `
 
+// IDEA: Rename `worldData` to `scenario` to clarify the purpose of this data.
+// It would make it easier to understand how game scenarios simply define the default data, while `GameState` is used during runtime.
 type GameProps = {
     worldData: GameWorld
 }
 
-type GameState = {
-    world: WorldState
-    card: CardData | EventCard
-    rounds: number
+const Game: React.FunctionComponent<GameProps> = ({ worldData }) => {
+    const [state, setState] = useState(getInitialState(worldData))
+
+    const card = addUniqueCardId(state.card)
+    const worldState = state.world.state
+    const stats = worldData.stats.map((stat) =>
+        Object.assign({}, stat, {
+            value: worldState[stat.id],
+        }),
+    )
+
+    function onSwipe(
+        card: CardData | EventCard,
+        direction: SwipeDirection,
+    ): void {
+        setState(getUpdatedState(worldData, state, card, direction))
+    }
+
+    return (
+        <>
+            <Stats stats={stats} />
+            <Deck onSwipe={onSwipe} card={card} tick={state.rounds} />
+            <Footer>
+                <div className="time-remaining"></div>
+            </Footer>
+        </>
+    )
 }
 
-declare global {
-    interface Window {
-        DEV_TOOLS_ACTIVE: Boolean
-        DEV_TOOLS: {
-            availableCards?: CardData[]
-            availableEvents?: WorldEvent[]
-            nextCard?: CardData | EventCard
-            game?: GameState
-        }
+function addUniqueCardId(
+    card: CardData | EventCard,
+    index: number = 0,
+): (CardData | EventCard) & { id: string } {
+    return {
+        ...card,
+        id: Date.now() + ':' + index,
     }
 }
 
-// Enable DEV_TOOLS for local development by default to improve DX
-window.DEV_TOOLS_ACTIVE = window.location.hostname.includes('localhost')
-window.DEV_TOOLS = {}
-
-export default class Game extends Component<GameProps, GameState> {
-    constructor() {
-        this.scenario = new GameScenario(this.props.worldData)
-        this.state = this.scenario.getInitialState()
-    }
-
-    render() {
-        const card = this.addUniqueCardId(this.state.card)
-        const worldState = this.state.world.state
-        const stats = this.props.worldData.stats.map((stat) =>
-            Object.assign({}, stat, {
-                value: worldState[stat.id],
-            }),
-        )
-        return (
-            <>
-                <Stats stats={stats} />
-                <Deck
-                    onSwipe={this.onSwipe.bind(this)}
-                    card={card}
-                    tick={this.state.rounds}
-                />
-                <Footer>
-                    <div className="time-remaining"></div>
-                </Footer>
-            </>
-        )
-    }
-
-    // TODO: Handle the game state update on each swipe.
-    // Call some kind of update method in the game scenario and store the result in
-    onSwipe(card: CardData | EventCard, direction: SwipeDirection): void {
-        const currentAction =
-            direction === SwipeDirection.Left
-                ? card.actions.left
-                : card.actions.right
-
-        const updatedWorld = this.getUpdatedWorld(currentAction.modifier)
-
-        this.setState({
-            world: updatedWorld,
-            card: this.getNextCard(updatedWorld, card, currentAction),
-            rounds: this.state.rounds + 1,
-        })
-    }
-}
+export default Game
