@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 
 import Game from './components/Game'
+import { GameScenario, BasicGameScenario } from './game/GameScenario'
 import { loadScenario } from './game/load-scenario'
-import { GameWorld } from './game/ContentTypes'
 
 const Container = styled.main`
     position: absolute;
@@ -20,11 +20,16 @@ type AppProps = {
 }
 
 function App({ path }: AppProps) {
-    const [scenario, setScenario] = useState<GameWorld | null>(null)
+    const [scenario, setScenario] = useState<GameScenario | null>(null)
     useEffect(() => {
         const fetchWorld = async () => {
-            const scenario = await loadScenario(path)
-            setScenario(scenario)
+            const scenarioData = await loadScenario(path)
+            if (scenarioData) {
+                const instance = new BasicGameScenario(scenarioData)
+                setScenario(instance)
+            } else {
+                console.warn('Scenario loading error')
+            }
         }
         fetchWorld()
     }, [path, setScenario])
