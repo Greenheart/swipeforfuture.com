@@ -136,7 +136,7 @@ async function tryLoadFromRestAPI(path: string): Promise<GameWorld | null> {
     }
 }
 
-export async function loadGameWorld(path: string) {
+export async function loadScenario(path: string) {
     return (
         (await tryLoadFromInternalData(path)) ||
         (await tryLoadFromLocalStorage(path)) ||
