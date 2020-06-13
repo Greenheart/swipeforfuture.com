@@ -27,19 +27,15 @@ async function tryLoadFromLocalStorage(
                 flags: {},
             },
         }
-        try {
-            const serializedData = localStorage.getItem(gameWorldId)
-            const data: GameWorld = serializedData
-                ? JSON.parse(serializedData)
-                : null
-            if (!data)
-                throw new Error(
-                    'Could not load data from local storage: ' + gameWorldId,
-                )
-            return Object.assign(gameWorld, data)
-        } catch (e) {
-            console.log(e)
-        }
+        const serializedData = localStorage.getItem(gameWorldId)
+        const data: GameWorld = serializedData
+            ? JSON.parse(serializedData)
+            : null
+        if (!data)
+            throw new Error(
+                'Could not load data from local storage: ' + gameWorldId,
+            )
+        return Object.assign(gameWorld, data)
     }
 
     return null
@@ -84,10 +80,6 @@ export async function loadScenario(path: string) {
 }
 
 async function fetchJSON<T>(path: string): Promise<T> {
-    try {
-        console.log('fetching path: ', path)
-        return await (await window.fetch(path)).json()
-    } catch (e) {
-        throw new Error('Could not load path: ' + path)
-    }
+    console.log('fetching path: ', path)
+    return await (await window.fetch(path)).json()
 }
