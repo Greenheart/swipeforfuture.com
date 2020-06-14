@@ -12,6 +12,35 @@ import { FLAGS } from './flags'
 export const otherCards: CardData[] = [
     {
         type: 'card',
+        image: unsplashImage('1544513566-b4de3719ee70'),
+        title: 'Extreme weather disaster',
+        location: 'South-east Asia',
+        text:
+            'Some of our allied countries were just hit by extreme weather. Entire cities were wiped out. They need help with disaster relief. Should we increase our foreign aid budget and help them?',
+        weight: 100,
+        isAvailableWhen: [
+            worldQuery({
+                [ENVIRONMENT]: [0, 40],
+            }),
+        ],
+        actions: {
+            left: addAction({
+                [PEOPLE]: -10,
+                [SECURITY]: -13,
+                [MONEY]: 5,
+                [POPULARITY]: -10,
+            }),
+            right: addAction({
+                [ENVIRONMENT]: 20,
+                [PEOPLE]: 10,
+                [SECURITY]: 8,
+                [MONEY]: -15,
+                [POPULARITY]: 25,
+            }),
+        },
+    },
+    {
+        type: 'card',
         image: unsplashImage('1497435334941-8c899ee9e8e9'),
         title: 'Our solar project is ready!',
         location: 'The greener other side',
