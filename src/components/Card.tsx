@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { CardView } from './CardView'
+
 import { animated, interpolate } from 'react-spring'
 import { useSpring } from 'react-spring'
 import { useGesture, GestureState } from 'react-with-gesture'
@@ -7,7 +9,6 @@ import { useKeyboardEvent } from '../util/hooks'
 import { CardData, EventCard } from '../game/ContentTypes'
 import { SwipeDirection } from '../util/constants'
 
-type InterpolationTypeHack = any
 type AnimationState = {
     x: number
     y: number
@@ -129,44 +130,26 @@ const Card: React.FunctionComponent<CardProps> = ({
 
     return (
         <animated.div
-            className="card-container"
+            {...bind(i)}
             key={i}
             style={{
                 position: 'absolute',
+                left: '50%',
                 transform: interpolate(
-                    [x, y],
-                    (x, y) => `translate3d(${x}px,${y}px,0)`,
+                    [x, y, rot, scale as any],
+                    (x: number, y: number, rot: number, scale: number) =>
+                        `translate3d(-50%, 0, 0) translate3d(${x}px,${y}px,0) ` +
+                        trans(rot, Number(scale)),
                 ),
                 zIndex: layer,
             }}
         >
-            <animated.div
-                className="card card-front"
-                {...bind(i)}
-                style={{
-                    // TODO: Upgrade to raect-spring to v9 and replace react-with-gesture with react-use-gesture
-                    // Then, also fix this hack
-                    transform: interpolate(
-                        [rot, scale as InterpolationTypeHack],
-                        trans,
-                    ),
-                }}
-            >
-                <div className="card-content">
-                    <div
-                        className="card-image"
-                        style={{
-                            backgroundImage:
-                                'url(' + (image ? image : '') + ')',
-                        }}
-                    ></div>
-                    <div className="card-text">
-                        {location && <em className="location">{location}</em>}
-                        <h1 className="title">{title}</h1>
-                        <p className="text">{text}</p>
-                    </div>
-                </div>
-            </animated.div>
+            <CardView
+                image={image}
+                title={title}
+                text={text}
+                location={location}
+            />
         </animated.div>
     )
 }
