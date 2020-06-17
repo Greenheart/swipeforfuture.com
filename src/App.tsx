@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
+import { createGlobalStyle } from 'styled-components'
 
 import Game from './components/Game'
 import { GameScenario, BasicGameScenario } from './game/GameScenario'
@@ -15,6 +16,23 @@ const Container = styled.main`
     display: grid;
     grid-template-rows: minmax(50px, 80px) auto minmax(50px, 80px);
 `
+const GlobalStyles = createGlobalStyle`
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        user-select: none;
+        position: fixed;
+        overflow: hidden;
+    }
+`
+
 type AppProps = {
     path: string
 }
@@ -33,7 +51,12 @@ function App({ path }: AppProps) {
         }
         fetchWorld()
     }, [path, setScenario])
-    return <Container>{scenario && <Game scenario={scenario} />}</Container>
+    return (
+        <Container>
+            <GlobalStyles />
+            {scenario && <Game scenario={scenario} />}
+        </Container>
+    )
 }
 
 export default App
