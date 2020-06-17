@@ -1,8 +1,7 @@
 import React from 'react'
 
 import Card from './Card'
-import DummyCard from './DummyCard'
-import './Deck.scss'
+import { DummyCard } from './CardView'
 
 import { CardData, EventCard } from '../game/ContentTypes'
 import { SwipeDirection } from '../util/constants'
