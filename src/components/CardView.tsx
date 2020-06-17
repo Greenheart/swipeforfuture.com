@@ -17,6 +17,7 @@ type CardProps = {
 
 const CardContent = styled.div`
     display: block;
+    will-change: transform;
     position: relative;
     width: ${(props) => props.theme.cardWidth(1)};
     height: ${(props) => props.theme.cardWidth(2)};
@@ -88,7 +89,7 @@ const CardContent = styled.div`
         height: 100%;
         border: solid ${(props) => props.theme.cardWidth(0.035)} #fff;
         box-sizing: border-box;
-        background: url('https://images.unsplash.com/photo-1550537687-c91072c4792d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80');
+        background: url(${(props) => props.theme.cardBackImage});
         background-size: auto 100%;
         background-repeat: repeat;
         background-position: center center;
@@ -97,6 +98,7 @@ const CardContent = styled.div`
 CardContent.defaultProps = {
     theme: {
         cardWidth: (value: number) => value * 40 + 'vh',
+        cardBackImage: 'https://images.unsplash.com/photo-1550537687-c91072c4792d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80', 
     },
 }
 
@@ -132,7 +134,7 @@ export const DummyCard: React.FunctionComponent<DummyCardProps> = ({
             position: 'absolute',
             left: '50%',
             transform: `translate3d(-50%, 0, 0) translate3d(${x}px, ${y}px, 0) perspective(1500px) rotate3d(1, 0, 0, 30deg) rotate3d(0, 0, 1, ${r}deg)`,
-            transition: 'transform 0.1s',
+            transition: 'transform 0.3s',
             zIndex: layer,
         }}
     >
