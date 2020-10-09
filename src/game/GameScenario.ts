@@ -11,6 +11,11 @@ import {
     EventCardActionData,
     EventCardId,
 } from './ContentTypes'
+import {
+    worldStateRounds,
+    WorldStateExtension,
+    worldStateCycle,
+} from './WorldStateExtensions'
 
 export interface GameScenario {
     getInitialState(): GameState
@@ -22,6 +27,11 @@ export interface GameScenario {
     stats: GameWorld['stats']
 }
 
+export type GameScenarioOptions = {
+    random: () => number
+    worldStateExtensions: WorldStateExtension[]
+}
+
 /**
  * BasicGameScenario used to simulate game scenarios.
  *
@@ -30,10 +40,21 @@ export interface GameScenario {
 export class BasicGameScenario implements GameScenario {
     protected _scenario: GameWorld
     protected _random: () => number
+    protected _worldStateExtensions: WorldStateExtension[]
 
-    constructor(scenario: GameWorld, random: () => number = Math.random) {
+    constructor(
+        scenario: GameWorld,
+        { random, worldStateExtensions }: GameScenarioOptions | undefined = {
+            random: Math.random,
+            worldStateExtensions: [
+                worldStateRounds,
+                worldStateCycle('weekDay', 7),
+            ],
+        },
+    ) {
         this._scenario = scenario
         this._random = random
+        this._worldStateExtensions = worldStateExtensions
     }
 
     get stats() {
@@ -94,11 +115,15 @@ export class BasicGameScenario implements GameScenario {
         }
         const updatedWorldState = this.updateWorldState(modifier, world)
         const updatedWorldFlags = this.updateWorldFlags(modifier, world)
+        const newWorldState = this.applyWorldStateExtensions(
+            this._worldStateExtensions,
+            {
+                state: updatedWorldState,
+                flags: updatedWorldFlags,
+            },
+        )
 
-        return {
-            state: updatedWorldState,
-            flags: updatedWorldFlags,
-        }
+        return newWorldState
     }
 
     updateWorldState(
@@ -145,6 +170,13 @@ export class BasicGameScenario implements GameScenario {
         }, currentWorldFlags)
 
         return updatedWorldFlags
+    }
+
+    applyWorldStateExtensions(
+        extensions: WorldStateExtension[],
+        world: WorldState,
+    ): WorldState {
+        return extensions.reduce((acc, extension) => extension(acc), world)
     }
 
     getInitialCard(): EventCard | CardData {
