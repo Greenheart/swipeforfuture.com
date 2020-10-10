@@ -5,6 +5,7 @@ import {
     EventCards,
     WorldEvent,
     GameWorld,
+    WorldStateModifier,
 } from './ContentTypes'
 
 async function tryLoadFromLocalStorage(
@@ -26,6 +27,7 @@ async function tryLoadFromLocalStorage(
                 state: {},
                 flags: {},
             },
+            worldStateModifiers: []
         }
         const serializedData = localStorage.getItem(gameWorldId)
         const data: GameWorld = serializedData
@@ -48,19 +50,22 @@ async function tryLoadFromRestAPI(path: string): Promise<GameWorld | null> {
     const eventsPath = path + '/events.json'
     const eventCardsPath = path + '/event-cards.json'
     const defaultStatePath = path + '/default-state.json'
+    const worldStateModifiersPath = path + '/modifiers.json'
 
-    const [stats, cards, events, eventCards, defaultState] = await Promise.all<
+    const [stats, cards, events, eventCards, defaultState, worldStateModifiers] = await Promise.all<
         StatDefinition[],
         CardData[],
         WorldEvent[],
         EventCards,
-        WorldState
+        WorldState,
+        WorldStateModifier[]
     >([
         fetchJSON(statsPath),
         fetchJSON(cardsPath),
         fetchJSON(eventsPath),
         fetchJSON(eventCardsPath),
         fetchJSON(defaultStatePath),
+        fetchJSON(worldStateModifiersPath),
     ])
 
     return {
@@ -69,6 +74,7 @@ async function tryLoadFromRestAPI(path: string): Promise<GameWorld | null> {
         events,
         eventCards,
         defaultState,
+        worldStateModifiers,
     }
 }
 

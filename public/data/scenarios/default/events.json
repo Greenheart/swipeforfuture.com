@@ -16,31 +16,46 @@
         "isAvailableWhen": [
             {
                 "state": {
-                    "environment": [0, 0]
+                    "environment": [
+                        0,
+                        0
+                    ]
                 },
                 "flags": {}
             },
             {
                 "state": {
-                    "people": [0, 0]
+                    "people": [
+                        0,
+                        0
+                    ]
                 },
                 "flags": {}
             },
             {
                 "state": {
-                    "security": [0, 0]
+                    "security": [
+                        0,
+                        0
+                    ]
                 },
                 "flags": {}
             },
             {
                 "state": {
-                    "money": [0, 0]
+                    "money": [
+                        0,
+                        0
+                    ]
                 },
                 "flags": {}
             },
             {
                 "state": {
-                    "popularity": [0, 0]
+                    "popularity": [
+                        0,
+                        0
+                    ]
                 },
                 "flags": {}
             }

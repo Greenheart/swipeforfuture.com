@@ -12,9 +12,8 @@ import {
     EventCardId,
 } from './ContentTypes'
 import {
-    worldStateRounds,
     WorldStateExtension,
-    worldStateCycle,
+    worldStateExtensionFromData,
 } from './WorldStateExtensions'
 
 export interface GameScenario {
@@ -38,20 +37,18 @@ export type GameScenarioOptions = {
  * The design goal is to keep this stateless, allowing user code to manage state.
  */
 export class BasicGameScenario implements GameScenario {
-    protected _scenario: GameWorld
+    protected _scenario: Omit<GameWorld, "worldStateModifiers">
     protected _random: () => number
     protected _worldStateExtensions: WorldStateExtension[]
 
     constructor(
-        scenario: GameWorld,
-        { random, worldStateExtensions }: GameScenarioOptions | undefined = {
-            random: Math.random,
-            worldStateExtensions: [
-                worldStateRounds,
-                worldStateCycle('weekDay', 7),
-            ],
-        },
+        scenario: Omit<GameWorld, "worldStateModifiers">,
+        options: Partial<GameScenarioOptions> | undefined = {},
     ) {
+        const {
+            random = Math.random,
+            worldStateExtensions = []
+        } = options;
         this._scenario = scenario
         this._random = random
         this._worldStateExtensions = worldStateExtensions
@@ -318,5 +315,15 @@ export class BasicGameScenario implements GameScenario {
         })
 
         return array[selectionIndex]
+    }
+
+    /**
+     * Create a runtime GameScenario from data
+     * 
+     * @param data Data needed to setup a basic game scenario
+     */
+    public static fromData(data: GameWorld): GameScenario {
+        const extensions = worldStateExtensionFromData(data.worldStateModifiers)
+        return new BasicGameScenario(data, {worldStateExtensions: extensions});
     }
 }

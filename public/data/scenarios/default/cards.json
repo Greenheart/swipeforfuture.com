@@ -9,7 +9,10 @@
         "isAvailableWhen": [
             {
                 "state": {
-                    "environment": [0, 100]
+                    "environment": [
+                        0,
+                        100
+                    ]
                 },
                 "flags": {}
             }
@@ -45,7 +48,10 @@
         "isAvailableWhen": [
             {
                 "state": {
-                    "people": [0, 100]
+                    "people": [
+                        0,
+                        100
+                    ]
                 },
                 "flags": {}
             }
@@ -81,7 +87,10 @@
         "isAvailableWhen": [
             {
                 "state": {
-                    "security": [0, 100]
+                    "security": [
+                        0,
+                        100
+                    ]
                 },
                 "flags": {}
             }
@@ -117,7 +126,10 @@
         "isAvailableWhen": [
             {
                 "state": {
-                    "money": [0, 100]
+                    "money": [
+                        0,
+                        100
+                    ]
                 },
                 "flags": {}
             }
@@ -153,7 +165,10 @@
         "isAvailableWhen": [
             {
                 "state": {
-                    "popularity": [0, 100]
+                    "popularity": [
+                        0,
+                        100
+                    ]
                 },
                 "flags": {}
             }
@@ -189,7 +204,10 @@
         "isAvailableWhen": [
             {
                 "state": {
-                    "brown-coal-plant:prop:0": [1, 1]
+                    "brown-coal-plant:prop:0": [
+                        1,
+                        1
+                    ]
                 },
                 "flags": {
                     "envira-init:prop:5": true
@@ -234,9 +252,18 @@
         "isAvailableWhen": [
             {
                 "state": {
-                    "environment": [60, 100],
-                    "money": [30, 100],
-                    "solar-investments:prop:1": [0, 0]
+                    "environment": [
+                        60,
+                        100
+                    ],
+                    "money": [
+                        30,
+                        100
+                    ],
+                    "solar-investments:prop:1": [
+                        0,
+                        0
+                    ]
                 },
                 "flags": {
                     "infran-init:prop:6": true
@@ -276,8 +303,14 @@
         "isAvailableWhen": [
             {
                 "state": {
-                    "people": [50, 100],
-                    "roads-suggested:prop:2": [0, 0]
+                    "people": [
+                        50,
+                        100
+                    ],
+                    "roads-suggested:prop:2": [
+                        0,
+                        0
+                    ]
                 },
                 "flags": {
                     "infran-init:prop:6": true
@@ -285,8 +318,14 @@
             },
             {
                 "state": {
-                    "people": [70, 100],
-                    "roads-suggested:prop:2": [1, 1]
+                    "people": [
+                        70,
+                        100
+                    ],
+                    "roads-suggested:prop:2": [
+                        1,
+                        1
+                    ]
                 },
                 "flags": {
                     "infran-init:prop:6": true
@@ -294,8 +333,14 @@
             },
             {
                 "state": {
-                    "people": [90, 100],
-                    "roads-suggested:prop:2": [2, 2]
+                    "people": [
+                        90,
+                        100
+                    ],
+                    "roads-suggested:prop:2": [
+                        2,
+                        2
+                    ]
                 },
                 "flags": {
                     "infran-init:prop:6": true
@@ -339,7 +384,10 @@
         "isAvailableWhen": [
             {
                 "state": {
-                    "solar-investments:prop:1": [1, 1]
+                    "solar-investments:prop:1": [
+                        1,
+                        1
+                    ]
                 },
                 "flags": {
                     "infran-init:prop:6": true
@@ -387,9 +435,18 @@
         "isAvailableWhen": [
             {
                 "state": {
-                    "environment": [21, 100],
-                    "money": [15, 100],
-                    "brown-coal-plant:prop:0": [0, 0]
+                    "environment": [
+                        21,
+                        100
+                    ],
+                    "money": [
+                        15,
+                        100
+                    ],
+                    "brown-coal-plant:prop:0": [
+                        0,
+                        0
+                    ]
                 },
                 "flags": {}
             }

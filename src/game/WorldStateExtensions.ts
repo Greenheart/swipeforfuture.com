@@ -1,4 +1,5 @@
 import { WorldState } from './ContentTypes'
+import { WorldStateModifier } from "./ContentTypes"
 
 export type WorldStateExtension = (worldState: WorldState) => WorldState
 
@@ -40,4 +41,21 @@ export function worldStateCycle(
             flags: worldState.flags,
         }
     }
+}
+
+/**
+ * Generate a list of world state extension from a data description
+ * 
+ * @param modifiers Data description of modifiers which can be converted to extensions
+ */
+export function worldStateExtensionFromData(modifiers: WorldStateModifier[]): WorldStateExtension[] {
+    return modifiers.map(modifier => {
+        switch (modifier.type) {
+            case "round":
+                return worldStateRounds
+            case "cycle":
+                return worldStateCycle(modifier.id, modifier.length)
+            default: throw new Error("Missing modifier type: " + (modifier as any).type) // Hack to please the linter
+        }
+    })
 }

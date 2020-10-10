@@ -59,6 +59,16 @@ export const builder: ScenarioBuilder = {
                     [FLAGS.INFRAN_INIT]: false,
                 },
             },
+            worldStateModifiers: [
+                {
+                    type: "round"
+                },
+                {
+                    type: "cycle",
+                    id: "clockHour",
+                    length: 24,
+                }
+            ]
         }
         return scenario
     },
