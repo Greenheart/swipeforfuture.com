@@ -42,6 +42,7 @@ async function exportScenario(id: string, scenario: Scenario) {
         events: 'events',
         defaultState: 'default-state',
         stats: 'stats',
+        worldStateModifiers: 'modifiers',
     }
 
     const outputDir = join(__dirname, '..', 'public', 'data', 'scenarios', id)

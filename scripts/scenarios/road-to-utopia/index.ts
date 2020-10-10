@@ -12,6 +12,7 @@ export const builder: ScenarioBuilder = {
                 state: {},
                 flags: {},
             },
+            worldStateModifiers: [],
         }
         return scenario
     },

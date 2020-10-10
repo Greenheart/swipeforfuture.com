@@ -1,0 +1,10 @@
+[
+    {
+        "type": "round"
+    },
+    {
+        "type": "cycle",
+        "id": "clockHour",
+        "length": 24
+    }
+]

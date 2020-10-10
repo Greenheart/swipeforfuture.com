@@ -43,7 +43,7 @@ function App({ path }: AppProps) {
         const fetchWorld = async () => {
             const scenarioData = await loadScenario(path)
             if (scenarioData) {
-                const instance = new BasicGameScenario(scenarioData)
+                const instance = BasicGameScenario.fromData(scenarioData)
                 setScenario(instance)
             } else {
                 console.warn('Scenario loading error')

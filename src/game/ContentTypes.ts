@@ -6,6 +6,15 @@ export type GameWorld = {
     events: WorldEvent[]
     eventCards: EventCards
     defaultState: WorldState
+    worldStateModifiers: WorldStateModifier[]
+}
+
+export type WorldStateModifier = {
+    type: "round"
+} | {
+    type: "cycle"
+    id: string
+    length: number
 }
 
 export type WorldState = {
