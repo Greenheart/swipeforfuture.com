@@ -65,7 +65,7 @@ export const builder: ScenarioBuilder = {
                 },
                 {
                     type: "cycle",
-                    id: "clockHour",
+                    id: "hourOfDay",
                     length: 24,
                 }
             ]
