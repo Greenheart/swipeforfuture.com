@@ -44,6 +44,20 @@ export function worldStateCycle(
 }
 
 /**
+ * World state extension debug logging the world state
+ *
+ * @param worldState The world state on which to operate
+ * @returns WorldState The input world state
+ */
+export const debugLogExtension: WorldStateExtension = (
+    worldState: WorldState,
+) => {
+    console.table(worldState.state);
+    console.table(worldState.flags)
+    return worldState
+}
+
+/**
  * Generate a list of world state extension from a data description
  * 
  * @param modifiers Data description of modifiers which can be converted to extensions
@@ -55,6 +69,8 @@ export function worldStateExtensionFromData(modifiers: WorldStateModifier[]): Wo
                 return worldStateRounds
             case "cycle":
                 return worldStateCycle(modifier.id, modifier.length)
+            case "debug":
+                return debugLogExtension
             default: throw new Error("Missing modifier type: " + (modifier as any).type) // Hack to please the linter
         }
     })
