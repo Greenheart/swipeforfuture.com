@@ -10,7 +10,7 @@ export type GameWorld = {
 }
 
 export type WorldStateModifier = {
-    type: "round"
+    type: "round" | "debug"
 } | {
     type: "cycle"
     id: string
