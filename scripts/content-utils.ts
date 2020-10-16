@@ -182,6 +182,19 @@ export const setAction = action('set')
 export const addAction = action('add')
 
 /**
+ * Add description to any object
+ *
+ * @param data The initial object
+ * @param description The description to include
+ */
+export function describe<T extends {description?: string}>(data: T, description: string): T {
+    return {
+        ...data,
+        description,
+    }
+}
+
+/**
  * Easily create an action with the replace modifier
  *
  * Actions are used to modify the game state and flags
@@ -220,11 +233,14 @@ export function action(
  * @param eventCardId The next EventCard to trigger, or null to stop the event.
  */
 export function eventCardAction(
-    action: CardActionData,
+    action: CardActionData | string,
     eventCardId: EventCardActionData['nextEventCardId'] = null,
 ): EventCardActionData {
+    const actualAction = typeof action === "string" ? (
+        describe(addAction(), action)
+    ) : action;
     return {
-        ...action,
+        ...actualAction,
         nextEventCardId: eventCardId,
     }
 }

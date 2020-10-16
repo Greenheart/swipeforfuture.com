@@ -13,6 +13,7 @@
                     "state": {},
                     "flags": {}
                 },
+                "description": "Nah. I'm good. I think I can handle things on my own.",
                 "nextEventCardId": "welcome-loop:card:4"
             },
             "right": {
@@ -21,6 +22,7 @@
                     "state": {},
                     "flags": {}
                 },
+                "description": "That sounds great. Let's do it ASAP",
                 "nextEventCardId": "welcome-lunch:card:5"
             }
         }
@@ -39,6 +41,7 @@
                     "state": {},
                     "flags": {}
                 },
+                "description": "Get off my back.",
                 "nextEventCardId": "welcome-loop:card:4"
             },
             "right": {
@@ -47,6 +50,7 @@
                     "state": {},
                     "flags": {}
                 },
+                "description": "Alright. Let's do this.",
                 "nextEventCardId": "welcome-lunch:card:5"
             }
         }
@@ -70,6 +74,7 @@
                         "lunch-meeting-completed:prop:4": true
                     }
                 },
+                "description": "Nice talk. Love the economy!",
                 "nextEventCardId": null
             },
             "right": {
@@ -83,6 +88,7 @@
                         "lunch-meeting-completed:prop:4": true
                     }
                 },
+                "description": "Nice talk. We should think about our future.",
                 "nextEventCardId": null
             }
         }
