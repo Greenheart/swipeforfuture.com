@@ -43,7 +43,7 @@ export class BasicGameScenario implements GameScenario {
 
     constructor(
         scenario: Omit<GameWorld, "worldStateModifiers">,
-        options: Partial<GameScenarioOptions> | undefined = {},
+        options: Partial<GameScenarioOptions> = {},
     ) {
         const {
             random = Math.random,
@@ -112,7 +112,7 @@ export class BasicGameScenario implements GameScenario {
         }
         const updatedWorldState = this.updateWorldState(modifier, world)
         const updatedWorldFlags = this.updateWorldFlags(modifier, world)
-        const newWorldState = this.applyWorldStateExtensions(
+        const newWorld = this.applyWorldStateExtensions(
             this._worldStateExtensions,
             {
                 state: updatedWorldState,
@@ -120,7 +120,7 @@ export class BasicGameScenario implements GameScenario {
             },
         )
 
-        return newWorldState
+        return newWorld
     }
 
     updateWorldState(
