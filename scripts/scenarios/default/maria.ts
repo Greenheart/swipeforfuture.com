@@ -3,11 +3,9 @@ import {
     createEventCardFromTemplate,
     unsplashImage,
     cardRef,
-    addAction,
     setAction,
     eventCardAction,
     worldQuery,
-    describe,
 } from '../../content-utils'
 import { POPULARITY, MONEY, ENVIRONMENT } from './stats'
 import { FLAGS } from './flags'
@@ -64,20 +62,16 @@ export const mariaEventCards = {
             'Really nice lunch! Now your first big decision has come. Should you prioritize the economy (left) or environment (right)?',
         actions: {
             left: eventCardAction(
-                describe(
-                    setAction(
-                        { [MONEY]: 70, [POPULARITY]: 52 },
-                        { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
-                    ),
+                setAction(
+                    { [MONEY]: 70, [POPULARITY]: 52 },
+                    { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
                     "Nice talk. Love the economy!"
                 ),
             ),
             right: eventCardAction(
-                describe(
-                    setAction(
-                        { [ENVIRONMENT]: 70, [POPULARITY]: 65 },
-                        { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
-                    ),
+                setAction(
+                    { [ENVIRONMENT]: 70, [POPULARITY]: 65 },
+                    { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
                     "Nice talk. We should think about our future."
                 ),
             ),

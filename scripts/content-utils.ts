@@ -17,8 +17,6 @@ import {
     CardActionData,
     WorldQuery,
     EventCardActionData,
-    WorldEvent,
-    EventCardId,
 } from '../src/game/ContentTypes'
 
 /**
@@ -182,19 +180,6 @@ export const setAction = action('set')
 export const addAction = action('add')
 
 /**
- * Add description to any object
- *
- * @param data The initial object
- * @param description The description to include
- */
-export function describe<T extends {description?: string}>(data: T, description: string): T {
-    return {
-        ...data,
-        description,
-    }
-}
-
-/**
  * Easily create an action with the replace modifier
  *
  * Actions are used to modify the game state and flags
@@ -214,9 +199,11 @@ export function action(
 ): (
     state?: CardActionData['modifier']['state'],
     flags?: CardActionData['modifier']['flags'],
+    description?: string,
 ) => CardActionData {
-    return (state = {}, flags = {}) => {
+    return (state = {}, flags = {}, description) => {
         return {
+            description,
             modifier: {
                 type,
                 state,
@@ -229,7 +216,8 @@ export function action(
 /**
  * Create an EventCard action to modify the state & flags and possibly point to another EventCard.
  *
- * @param action The action to trigger upon swipe.
+ * @param action The action is either a state modifier or a string for description.
+ *               An empty state modifier will be used for a string description.
  * @param eventCardId The next EventCard to trigger, or null to stop the event.
  */
 export function eventCardAction(
@@ -237,7 +225,7 @@ export function eventCardAction(
     eventCardId: EventCardActionData['nextEventCardId'] = null,
 ): EventCardActionData {
     const actualAction = typeof action === "string" ? (
-        describe(addAction(), action)
+        addAction({}, {}, action)
     ) : action;
     return {
         ...actualAction,
