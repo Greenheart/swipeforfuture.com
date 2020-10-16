@@ -34,6 +34,7 @@ const CardContent = styled.div`
 
         & > .description {
             padding: 5%;
+            text-align: center;
         }
 
         & > .arrow {
@@ -71,7 +72,7 @@ const CardContent = styled.div`
         right: -50%;
     }
 
-    & > .card-front {
+    & > .card-view {
         display: block;
         will-change: transform;
         position: relative;
@@ -174,7 +175,7 @@ export const CardView: React.SFC<CardProps> = ({
             <div className="description">{rightAction ?? "Yes"}</div>
             <div className="arrow">&rarr;</div>
         </div>
-        <div className="card-front">
+        <div className="card-view">
             <div
                 className="card-image"
                 style={{
@@ -206,7 +207,9 @@ export const DummyCard: React.FunctionComponent<DummyCardProps> = ({
         }}
     >
         <CardContent>
-            <div className="card-back"></div>
+            <div className="card-view">
+                <div className="card-back"></div>
+            </div>
         </CardContent>
     </div>
 )
