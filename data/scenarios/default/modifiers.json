@@ -1,0 +1,13 @@
+[
+    {
+        "type": "round"
+    },
+    {
+        "type": "cycle",
+        "id": "hourOfDay",
+        "length": 24
+    },
+    {
+        "type": "debug"
+    }
+]

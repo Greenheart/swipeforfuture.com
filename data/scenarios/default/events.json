@@ -1,0 +1,91 @@
+[
+    {
+        "initialEventCardId": "welcome:card:3",
+        "isAvailableWhen": [
+            {
+                "state": {},
+                "flags": {
+                    "lunch-meeting-completed:prop:4": false
+                }
+            }
+        ],
+        "probability": 1
+    },
+    {
+        "initialEventCardId": "end-game:card:2",
+        "isAvailableWhen": [
+            {
+                "state": {
+                    "environment": [
+                        0,
+                        0
+                    ]
+                },
+                "flags": {}
+            },
+            {
+                "state": {
+                    "people": [
+                        0,
+                        0
+                    ]
+                },
+                "flags": {}
+            },
+            {
+                "state": {
+                    "security": [
+                        0,
+                        0
+                    ]
+                },
+                "flags": {}
+            },
+            {
+                "state": {
+                    "money": [
+                        0,
+                        0
+                    ]
+                },
+                "flags": {}
+            },
+            {
+                "state": {
+                    "popularity": [
+                        0,
+                        0
+                    ]
+                },
+                "flags": {}
+            }
+        ],
+        "probability": 1
+    },
+    {
+        "initialEventCardId": "infran-intro:card:1",
+        "isAvailableWhen": [
+            {
+                "state": {},
+                "flags": {
+                    "lunch-meeting-completed:prop:4": true,
+                    "infran-init:prop:6": false
+                }
+            }
+        ],
+        "probability": 0.5
+    },
+    {
+        "initialEventCardId": "envira-intro:card:0",
+        "isAvailableWhen": [
+            {
+                "state": {},
+                "flags": {
+                    "envira-init:prop:5": false,
+                    "lunch-meeting-completed:prop:4": true
+                }
+            }
+        ],
+        "probability": 0.5
+    }
+]
