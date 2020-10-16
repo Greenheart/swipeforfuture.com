@@ -46,12 +46,13 @@ const Card: React.FunctionComponent<CardProps> = ({
     onSwipe,
     layer,
 }) => {
-    const { title, location, text, image } = cardData
+    const { title, location, text, image, actions } = cardData
 
     const [cardAnimationState, setCardAnimationState] = useSpring(() => ({
         ...to(i),
         from: from(),
     }))
+    const [directionPreview, setDirectionPreview] = useState<number>(0);
 
     const [cardState] = useState<{
         isGone: boolean
@@ -83,6 +84,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                 cardState.currentKey = null
             }, 200)
         }
+        setDirectionPreview(dir);
         const isGone = cardState.isGone
 
         const x = isGone ? (200 + window.innerWidth) * dir : down ? xDelta : 0
@@ -127,6 +129,7 @@ const Card: React.FunctionComponent<CardProps> = ({
     })
 
     const { x, y, rot, scale } = cardAnimationState
+    console.log(directionPreview);
 
     return (
         <animated.div
@@ -149,6 +152,9 @@ const Card: React.FunctionComponent<CardProps> = ({
                 title={title}
                 text={text}
                 location={location}
+                leftAction={actions.left.description}
+                rightAction={actions.right.description}
+                direction={directionPreview}
             />
         </animated.div>
     )
