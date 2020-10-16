@@ -8,21 +8,21 @@
         "type": "event",
         "actions": {
             "left": {
+                "description": "Nah. I'm good. I think I can handle things on my own.",
                 "modifier": {
                     "type": "add",
                     "state": {},
                     "flags": {}
                 },
-                "description": "Nah. I'm good. I think I can handle things on my own.",
                 "nextEventCardId": "welcome-loop:card:4"
             },
             "right": {
+                "description": "That sounds great. Let's do it ASAP",
                 "modifier": {
                     "type": "add",
                     "state": {},
                     "flags": {}
                 },
-                "description": "That sounds great. Let's do it ASAP",
                 "nextEventCardId": "welcome-lunch:card:5"
             }
         }
@@ -36,21 +36,21 @@
         "type": "event",
         "actions": {
             "left": {
+                "description": "Get off my back.",
                 "modifier": {
                     "type": "add",
                     "state": {},
                     "flags": {}
                 },
-                "description": "Get off my back.",
                 "nextEventCardId": "welcome-loop:card:4"
             },
             "right": {
+                "description": "Alright. Let's do this.",
                 "modifier": {
                     "type": "add",
                     "state": {},
                     "flags": {}
                 },
-                "description": "Alright. Let's do this.",
                 "nextEventCardId": "welcome-lunch:card:5"
             }
         }
@@ -64,6 +64,7 @@
         "type": "event",
         "actions": {
             "left": {
+                "description": "Nice talk. Love the economy!",
                 "modifier": {
                     "type": "set",
                     "state": {
@@ -74,10 +75,10 @@
                         "lunch-meeting-completed:prop:4": true
                     }
                 },
-                "description": "Nice talk. Love the economy!",
                 "nextEventCardId": null
             },
             "right": {
+                "description": "Nice talk. We should think about our future.",
                 "modifier": {
                     "type": "set",
                     "state": {
@@ -88,7 +89,6 @@
                         "lunch-meeting-completed:prop:4": true
                     }
                 },
-                "description": "Nice talk. We should think about our future.",
                 "nextEventCardId": null
             }
         }
