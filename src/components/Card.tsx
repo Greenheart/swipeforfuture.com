@@ -84,7 +84,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                 cardState.currentKey = null
             }, 200)
         }
-        setDirectionPreview(dir);
+        setDirectionPreview(down ? dir : 0);
         const isGone = cardState.isGone
 
         const x = isGone ? (200 + window.innerWidth) * dir : down ? xDelta : 0
@@ -129,7 +129,6 @@ const Card: React.FunctionComponent<CardProps> = ({
     })
 
     const { x, y, rot, scale } = cardAnimationState
-    console.log(directionPreview);
 
     return (
         <animated.div
