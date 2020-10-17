@@ -54,6 +54,8 @@ const CardContent = styled.div`
         opacity: 0;
         transition: transform 0.2s, opacity 0.2s;
         transform: translateX(0%);
+        box-shadow: 0 12.5px 20px -10px rgba(50, 50, 73, 0.4),
+            0 10px 10px -10px rgba(50, 50, 73, 0.3);
 
         & > .description {
             padding: ${mediumPadding};
