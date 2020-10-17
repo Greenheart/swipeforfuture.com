@@ -19,8 +19,14 @@ type CardProps = {
     direction?: SwipeDirection
 }
 
+function cardSize(
+    scale: number
+): ((props: {theme: {cardWidth: (s: number) => number}}) => number) {
+    return ({theme: {cardWidth}}: {theme: {cardWidth: (s: number) => number}}) => cardWidth(scale);
+}
+
 const CardContent = styled.div`
-    font-size: ${(props) => props.theme.cardWidth(0.035)};
+    font-size: ${cardSize(0.035)};
 
     & > .action-left, & > .action-right {
         font-size: 160%;
@@ -31,6 +37,7 @@ const CardContent = styled.div`
         width: 50%;
 
         padding: 0;
+        opacity: 0;
 
         & > .description {
             padding: 5%;
@@ -39,7 +46,7 @@ const CardContent = styled.div`
 
         & > .arrow {
             background: #333;
-            font-size: 200%;
+            font-size: 160%;
             color: #fff;
             padding-left: 5%;
             padding-right: 5%;
@@ -47,10 +54,9 @@ const CardContent = styled.div`
     }
 
     & > .action-right {
-        transition: left 0.2s;
+        transition: left 0.2s, opacity 0.2s;
         left: 0;
-        border-top-left-radius: ${(props) => props.theme.cardWidth(0.035)};
-        border-bottom-left-radius: ${(props) => props.theme.cardWidth(0.035)};
+        border-radius: ${cardSize(0.035)};
 
         & > .arrow {
             text-align: right;
@@ -58,27 +64,28 @@ const CardContent = styled.div`
     }
 
     & > .action-left {
-        transition: right 0.2s;
+        transition: right 0.2s, opacity 0.2s;
         right: 0;
-        border-top-right-radius: ${(props) => props.theme.cardWidth(0.035)};
-        border-bottom-right-radius: ${(props) => props.theme.cardWidth(0.035)};
+        border-radius: ${cardSize(0.035)};
     }
 
     & > .action-right.active {
-        left: -50%;
+        left: -30%;
+        opacity: 1;
     }
 
     & > .action-left.active {
-        right: -50%;
+        right: -30%;
+        opacity: 1;
     }
 
     & > .card-view {
         display: block;
         will-change: transform;
         position: relative;
-        width: ${(props) => props.theme.cardWidth(1)};
-        height: ${(props) => props.theme.cardWidth(2)};
-        border-radius: ${(props) => props.theme.cardWidth(0.035)};
+        width: ${cardSize(1)};
+        height: ${cardSize(2)};
+        border-radius: ${cardSize(0.035)};
         box-shadow: 0 12.5px 20px -10px rgba(50, 50, 73, 0.4),
             0 10px 10px -10px rgba(50, 50, 73, 0.3);
         overflow: hidden;
@@ -90,7 +97,7 @@ const CardContent = styled.div`
             background-repeat: no-repeat;
             background-position: center center;
             background-size: auto 120%;
-            border: solid ${(props) => props.theme.cardWidth(0.035)} #fff;
+            border: solid ${cardSize(0.035)} #fff;
             border-style: solid solid none solid;
         }
 
@@ -104,16 +111,16 @@ const CardContent = styled.div`
 
             & > em.location {
                 position: absolute;
-                top: ${(props) => props.theme.cardWidth(-0.1125)};
+                top: ${cardSize(-0.1125)};
                 right: 0;
                 display: block;
                 font-size: 140%;
                 background: rgba(230, 230, 230, 0.7);
                 border-radius: 1vh 0 0 1vh;
-                padding: ${(props) => props.theme.cardWidth(0.0125)}
-                    ${(props) => props.theme.cardWidth(0.125)}
-                    ${(props) => props.theme.cardWidth(0.0125)}
-                    ${(props) => props.theme.cardWidth(0.05)};
+                padding: ${cardSize(0.0125)}
+                    ${cardSize(0.125)}
+                    ${cardSize(0.0125)}
+                    ${cardSize(0.05)};
             }
 
             & > h1.title {
@@ -123,17 +130,17 @@ const CardContent = styled.div`
                 background: #333;
                 display: block;
                 margin: 0;
-                padding: ${(props) => props.theme.cardWidth(0.025)}
-                    ${(props) => props.theme.cardWidth(0.0625)};
+                padding: ${cardSize(0.025)}
+                    ${cardSize(0.0625)};
             }
 
             & > p.text {
                 font-size: 160%;
                 color: #333;
-                padding: ${(props) => props.theme.cardWidth(0.05)}
-                    ${(props) => props.theme.cardWidth(0.0625)}
-                    ${(props) => props.theme.cardWidth(0.1)}
-                    ${(props) => props.theme.cardWidth(0.0625)};
+                padding: ${cardSize(0.05)}
+                    ${cardSize(0.0625)}
+                    ${cardSize(0.1)}
+                    ${cardSize(0.0625)};
                 margin: 0;
             }
         }
@@ -141,7 +148,7 @@ const CardContent = styled.div`
         & > .card-back {
             width: 100%;
             height: 100%;
-            border: solid ${(props) => props.theme.cardWidth(0.035)} #fff;
+            border: solid ${cardSize(0.035)} #fff;
             box-sizing: border-box;
             background: url(${(props) => props.theme.cardBackImage});
             background-size: auto 100%;
@@ -167,14 +174,6 @@ export const CardView: React.SFC<CardProps> = ({
     direction,
 }) => (
     <CardContent>
-        <div className={"action-left" + (direction === SwipeDirection.Left ? " active" : "")}>
-            <div className="description">{leftAction ?? "No"}</div>
-            <div className="arrow">&larr;</div>
-        </div>
-        <div className={"action-right" + (direction === SwipeDirection.Right ? " active" : "")}>
-            <div className="description">{rightAction ?? "Yes"}</div>
-            <div className="arrow">&rarr;</div>
-        </div>
         <div className="card-view">
             <div
                 className="card-image"
@@ -187,6 +186,14 @@ export const CardView: React.SFC<CardProps> = ({
                 <h1 className="title">{title}</h1>
                 <p className="text">{text}</p>
             </div>
+        </div>
+        <div className={"action-left" + (direction === SwipeDirection.Left ? " active" : "")}>
+            <div className="description">{leftAction ?? "No"}</div>
+            <div className="arrow">&larr;</div>
+        </div>
+        <div className={"action-right" + (direction === SwipeDirection.Right ? " active" : "")}>
+            <div className="description">{rightAction ?? "Yes"}</div>
+            <div className="arrow">&rarr;</div>
         </div>
     </CardContent>
 )
