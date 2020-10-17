@@ -21,12 +21,18 @@ type CardProps = {
 
 function cardSize(
     scale: number
-): ((props: {theme: {cardWidth: (s: number) => number}}) => number) {
-    return ({theme: {cardWidth}}: {theme: {cardWidth: (s: number) => number}}) => cardWidth(scale);
+): ((props: {theme: {cardWidth: (s: number) => string}}) => string) {
+    return ({theme: {cardWidth}}: {theme: {cardWidth: (s: number) => string}}) => cardWidth(scale);
 }
 
+const borderRadius = cardSize(0.035);
+const cardWidth = cardSize(1);
+const cardHeight = cardSize(2);
+const actionWidth = cardSize(0.5);
+const minActionWidth = cardSize(0.25);
+
 const CardContent = styled.div`
-    font-size: ${cardSize(0.035)};
+    font-size: ${borderRadius};
 
     & > .action-left, & > .action-right {
         font-size: 160%;
@@ -34,13 +40,16 @@ const CardContent = styled.div`
         position: absolute;
         overflow: hidden;
         top: 20%;
-        width: 50%;
+        max-width: ${actionWidth};
+        min-width: ${minActionWidth};
 
         padding: 0;
         opacity: 0;
+        transition: transform 0.2s, opacity 0.2s;
+        transform: translateX(0%);
 
         & > .description {
-            padding: 5%;
+            padding: ${cardSize(0.025)};
             text-align: center;
         }
 
@@ -48,15 +57,14 @@ const CardContent = styled.div`
             background: #333;
             font-size: 160%;
             color: #fff;
-            padding-left: 5%;
-            padding-right: 5%;
+            padding-left: ${cardSize(0.025)};
+            padding-right: ${cardSize(0.025)};
         }
     }
 
     & > .action-right {
-        transition: left 0.2s, opacity 0.2s;
         left: 0;
-        border-radius: ${cardSize(0.035)};
+        border-radius: ${borderRadius};
 
         & > .arrow {
             text-align: right;
@@ -64,18 +72,17 @@ const CardContent = styled.div`
     }
 
     & > .action-left {
-        transition: right 0.2s, opacity 0.2s;
         right: 0;
-        border-radius: ${cardSize(0.035)};
+        border-radius: ${borderRadius};
     }
 
     & > .action-right.active {
-        left: -30%;
+        transform: translateX(-50%);
         opacity: 1;
     }
 
     & > .action-left.active {
-        right: -30%;
+        transform: translateX(50%);
         opacity: 1;
     }
 
@@ -83,9 +90,9 @@ const CardContent = styled.div`
         display: block;
         will-change: transform;
         position: relative;
-        width: ${cardSize(1)};
-        height: ${cardSize(2)};
-        border-radius: ${cardSize(0.035)};
+        width: ${cardWidth};
+        height: ${cardHeight};
+        border-radius: ${borderRadius};
         box-shadow: 0 12.5px 20px -10px rgba(50, 50, 73, 0.4),
             0 10px 10px -10px rgba(50, 50, 73, 0.3);
         overflow: hidden;
@@ -97,7 +104,7 @@ const CardContent = styled.div`
             background-repeat: no-repeat;
             background-position: center center;
             background-size: auto 120%;
-            border: solid ${cardSize(0.035)} #fff;
+            border: solid ${borderRadius} #fff;
             border-style: solid solid none solid;
         }
 
@@ -148,7 +155,7 @@ const CardContent = styled.div`
         & > .card-back {
             width: 100%;
             height: 100%;
-            border: solid ${cardSize(0.035)} #fff;
+            border: solid ${borderRadius} #fff;
             box-sizing: border-box;
             background: url(${(props) => props.theme.cardBackImage});
             background-size: auto 100%;
