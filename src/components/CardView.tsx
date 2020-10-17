@@ -20,7 +20,7 @@ type CardProps = {
 }
 
 function cardSize(
-    scale: number
+    scale: number,
 ): ((props: {theme: {cardWidth: (s: number) => string}}) => string) {
     return ({theme: {cardWidth}}: {theme: {cardWidth: (s: number) => string}}) => cardWidth(scale);
 }
@@ -30,6 +30,13 @@ const cardWidth = cardSize(1);
 const cardHeight = cardSize(2);
 const actionWidth = cardSize(0.5);
 const minActionWidth = cardSize(0.25);
+const largePadding = cardSize(0.125);
+const halfLargePadding = cardSize(0.0625);
+const quadPadding = cardSize(0.1);
+const doublePadding = cardSize(0.05);
+const mediumPadding = cardSize(0.025);
+const halfPadding = cardSize(0.0125);
+const locationPosition = cardSize(-0.1125);
 
 const CardContent = styled.div`
     font-size: ${borderRadius};
@@ -49,7 +56,7 @@ const CardContent = styled.div`
         transform: translateX(0%);
 
         & > .description {
-            padding: ${cardSize(0.025)};
+            padding: ${mediumPadding};
             text-align: center;
         }
 
@@ -57,8 +64,8 @@ const CardContent = styled.div`
             background: #333;
             font-size: 160%;
             color: #fff;
-            padding-left: ${cardSize(0.025)};
-            padding-right: ${cardSize(0.025)};
+            padding-left: ${mediumPadding};
+            padding-right: ${mediumPadding};
         }
     }
 
@@ -118,16 +125,16 @@ const CardContent = styled.div`
 
             & > em.location {
                 position: absolute;
-                top: ${cardSize(-0.1125)};
+                top: ${locationPosition};
                 right: 0;
                 display: block;
                 font-size: 140%;
                 background: rgba(230, 230, 230, 0.7);
                 border-radius: 1vh 0 0 1vh;
-                padding: ${cardSize(0.0125)}
-                    ${cardSize(0.125)}
-                    ${cardSize(0.0125)}
-                    ${cardSize(0.05)};
+                padding: ${halfPadding}
+                    ${largePadding}
+                    ${halfPadding}
+                    ${doublePadding};
             }
 
             & > h1.title {
@@ -137,17 +144,17 @@ const CardContent = styled.div`
                 background: #333;
                 display: block;
                 margin: 0;
-                padding: ${cardSize(0.025)}
-                    ${cardSize(0.0625)};
+                padding: ${mediumPadding}
+                    ${halfLargePadding};
             }
 
             & > p.text {
                 font-size: 160%;
                 color: #333;
-                padding: ${cardSize(0.05)}
-                    ${cardSize(0.0625)}
-                    ${cardSize(0.1)}
-                    ${cardSize(0.0625)};
+                padding: ${doublePadding}
+                    ${halfLargePadding}
+                    ${quadPadding}
+                    ${halfLargePadding};
                 margin: 0;
             }
         }
