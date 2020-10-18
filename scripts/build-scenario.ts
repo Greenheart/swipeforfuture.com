@@ -19,7 +19,7 @@ async function buildScenario(id: string) {
         ).builder
 
         const scenario = builder.run()
-        console.log(`✅ Sucessfully built scenario "${id}"`)
+        console.log(`✅ Successfully built scenario "${id}"`)
 
         return scenario
     } catch (e) {
@@ -67,7 +67,7 @@ async function exportScenario(id: string, scenario: Scenario) {
     // IDEA: Add support for building all images used and saving them to a directory
     // save with format `pexels-[ID].png` or `unsplash-[ID].png`
 
-    console.log(`✅ Sucessfully exported scenario "${id}" to ${outputDir}`)
+    console.log(`✅ Successfully exported scenario "${id}" to ${outputDir}`)
 }
 
 buildScenario(id).then((scenario: Scenario) => {
