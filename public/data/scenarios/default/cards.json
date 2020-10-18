@@ -384,7 +384,10 @@
         "isAvailableWhen": [
             {
                 "state": {
-                    "environment": [0, 40]
+                    "environment": [
+                        0,
+                        40
+                    ]
                 },
                 "flags": {}
             }
@@ -406,10 +409,10 @@
                 "modifier": {
                     "type": "add",
                     "state": {
-                        "environment": 30,
+                        "environment": 20,
                         "people": 10,
                         "security": 8,
-                        "money": -10,
+                        "money": -15,
                         "popularity": 25
                     },
                     "flags": {}
