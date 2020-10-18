@@ -376,6 +376,52 @@
     },
     {
         "type": "card",
+        "image": "https://images.unsplash.com/photo-1544513566-b4de3719ee70?fit=crop&w=800&q=60",
+        "title": "Extreme weather disaster",
+        "location": "South-east Asia",
+        "text": "Some of our allied countries were just hit by extreme weather. Entire cities were wiped out. They need help with disaster relief. Should we increase our foreign aid budget and help them?",
+        "weight": 100,
+        "isAvailableWhen": [
+            {
+                "state": {
+                    "environment": [
+                        0,
+                        40
+                    ]
+                },
+                "flags": {}
+            }
+        ],
+        "actions": {
+            "left": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "people": -10,
+                        "security": -13,
+                        "money": 5,
+                        "popularity": -10
+                    },
+                    "flags": {}
+                }
+            },
+            "right": {
+                "modifier": {
+                    "type": "add",
+                    "state": {
+                        "environment": 20,
+                        "people": 10,
+                        "security": 8,
+                        "money": -15,
+                        "popularity": 25
+                    },
+                    "flags": {}
+                }
+            }
+        }
+    },
+    {
+        "type": "card",
         "image": "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?fit=crop&w=800&q=60",
         "title": "Our solar project is ready!",
         "location": "The greener other side",
