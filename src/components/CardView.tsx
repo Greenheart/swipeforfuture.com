@@ -53,7 +53,7 @@ const CardContent = styled.div`
         padding: 0;
         opacity: 0;
         transition: transform 0.2s, opacity 0.2s;
-        transform: translateX(0%) scaleX(70%) scaleY(70%);
+        transform: translateX(0%) scale(0.7);
         box-shadow: 0 12.5px 20px -10px rgba(50, 50, 73, 0.4),
             0 10px 10px -10px rgba(50, 50, 73, 0.3);
 
@@ -86,12 +86,12 @@ const CardContent = styled.div`
     }
 
     & > .action-right.active {
-        transform: translateX(-50%) scaleX(100%) scaleY(100%);
+        transform: translateX(-50%) scale(1);
         opacity: 1;
     }
 
     & > .action-left.active {
-        transform: translateX(50%) scaleX(100%) scaleY(100%);
+        transform: translateX(50%) scale(1);
         opacity: 1;
     }
 
