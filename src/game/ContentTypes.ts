@@ -15,6 +15,10 @@ export type WorldStateModifier = {
     type: "cycle"
     id: string
     length: number
+} | {
+    type: "sum" | "min" | "max",
+    sourceIds: string[],
+    targetId: string,
 }
 
 export type WorldState = {

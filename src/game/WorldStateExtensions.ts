@@ -44,6 +44,31 @@ export function worldStateCycle(
 }
 
 /**
+ * Creates a reducer for world state parameters
+ * 
+ * @param targetId The id of the state parameter that will receive the result
+ * @param sourceIds The ids of the sources that are used in the reduction
+ * @param func The reducer function
+ * @param initialValue The initial value to the reducer
+ * @returns A world state extension that reduces a single value from multiple sources
+ */
+function reduceState(targetId: string, sourceIds: string[], func: (a: number, b: number) => number, initialValue?: number) {
+    return (worldState: WorldState) => {
+        const stateValues = sourceIds.map(id => worldState.state[id] ?? 0);
+        const result = initialValue 
+            ? stateValues.reduce((acc, value) => func(acc, value), initialValue)
+            : stateValues.reduce((acc, value) => func(acc, value))
+        return {
+            state: {
+                ...worldState.state,
+                [targetId]: result,
+            },
+            flags: worldState.flags
+        }
+    }
+}
+
+/**
  * World state extension debug logging the world state
  *
  * @param worldState The world state on which to operate
@@ -69,6 +94,12 @@ export function worldStateExtensionFromData(modifiers: WorldStateModifier[]): Wo
                 return worldStateRounds
             case "cycle":
                 return worldStateCycle(modifier.id, modifier.length)
+            case "min":
+                return reduceState(modifier.targetId, modifier.sourceIds, (a, b) => Math.min(a, b))
+            case "max":
+                return reduceState(modifier.targetId, modifier.sourceIds, (a, b) => Math.max(a, b))
+            case "sum":
+                return reduceState(modifier.targetId, modifier.sourceIds, (a, b) => a + b, 0)
             case "debug":
                 return debugLogExtension
             default: throw new Error("Missing modifier type: " + (modifier as any).type) // Hack to please the linter
