@@ -10,7 +10,7 @@ export type GameWorld = {
 }
 
 export type WorldStateModifier = {
-    type: "round" | "debug"
+    type: "round"
 } | {
     type: "cycle"
     id: string
@@ -19,6 +19,10 @@ export type WorldStateModifier = {
     type: "sum" | "min" | "max",
     sourceIds: string[],
     targetId: string,
+} | {
+    type: "debug"
+    stateIds?: string[]
+    flagIds?: string[]
 }
 
 export type WorldState = {

@@ -69,17 +69,39 @@ function reduceState(targetId: string, sourceIds: string[], func: (a: number, b:
 }
 
 /**
- * World state extension debug logging the world state
+ * Creates a configured debug log extension that logs either the entire world state
+ * or a number of specified state or flag parameters.
  *
  * @param worldState The world state on which to operate
- * @returns WorldState The input world state
+ * @param stateIds Optional ids of the states to log
+ * @param flagIds Optional ids of the flags to log
+ * @returns A configured debug world state extension that logs state and flags to tables
  */
-export const debugLogExtension: WorldStateExtension = (
-    worldState: WorldState,
-) => {
-    console.table(worldState.state);
-    console.table(worldState.flags)
-    return worldState
+export function debugLogExtension(
+    stateIds?: string[],
+    flagIds?: string[]
+): WorldStateExtension {
+    return (worldState: WorldState) => {
+        const outState = stateIds === undefined
+            ? worldState.state
+            : stateIds.reduce<WorldState['state']>((acc, id) => {
+                acc[id] = worldState.state[id]
+                return acc
+            }, {})
+        const outFlags = flagIds === undefined
+            ? worldState.flags
+            : flagIds.reduce<WorldState['flags']>((acc, id) => {
+                acc[id] = worldState.flags[id]
+                return acc
+            }, {})
+        if (Object.keys(outState).length > 0) {
+            console.table(outState)
+        }
+        if (Object.keys(outFlags).length > 0) {
+            console.table(outFlags)
+        }
+        return worldState
+    }
 }
 
 /**
@@ -101,7 +123,7 @@ export function worldStateExtensionFromData(modifiers: WorldStateModifier[]): Wo
             case "sum":
                 return reduceState(modifier.targetId, modifier.sourceIds, (a, b) => a + b, 0)
             case "debug":
-                return debugLogExtension
+                return debugLogExtension(modifier.stateIds, modifier.flagIds)
             default: throw new Error("Missing modifier type: " + (modifier as any).type) // Hack to please the linter
         }
     })
