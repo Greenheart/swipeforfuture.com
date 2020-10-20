@@ -65,7 +65,10 @@ export class BasicGameScenario implements GameScenario {
      */
     getInitialState(): GameState {
         return {
-            world: this._scenario.defaultState,
+            world: this.applyWorldStateExtensions(
+                this._worldStateExtensions,
+                this._scenario.defaultState,
+            ),
             card: this.getInitialCard(),
             rounds: 0,
         }
