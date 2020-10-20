@@ -19,7 +19,7 @@ type GameProps = {
 }
 
 const Game: React.FunctionComponent<GameProps> = ({ scenario }) => {
-    const [state, setState] = useState<GameState>(scenario.getInitialState())
+    const [state, setState] = useState<GameState>(() => scenario.getInitialState())
 
     const card = addUniqueCardId(state.card)
     const worldState = state.world.state
