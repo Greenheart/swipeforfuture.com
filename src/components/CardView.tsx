@@ -175,7 +175,7 @@ const CardContent = styled.div`
 `
 CardContent.defaultProps = {
     theme: {
-        cardWidth: (value: number) => value * 45 + 'vh',
+        cardWidth: (value: number) => value * 40 + 'vh',
         cardBackImage:
             'https://images.unsplash.com/photo-1550537687-c91072c4792d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80',
     },
