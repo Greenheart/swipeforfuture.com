@@ -21,27 +21,32 @@ type CardProps = {
 
 function cardSize(
     scale: number,
-): ((props: {theme: {cardWidth: (s: number) => string}}) => string) {
-    return ({theme: {cardWidth}}: {theme: {cardWidth: (s: number) => string}}) => cardWidth(scale);
+): (props: { theme: { cardWidth: (s: number) => string } }) => string {
+    return ({
+        theme: { cardWidth },
+    }: {
+        theme: { cardWidth: (s: number) => string }
+    }) => cardWidth(scale)
 }
 
-const borderRadius = cardSize(0.035);
-const cardWidth = cardSize(1);
-const cardHeight = cardSize(2);
-const actionWidth = cardSize(0.5);
-const minActionWidth = cardSize(0.25);
-const largePadding = cardSize(0.125);
-const halfLargePadding = cardSize(0.0625);
-const quadPadding = cardSize(0.1);
-const doublePadding = cardSize(0.05);
-const mediumPadding = cardSize(0.025);
-const halfPadding = cardSize(0.0125);
-const locationPosition = cardSize(-0.1125);
+const borderRadius = cardSize(0.035)
+const cardWidth = cardSize(1)
+const cardHeight = cardSize(2)
+const actionWidth = cardSize(0.5)
+const minActionWidth = cardSize(0.25)
+const largePadding = cardSize(0.125)
+const halfLargePadding = cardSize(0.0625)
+const quadPadding = cardSize(0.1)
+const doublePadding = cardSize(0.05)
+const mediumPadding = cardSize(0.025)
+const halfPadding = cardSize(0.0125)
+const locationPosition = cardSize(-0.1125)
 
 const CardContent = styled.div`
     font-size: ${borderRadius};
 
-    & > .action-left, & > .action-right {
+    & > .action-left,
+    & > .action-right {
         font-size: 160%;
         background: #fff;
         position: absolute;
@@ -133,9 +138,7 @@ const CardContent = styled.div`
                 font-size: 140%;
                 background: rgba(230, 230, 230, 0.7);
                 border-radius: 1vh 0 0 1vh;
-                padding: ${halfPadding}
-                    ${largePadding}
-                    ${halfPadding}
+                padding: ${halfPadding} ${largePadding} ${halfPadding}
                     ${doublePadding};
             }
 
@@ -146,16 +149,13 @@ const CardContent = styled.div`
                 background: #333;
                 display: block;
                 margin: 0;
-                padding: ${mediumPadding}
-                    ${halfLargePadding};
+                padding: ${mediumPadding} ${halfLargePadding};
             }
 
             & > p.text {
                 font-size: 160%;
                 color: #333;
-                padding: ${doublePadding}
-                    ${halfLargePadding}
-                    ${quadPadding}
+                padding: ${doublePadding} ${halfLargePadding} ${quadPadding}
                     ${halfLargePadding};
                 margin: 0;
             }
@@ -175,8 +175,9 @@ const CardContent = styled.div`
 `
 CardContent.defaultProps = {
     theme: {
-        cardWidth: (value: number) => value * 40 + 'vh',
-        cardBackImage: 'https://images.unsplash.com/photo-1550537687-c91072c4792d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80', 
+        cardWidth: (value: number) => value * 45 + 'vh',
+        cardBackImage:
+            'https://images.unsplash.com/photo-1550537687-c91072c4792d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80',
     },
 }
 
@@ -203,12 +204,22 @@ export const CardView: React.SFC<CardProps> = ({
                 <p className="text">{text}</p>
             </div>
         </div>
-        <div className={"action-left" + (direction === SwipeDirection.Left ? " active" : "")}>
-            <div className="description">{leftAction ?? "No"}</div>
+        <div
+            className={
+                'action-left' +
+                (direction === SwipeDirection.Left ? ' active' : '')
+            }
+        >
+            <div className="description">{leftAction ?? 'No'}</div>
             <div className="arrow">&larr;</div>
         </div>
-        <div className={"action-right" + (direction === SwipeDirection.Right ? " active" : "")}>
-            <div className="description">{rightAction ?? "Yes"}</div>
+        <div
+            className={
+                'action-right' +
+                (direction === SwipeDirection.Right ? ' active' : '')
+            }
+        >
+            <div className="description">{rightAction ?? 'Yes'}</div>
             <div className="arrow">&rarr;</div>
         </div>
     </CardContent>
@@ -224,7 +235,9 @@ export const DummyCard: React.FunctionComponent<DummyCardProps> = ({
         style={{
             position: 'absolute',
             left: '50%',
-            transform: `translate3d(-50%, 0, 0) translate3d(${x}px, ${y}px, 0) perspective(1500px) rotate3d(1, 0, 0, 30deg) rotate3d(0, 0, 1, ${r}deg)`,
+            transform: `translate3d(-50%, 0, 0) translate3d(${x * 0.15}vh, ${
+                y * 0.15
+            }vh, 0) perspective(1500px) rotate3d(1, 0, 0, 30deg) rotate3d(0, 0, 1, ${r}deg)`,
             transition: 'transform 0.3s',
             zIndex: layer,
         }}

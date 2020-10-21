@@ -12,9 +12,9 @@ const Container = styled.main`
     left: 0;
     width: 100vw;
     height: 100%;
-    background: #546a76;
-    display: grid;
-    grid-template-rows: minmax(50px, 80px) auto minmax(50px, 80px);
+    background: #ccdddd;
+    display: flex;
+    flex-direction: column;
 `
 const GlobalStyles = createGlobalStyle`
     * {

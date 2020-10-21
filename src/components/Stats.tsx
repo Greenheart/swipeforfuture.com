@@ -10,11 +10,17 @@ import Bar from './Bar'
 import { StatDefinition } from '../game/ContentTypes'
 
 const Container = styled.header`
-    background: #f6fbf5;
+    background: #66aa55;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
+    gap: 3.5vh;
+    flex-basis: 10vh;
+    flex-grow: 0;
+    flex-shrink: 0;
+    border-bottom: solid 0.5vh #fff;
+    box-shadow: 0 0.2vh 0.5vh rgba(0, 0, 0, 0.5);
 `
 
 const Stat = styled.div`
@@ -22,17 +28,19 @@ const Stat = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
+    gap: 0.5vh;
 `
 
 const Icon = styled.div`
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #91c779;
+    width: 5vh;
+    height: 5vh;
+    border-radius: 50% 0;
+    background: #fff;
 
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0.3vh 0.3vh rgba(0, 0, 0, 0.2);
 `
 type StatsProps = {
     stats: (StatDefinition & { value: number })[]

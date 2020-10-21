@@ -2,20 +2,17 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 const Container = styled.div`
-    margin-top: 10px;
-    width: 40px;
-    height: 8px;
-    border-radius: 4px;
-    background: #546a76;
+    width: 5vh;
+    height: 1vh;
+    background: #333;
+    box-shadow: 0 0.2vh 0.2vh rgba(0, 0, 0, 0.2);
 `
 
-const Value = styled.div`
+const Value = styled.div<{ value: number }>`
+    width: ${(props) => props.value + '%'};
     position: relative;
-    top: 1px;
-    left: 1px;
-    height: 6px;
-    max-width: 38px;
-    border-radius: 3px;
+    height: 100%;
+    background: #fff;
 `
 
 type BarProps = {
@@ -24,23 +21,8 @@ type BarProps = {
 
 const Bar: React.FunctionComponent<BarProps> = ({ value = 100 }) => (
     <Container>
-        <Value
-            style={{
-                width: `${value}%`,
-                backgroundColor: getBarColor(value),
-            }}
-        />
+        <Value value={value} />
     </Container>
 )
-
-function getBarColor(value: number): string {
-    if (value <= 30) {
-        return '#dd7373'
-    } else if (value <= 70) {
-        return '#e7e247'
-    } else {
-        return '#91c779'
-    }
-}
 
 export default Bar
