@@ -19,12 +19,12 @@ type AnimationState = {
 
 const to = (i: number): AnimationState => ({
     x: 0,
-    y: 0,
+    y: -30,
     scale: 1,
     rot: 0,
     delay: i * 100,
 })
-const from = (): AnimationState => ({ rot: 0, scale: 1.0, y: 10, x: 0 })
+const from = (): AnimationState => ({ rot: 0, scale: 1.0, y: -20, x: 0 })
 
 const trans = (r: number, s: number) =>
     `perspective(1500px) rotate3d(1, 0, 0, 30deg) rotate3d(0, 0, 1, ${r}deg) scale(${s})`
@@ -52,7 +52,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         ...to(i),
         from: from(),
     }))
-    const [directionPreview, setDirectionPreview] = useState<number>(0);
+    const [directionPreview, setDirectionPreview] = useState<number>(0)
 
     const [cardState] = useState<{
         isGone: boolean
@@ -84,7 +84,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                 cardState.currentKey = null
             }, 200)
         }
-        setDirectionPreview(down ? dir : 0);
+        setDirectionPreview(down ? dir : 0)
         const isGone = cardState.isGone
 
         const x = isGone ? (200 + window.innerWidth) * dir : down ? xDelta : 0
@@ -140,8 +140,9 @@ const Card: React.FunctionComponent<CardProps> = ({
                 transform: interpolate(
                     [x, y, rot, scale as any],
                     (x: number, y: number, rot: number, scale: number) =>
-                        `translate3d(-50%, 0, 0) translate3d(${x}px,${y}px,0) ` +
-                        trans(rot, Number(scale)),
+                        `translate3d(-50%, 0, 0) translate3d(${x * 0.15}vh,${
+                            y * 0.15
+                        }vh,0) ` + trans(rot, Number(scale)),
                 ),
                 zIndex: layer,
             }}

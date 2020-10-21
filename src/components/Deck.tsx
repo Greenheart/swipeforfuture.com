@@ -23,7 +23,7 @@ const Deck: React.FunctionComponent<DeckProps> = ({
                 <DummyCard
                     x={0}
                     y={
-                        10 +
+                        -20 +
                         list[loopingIndex(index, list.length, tick)] *
                             (50 / list.length)
                     }
