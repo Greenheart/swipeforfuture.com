@@ -28,7 +28,7 @@ const Stat = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    gap: 0.5vh;
+    gap: 1vh;
 `
 
 const Icon = styled.div`
