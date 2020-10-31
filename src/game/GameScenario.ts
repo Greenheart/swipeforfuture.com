@@ -262,7 +262,7 @@ export class BasicGameScenario implements GameScenario {
         const result =
             hasStateMatch &&
             Object.entries(flags).every(
-                ([flag, value]) => world.flags[flag] === !!value,
+                ([flag, value]) => !!world.flags[flag] === value,
             )
 
         return result
