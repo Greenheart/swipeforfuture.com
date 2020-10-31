@@ -37,18 +37,15 @@ export type GameScenarioOptions = {
  * The design goal is to keep this stateless, allowing user code to manage state.
  */
 export class BasicGameScenario implements GameScenario {
-    protected _scenario: Omit<GameWorld, "worldStateModifiers">
+    protected _scenario: Omit<GameWorld, 'worldStateModifiers'>
     protected _random: () => number
     protected _worldStateExtensions: WorldStateExtension[]
 
     constructor(
-        scenario: Omit<GameWorld, "worldStateModifiers">,
+        scenario: Omit<GameWorld, 'worldStateModifiers'>,
         options: Partial<GameScenarioOptions> = {},
     ) {
-        const {
-            random = Math.random,
-            worldStateExtensions = []
-        } = options;
+        const { random = Math.random, worldStateExtensions = [] } = options
         this._scenario = scenario
         this._random = random
         this._worldStateExtensions = worldStateExtensions
@@ -265,7 +262,7 @@ export class BasicGameScenario implements GameScenario {
         const result =
             hasStateMatch &&
             Object.entries(flags).every(
-                ([flag, value]) => world.flags[flag] === value,
+                ([flag, value]) => world.flags[flag] === !!value,
             )
 
         return result
@@ -322,11 +319,11 @@ export class BasicGameScenario implements GameScenario {
 
     /**
      * Create a runtime GameScenario from data
-     * 
+     *
      * @param data Data needed to setup a basic game scenario
      */
     public static fromData(data: GameWorld): GameScenario {
         const extensions = worldStateExtensionFromData(data.worldStateModifiers)
-        return new BasicGameScenario(data, {worldStateExtensions: extensions});
+        return new BasicGameScenario(data, { worldStateExtensions: extensions })
     }
 }
