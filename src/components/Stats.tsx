@@ -15,7 +15,6 @@ const Container = styled.header`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 3.5vh;
     flex-basis: 10vh;
     flex-grow: 0;
     flex-shrink: 0;
@@ -28,7 +27,11 @@ const Stat = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    gap: 1vh;
+    margin-right: 3.5vh;
+
+    &:last-child {
+        margin-right: 0;
+    }
 `
 
 const Icon = styled.div`
@@ -41,6 +44,7 @@ const Icon = styled.div`
     justify-content: center;
     align-items: center;
     box-shadow: 0 0.3vh 0.3vh rgba(0, 0, 0, 0.2);
+    margin-bottom: 1vh;
 `
 type StatsProps = {
     stats: (StatDefinition & { value: number })[]
