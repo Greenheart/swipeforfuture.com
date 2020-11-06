@@ -89,7 +89,7 @@ export class BasicGameScenario implements GameScenario {
         action: CardActionData | EventCardActionData,
     ): GameState {
         const updatedWorld = this.getUpdatedWorld(
-            action.modifier,
+            action.modifiers,
             prevState.world,
         )
 
@@ -101,17 +101,24 @@ export class BasicGameScenario implements GameScenario {
     }
 
     getUpdatedWorld(
-        inputModifier: GameWorldModifier,
+        inputModifiers: GameWorldModifier[],
         world: WorldState,
     ): WorldState {
-        const modifier: GameWorldModifier = {
+        const modifiers: GameWorldModifier[] = inputModifiers.map((mod) => ({
             type: 'add',
             state: {},
             flags: {},
-            ...inputModifier,
-        }
-        const updatedWorldState = this.updateWorldState(modifier, world)
-        const updatedWorldFlags = this.updateWorldFlags(modifier, world)
+            ...mod,
+        }))
+        const updatedWorldState = modifiers.reduce<WorldState['state']>(
+            (acc, mod) => this.updateWorldState(mod, { state: acc, flags: {} }),
+            world.state,
+        )
+        const updatedWorldFlags = modifiers.reduce<WorldState['flags']>(
+            (acc, mod) => this.updateWorldFlags(mod, { state: {}, flags: acc }),
+            world.flags,
+        )
+
         const newWorld = this.applyWorldStateExtensions(
             this._worldStateExtensions,
             {

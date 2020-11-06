@@ -9,21 +9,25 @@ export type GameWorld = {
     worldStateModifiers: WorldStateModifier[]
 }
 
-export type WorldStateModifier = {
-    type: "round"
-} | {
-    type: "cycle"
-    id: string
-    length: number
-} | {
-    type: "sum" | "min" | "max",
-    sourceIds: string[],
-    targetId: string,
-} | {
-    type: "debug"
-    stateIds?: string[]
-    flagIds?: string[]
-}
+export type WorldStateModifier =
+    | {
+          type: 'round'
+      }
+    | {
+          type: 'cycle'
+          id: string
+          length: number
+      }
+    | {
+          type: 'sum' | 'min' | 'max'
+          sourceIds: string[]
+          targetId: string
+      }
+    | {
+          type: 'debug'
+          stateIds?: string[]
+          flagIds?: string[]
+      }
 
 export type WorldState = {
     state: {
@@ -55,7 +59,7 @@ export type GameWorldModifier = Partial<WorldState> & {
 
 export interface CardActionData {
     description?: string
-    modifier: GameWorldModifier
+    modifiers: GameWorldModifier[]
 }
 
 export interface CardData extends CardDescription {
