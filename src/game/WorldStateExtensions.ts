@@ -1,130 +1,37 @@
-import { WorldState } from './ContentTypes'
-import { WorldStateModifier } from "./ContentTypes"
+import { WorldState, WorldStateModifier } from './ContentTypes'
+import { StateExtension, stateExtensionsFromData } from './StateExtensions'
+import { Params, GameState } from './'
 
 export type WorldStateExtension = (worldState: WorldState) => WorldState
 
-/**
- * World state extension counting the number of sounds from game start
- *
- * @param worldState The world state on which to operate
- * @returns WorldState The updated world state
- */
-export const worldStateRounds: WorldStateExtension = (
-    worldState: WorldState,
-) => {
-    return {
-        state: {
-            ...worldState.state,
-            rounds: (worldState.state.rounds ?? 0) + 1,
-        },
-        flags: worldState.flags,
-    }
-}
-
-/**
- * Create a cyclic world state extension with a given state id
- *
- * @param id The id to which cyclic state is assigned
- * @param length The length of the cycle
- * @returns WorldStateExtension A cyclic world state extension
- */
-export function worldStateCycle(
-    id: string,
-    length: number,
+function worldStateExtensionFromStateExtension(
+    extension: StateExtension,
 ): WorldStateExtension {
-    return (worldState: WorldState) => {
-        return {
-            state: {
-                ...worldState.state,
-                [id]: ((worldState.state[id] ?? 0) + 1) % length,
+    return (worldState) => {
+        const state: GameState<Params> = {
+            params: {
+                vars: worldState.state,
+                flags: worldState.flags,
             },
-            flags: worldState.flags,
         }
-    }
-}
+        const newState = extension(state)
 
-/**
- * Creates a reducer for world state parameters
- * 
- * @param targetId The id of the state parameter that will receive the result
- * @param sourceIds The ids of the sources that are used in the reduction
- * @param func The reducer function
- * @param initialValue The initial value to the reducer
- * @returns A world state extension that reduces a single value from multiple sources
- */
-function reduceState(targetId: string, sourceIds: string[], func: (a: number, b: number) => number, initialValue?: number) {
-    return (worldState: WorldState) => {
-        const stateValues = sourceIds.map(id => worldState.state[id] ?? 0);
-        const result = initialValue 
-            ? stateValues.reduce((acc, value) => func(acc, value), initialValue)
-            : stateValues.reduce((acc, value) => func(acc, value))
         return {
-            state: {
-                ...worldState.state,
-                [targetId]: result,
-            },
-            flags: worldState.flags
+            state: newState.params.vars,
+            flags: newState.params.flags,
         }
-    }
-}
-
-/**
- * Creates a configured debug log extension that logs either the entire world state
- * or a number of specified state or flag parameters.
- *
- * @param worldState The world state on which to operate
- * @param stateIds Optional ids of the states to log
- * @param flagIds Optional ids of the flags to log
- * @returns A configured debug world state extension that logs state and flags to tables
- */
-export function debugLogExtension(
-    stateIds?: string[],
-    flagIds?: string[]
-): WorldStateExtension {
-    return (worldState: WorldState) => {
-        const outState = stateIds === undefined
-            ? worldState.state
-            : stateIds.reduce<WorldState['state']>((acc, id) => {
-                acc[id] = worldState.state[id]
-                return acc
-            }, {})
-        const outFlags = flagIds === undefined
-            ? worldState.flags
-            : flagIds.reduce<WorldState['flags']>((acc, id) => {
-                acc[id] = worldState.flags[id]
-                return acc
-            }, {})
-        if (Object.keys(outState).length > 0) {
-            console.table(outState)
-        }
-        if (Object.keys(outFlags).length > 0) {
-            console.table(outFlags)
-        }
-        return worldState
     }
 }
 
 /**
  * Generate a list of world state extension from a data description
- * 
+ *
  * @param modifiers Data description of modifiers which can be converted to extensions
  */
-export function worldStateExtensionFromData(modifiers: WorldStateModifier[]): WorldStateExtension[] {
-    return modifiers.map(modifier => {
-        switch (modifier.type) {
-            case "round":
-                return worldStateRounds
-            case "cycle":
-                return worldStateCycle(modifier.id, modifier.length)
-            case "min":
-                return reduceState(modifier.targetId, modifier.sourceIds, (a, b) => Math.min(a, b))
-            case "max":
-                return reduceState(modifier.targetId, modifier.sourceIds, (a, b) => Math.max(a, b))
-            case "sum":
-                return reduceState(modifier.targetId, modifier.sourceIds, (a, b) => a + b, 0)
-            case "debug":
-                return debugLogExtension(modifier.stateIds, modifier.flagIds)
-            default: throw new Error("Missing modifier type: " + (modifier as any).type) // Hack to please the linter
-        }
-    })
+export function worldStateExtensionFromData(
+    modifiers: WorldStateModifier[],
+): WorldStateExtension[] {
+    return stateExtensionsFromData(modifiers).map(
+        worldStateExtensionFromStateExtension,
+    )
 }

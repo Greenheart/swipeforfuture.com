@@ -4,7 +4,7 @@ import { createGlobalStyle } from 'styled-components'
 
 import Game from './components/Game'
 import { Game as GameLogic, BasicGameScenario } from './game'
-import { WorldState } from './game/ContentTypes'
+import * as GameWorldLoader from './game/GameWorldLoader'
 import { loadScenario } from './game/load-scenario'
 
 const Container = styled.main`
@@ -36,22 +36,25 @@ const GlobalStyles = createGlobalStyle`
 
 type AppProps = {
     path: string
+    useBasicGame?: boolean
 }
 
-function App({ path }: AppProps) {
-    const [game, setGame] = useState<GameLogic<WorldState> | null>(null)
+function App({ path, useBasicGame = false }: AppProps) {
+    const [game, setGame] = useState<GameLogic<any> | null>(null)
     useEffect(() => {
         const fetchWorld = async () => {
             const scenarioData = await loadScenario(path)
             if (scenarioData) {
-                const instance = BasicGameScenario.fromData(scenarioData)
+                const instance = useBasicGame
+                    ? BasicGameScenario.fromData(scenarioData)
+                    : GameWorldLoader.load(scenarioData)
                 setGame(instance)
             } else {
                 console.warn('Scenario loading error')
             }
         }
         fetchWorld()
-    }, [path, setGame])
+    }, [path, useBasicGame, setGame])
     return (
         <Container>
             <GlobalStyles />
