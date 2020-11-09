@@ -1,4 +1,3 @@
-import { GameState } from './GameTypes'
 import {
     GameWorld,
     WorldState,
@@ -15,28 +14,21 @@ import {
     WorldStateExtension,
     worldStateExtensionFromData,
 } from './WorldStateExtensions'
-
-export interface GameScenario {
-    getInitialState(): GameState
-    getUpdatedState(
-        prevState: GameState,
-        card: CardData | EventCard,
-        action: CardActionData | EventCardActionData,
-    ): GameState
-    stats: GameWorld['stats']
-}
+import { Card, Game, GameState, StateModifier, Stat } from './'
 
 export type GameScenarioOptions = {
     random: () => number
     worldStateExtensions: WorldStateExtension[]
 }
 
+type ScenarioState = GameState<WorldState>
+
 /**
  * BasicGameScenario used to simulate game scenarios.
  *
  * The design goal is to keep this stateless, allowing user code to manage state.
  */
-export class BasicGameScenario implements GameScenario {
+export class BasicGameScenario implements Game<WorldState> {
     protected _scenario: Omit<GameWorld, 'worldStateModifiers'>
     protected _random: () => number
     protected _worldStateExtensions: WorldStateExtension[]
@@ -51,8 +43,11 @@ export class BasicGameScenario implements GameScenario {
         this._worldStateExtensions = worldStateExtensions
     }
 
-    get stats() {
-        return this._scenario.stats
+    get stats(): Stat<WorldState>[] {
+        return this._scenario.stats.map<Stat<WorldState>>((stat) => ({
+            ...stat,
+            getValue: ({ params }) => params.state[stat.id],
+        }))
     }
 
     /**
@@ -60,15 +55,21 @@ export class BasicGameScenario implements GameScenario {
      *
      * @param scenario The scenario default data which holds all cards, events and similar
      */
-    getInitialState(): GameState {
+    get initialState(): ScenarioState {
         return {
-            world: this.applyWorldStateExtensions(
+            params: this.applyWorldStateExtensions(
                 this._worldStateExtensions,
                 this._scenario.defaultState,
             ),
             card: this.getInitialCard(),
-            rounds: 0,
         }
+    }
+
+    applyAction(
+        prevState: ScenarioState,
+        action: StateModifier<WorldState>,
+    ): ScenarioState {
+        return action(prevState)
     }
 
     /**
@@ -84,19 +85,18 @@ export class BasicGameScenario implements GameScenario {
      * @param action The player's choosen action for how to move forward in the game
      */
     getUpdatedState(
-        prevState: GameState,
+        prevState: ScenarioState,
         card: CardData | EventCard,
         action: CardActionData | EventCardActionData,
-    ): GameState {
+    ): ScenarioState {
         const updatedWorld = this.getUpdatedWorld(
             action.modifiers,
-            prevState.world,
+            prevState.params,
         )
 
         return {
-            world: updatedWorld,
+            params: updatedWorld,
             card: this.getNextCard(updatedWorld, card, action),
-            rounds: prevState.rounds + 1,
         }
     }
 
@@ -183,26 +183,26 @@ export class BasicGameScenario implements GameScenario {
         return extensions.reduce((acc, extension) => extension(acc), world)
     }
 
-    getInitialCard(): EventCard | CardData {
+    getInitialCard(): Card<WorldState> {
         const availableEvents = this.getAvailableEvents(
             this._scenario.defaultState,
         )
         const event = this.selectNextEvent(availableEvents)
 
-        if (event) {
-            return this.selectEventCard(event.initialEventCardId)
-        } else {
-            return this.selectNextCard(
-                this.getAvailableCards(this._scenario.defaultState),
-            )
-        }
+        return this._cardDataToCard(
+            event
+                ? this.selectEventCard(event.initialEventCardId)
+                : this.selectNextCard(
+                      this.getAvailableCards(this._scenario.defaultState),
+                  ),
+        )
     }
 
     getNextCard(
         updatedWorld: WorldState,
         card: CardData | EventCard,
         action: CardActionData | EventCardActionData,
-    ): CardData | EventCard {
+    ): Card<WorldState> {
         const { eventCards } = this._scenario
         const availableEvents = this.getAvailableEvents(updatedWorld)
         let availableCards: CardData[] = []
@@ -233,7 +233,7 @@ export class BasicGameScenario implements GameScenario {
         }
 
         if (!nextCard) throw new Error('Content error. No next card available.')
-        return nextCard
+        return this._cardDataToCard(nextCard)
     }
 
     getAvailableEvents(world: WorldState): WorldEvent[] {
@@ -324,12 +324,47 @@ export class BasicGameScenario implements GameScenario {
         return array[selectionIndex]
     }
 
+    private _cardDataToCard<T extends CardData | EventCard>(
+        data: T,
+    ): Card<WorldState> {
+        return {
+            image: data.image ?? '',
+            title: data.title ?? '',
+            text: data.text ?? '',
+            location: data.location ?? '',
+            match: () => true,
+            weight: data.weight ?? 1,
+            actions: {
+                left: {
+                    description: data.actions.left.description ?? 'No',
+                    modifier: (state) => {
+                        return this.getUpdatedState(
+                            state,
+                            data,
+                            data.actions.left,
+                        )
+                    },
+                },
+                right: {
+                    description: data.actions.right.description ?? 'No',
+                    modifier: (state) => {
+                        return this.getUpdatedState(
+                            state,
+                            data,
+                            data.actions.right,
+                        )
+                    },
+                },
+            },
+        }
+    }
+
     /**
      * Create a runtime GameScenario from data
      *
      * @param data Data needed to setup a basic game scenario
      */
-    public static fromData(data: GameWorld): GameScenario {
+    public static fromData(data: GameWorld): Game<WorldState> {
         const extensions = worldStateExtensionFromData(data.worldStateModifiers)
         return new BasicGameScenario(data, { worldStateExtensions: extensions })
     }
