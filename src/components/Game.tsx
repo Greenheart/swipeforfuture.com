@@ -4,9 +4,7 @@ import styled from 'styled-components/macro'
 import Deck from './Deck'
 import Stats from './Stats'
 import { SwipeDirection } from '../util/constants'
-import { GameScenario } from '../game/GameScenario'
-import { CardData, EventCard } from '../game/ContentTypes'
-import { GameState } from '../game/GameTypes'
+import { GameState, Game as GameLogic } from '../game/Types'
 
 const Footer = styled.footer`
     display: flex;
@@ -14,52 +12,43 @@ const Footer = styled.footer`
     align-items: center;
 `
 
-type GameProps = {
-    scenario: GameScenario
+type GameProps<P> = {
+    game: GameLogic<P>
 }
 
-const Game: React.FunctionComponent<GameProps> = ({ scenario }) => {
-    const [state, setState] = useState<GameState>(() => scenario.getInitialState())
+function Game<P>({ game }: GameProps<P>): React.ReactElement<any, any> | null {
+    const [state, setState] = useState<GameState<P>>(() => game.initialState)
+    const [tick, setTick] = useState<number>(0)
 
-    const card = addUniqueCardId(state.card)
-    const worldState = state.world.state
-    const stats = scenario.stats.map((stat) =>
+    const stats = game.stats.map((stat) =>
         Object.assign({}, stat, {
-            value: worldState[stat.id],
+            value: stat.getValue(state),
         }),
     )
 
-    function onSwipe(
-        card: CardData | EventCard,
-        direction: SwipeDirection,
-    ): void {
+    function onSwipe(direction: SwipeDirection): void {
+        if (!state.card) return
+
         const action =
             direction === SwipeDirection.Left
-                ? card.actions.left
-                : card.actions.right
+                ? state.card.actions.left.modifier
+                : state.card.actions.right.modifier
 
-        setState(scenario.getUpdatedState(state, card, action))
+        setState(game.applyAction(state, action))
+        setTick(tick + 1)
     }
 
     return (
         <>
             <Stats stats={stats} />
-            <Deck onSwipe={onSwipe} card={card} tick={state.rounds} />
+            {state.card ? (
+                <Deck onSwipe={onSwipe} card={state.card} tick={tick} />
+            ) : null}
             <Footer>
                 <div className="time-remaining"></div>
             </Footer>
         </>
     )
-}
-
-function addUniqueCardId(
-    card: CardData | EventCard,
-    index: number = 0,
-): (CardData | EventCard) & { id: string } {
-    return {
-        ...card,
-        id: Date.now() + ':' + index,
-    }
 }
 
 export default Game

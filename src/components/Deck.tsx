@@ -1,14 +1,13 @@
 import React from 'react'
 
-import Card from './Card'
+import { Card } from './Card'
 import { DummyCard } from './CardView'
-
-import { CardData, EventCard } from '../game/ContentTypes'
 import { SwipeDirection } from '../util/constants'
+import { CardPresentation } from '../game/Types'
 
 type DeckProps = {
-    onSwipe: (card: CardData | EventCard, direction: SwipeDirection) => void
-    card: (CardData | EventCard) & { id: string }
+    onSwipe: (direction: SwipeDirection) => void
+    card: CardPresentation
     tick: number
 }
 const Deck: React.FunctionComponent<DeckProps> = ({
@@ -34,8 +33,8 @@ const Deck: React.FunctionComponent<DeckProps> = ({
             ))}
             <Card
                 i={0}
-                key={card.id}
-                cardData={card}
+                key={tick}
+                card={card}
                 onSwipe={onSwipe}
                 layer={cardStack.length + 1}
             />
