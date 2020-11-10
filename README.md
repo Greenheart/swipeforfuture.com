@@ -2,6 +2,8 @@
 
 > Solving the climate crisis, one swipe at a time 🌍🔥
 
+A community-driven game where players explore, create and share scenarios for a sustainable future.
+
 ## Welcome, Mrs. President! 🖖
 
 Solving the climate crisis will need everyone to contribute in one way or another. But that is extremely hard given that different "solutions" affect people in different ways. And you need broad public support to succeed 🧩
@@ -24,7 +26,26 @@ So, will you guide your society to a safe, just future? Or will you let the worl
 
 Seriously though, no pressure. You got this (we hope...) 😬
 
-# Contributors
+**[Play Swipe for Future here!](https://swipeforfuture.com)**
+
+## We 💚 Open Source
+
+This project is distributed under the [MIT License](./LICENSE) to allow as many people as possible to explore, create and share scenarios for a sustainable future.
+
+**[Join us and let's get creative together!](./CONTRIBUTING.md)**
+
+## Do you have ideas for the game or scenarios you want to explore?
+
+-   Join our [Discord](https://discord.gg/JGkQr9raU5) and chat with other contributors!
+
+We use GitHub to collaborate on ideas, improvements, bugs and development. The project has two parts:
+
+-   📱 [Game client](https://github.com/Greenheart/swipeforfuture.com)
+-   📝 [Scenarios and content creation](https://github.com/Muthaias/swipeforfuture-content)
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) to learn more about how you can help improve scenarios and the game itself. Feel free to ask us on [Discord](https://discord.gg/JGkQr9raU5) if you want help getting started!
+
+## Contributors
 
 This game is a community effort, created together with these awesome people:
 
@@ -39,5 +60,3 @@ This game is a community effort, created together with these awesome people:
 -   Amanda Lagos Sallhed
 -   Malin Jansson
 -   Clayton Whittle
-
-Do you have ideas or want to support the development? You're welcome to submit issues and PR:s here on GitHub and tell us more!
