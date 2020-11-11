@@ -346,7 +346,7 @@ export class BasicGameScenario implements Game<WorldState> {
                     },
                 },
                 right: {
-                    description: data.actions.right.description ?? 'No',
+                    description: data.actions.right.description ?? 'Yes',
                     modifier: (state) => {
                         return this.getUpdatedState(
                             state,
