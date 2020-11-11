@@ -52,8 +52,6 @@ export class BasicGameScenario implements Game<WorldState> {
 
     /**
      * Get the initial state for a given scenario.
-     *
-     * @param scenario The scenario default data which holds all cards, events and similar
      */
     get initialState(): ScenarioState {
         return {
@@ -79,7 +77,6 @@ export class BasicGameScenario implements Game<WorldState> {
      * it's really easy to change partial data and state to get a different updated state.
      * This could be really useful for testing, or perhaps even some kind of AI to find the optimal actions/strategy
      *
-     * @param scenario The scenario default data which holds all cards, events and similar
      * @param prevState The state before this update
      * @param card The currently visible card that the player is acting upon
      * @param action The player's choosen action for how to move forward in the game
