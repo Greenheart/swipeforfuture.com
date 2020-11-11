@@ -27,7 +27,7 @@ export const useRounds: StateExtension = (state: GameState<Params>) => {
  *
  * @param id The id to which cyclic state is assigned
  * @param length The length of the cycle
- * @returns WorldStateExtension A cyclic world state extension
+ * @returns a state extesion that generates a cyclic param behaviour
  */
 export function createCycle(id: string, length: number): StateExtension {
     return (state: GameState<Params>) => {
@@ -123,6 +123,7 @@ export function createDebugger(
  * @param ids Ids of the params which to limit to the range [min, max]
  * @param min The minimum number of the range
  * @param max The maximum number of the range
+ * @returns a state extension which caps params with ids to the range [min, max]
  */
 export function createParameterCap(
     ids: string[],
