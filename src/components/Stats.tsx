@@ -5,6 +5,7 @@ import styled from 'styled-components/macro'
 import * as IoIcons from 'react-icons/io'
 import * as GameIcons from 'react-icons/gi'
 import * as FeatherIcons from 'react-icons/fi'
+import * as IoIcons5 from 'react-icons/io5'
 
 import Bar from './Bar'
 import { StatDefinition } from '../game/ContentTypes'
@@ -55,10 +56,12 @@ const Stats: React.FunctionComponent<StatsProps> = ({ stats }) => (
         {stats.map((s) => {
             const gameIcon = s.icon as keyof typeof GameIcons
             const ioIcon = s.icon as keyof typeof IoIcons
+            const ioIcon5 = s.icon as keyof typeof IoIcons5
             const featherIcon = s.icon as keyof typeof FeatherIcons
             const IconWidget =
                 GameIcons[gameIcon] ||
                 IoIcons[ioIcon] ||
+                IoIcons5[ioIcon5] ||
                 FeatherIcons[featherIcon]
             const iconSize = s.iconSize || '80%'
             const value = s.value
