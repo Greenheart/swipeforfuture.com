@@ -6,6 +6,7 @@ import Game from './components/Game'
 import { Game as GameLogic, BasicGameScenario } from './game'
 import * as GameWorldLoader from './game/GameWorldLoader'
 import { loadScenario } from './game/load-scenario'
+import { builder } from "./dev-mode/excel-utils"
 
 const Container = styled.main`
     position: absolute;
@@ -39,6 +40,37 @@ type AppProps = {
     useBasicGame?: boolean
 }
 
+const DevMode = styled.div`
+    display: block;
+    position: absolute:
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 20px;
+`
+
+export async function uploadObject(file: File) {
+    const reader = new FileReader();
+    console.log(file)
+    const loadPromise = new Promise<string | ArrayBuffer | null>((resolve, reject) => {
+        reader.onload = (event) => {
+            if (event.target) {
+                const content = event.target.result;
+                console.log(typeof content)
+                resolve(content);
+            } else {
+                reject('Could not load file.');
+            }
+        }
+    });
+    reader.readAsBinaryString(file);
+    const data = await loadPromise;
+    const scenario = builder.run(data);
+    console.log(scenario);
+    localStorage.setItem('game_world:dev-mode', JSON.stringify(scenario))
+}
+
 function App({ path, useBasicGame = false }: AppProps) {
     const [game, setGame] = useState<GameLogic<any> | null>(null)
     useEffect(() => {
@@ -59,6 +91,12 @@ function App({ path, useBasicGame = false }: AppProps) {
         <Container>
             <GlobalStyles />
             {game && <Game game={game} />}
+            <DevMode>
+                <input
+                    type="file"
+                    onChange={(event) => event.target && event.target.files && uploadObject(event.target.files[0])}
+                />
+            </DevMode>
         </Container>
     )
 }
