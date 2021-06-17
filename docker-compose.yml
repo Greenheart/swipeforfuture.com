@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  build-dev:
+    environment:
+      - BROWSER=${BROWSER}
+      - REACT_APP_SFF_DEFAULT_SCENARIO=${REACT_APP_SFF_DEFAULT_SCENARIO}
+    ports:
+      - "3000:3000"
+    build: .
+    volumes:
+      - ./src:/exec/src
+      - ./env:/exec/env
+      - ./public:/exec/public
+    entrypoint: ["npm", "run", "start"]
