@@ -14,11 +14,10 @@ import {
     WorldQuery,
 } from "../content-utils"
 import { createLinkContext } from "./utils"
-import { getImage } from "./images"
 
 const { linkLogic } = createLinkContext(createIdContext("from-data"))
 
-type DataDescription = {
+type CardDescription = {
     "Card Name": string
     "Card Type": string
     Character: string
@@ -37,9 +36,42 @@ type DataDescription = {
     Weight: number
 }
 
-export function loadStandardFile(path: string, sheetIds?: string[]): DataDescription[] {
-    return loadFile<DataDescription>(
-        path,
+type FlagDescription = {
+    Name: string
+    Value: boolean
+}
+
+type StateDescription = {
+    Name: string
+    Icon?: string
+    IconSize?: number
+    Value: number
+}
+
+type CharacterDescription = {
+    Name: string
+    Source: string
+}
+
+export function loadCharacters(data: any) {
+    return loadFile<CharacterDescription>(
+        data,
+        {
+            "Name": toString(""),
+            "Source": toString(""),
+        },
+        {
+            sheetIds: ["_characters"],
+        },
+    )
+}
+
+export function loadStandardFile(
+    data: any,
+    sheetIds?: string[]
+): CardDescription[] {
+    return loadFile<CardDescription>(
+        data,
         {
             "Card Name": toLowerCaseString(""),
             "Card Type": toString(""),
@@ -60,6 +92,7 @@ export function loadStandardFile(path: string, sheetIds?: string[]): DataDescrip
         },
         {
             sheetIds,
+            sheetFilter: (key) => key[0] !== "_",
         },
     )
 }
@@ -198,7 +231,10 @@ function parseWorldQuery(data: string): WorldQuery | undefined {
     return wq
 }
 
-export function toCardData(data: DataDescription[]): CardData[] {
+export function toCardData(
+    data: CardDescription[],
+    getImage: (id: string, variant?: string) => string
+): CardData[] {
     const cardMap = data.reduce((acc, entry) => {
         const card = cardContent(
             getImage(entry["Character"]),
@@ -209,7 +245,7 @@ export function toCardData(data: DataDescription[]): CardData[] {
         )
         acc.set(card, entry)
         return acc
-    }, new Map<BaseCard, DataDescription>())
+    }, new Map<BaseCard, CardDescription>())
 
     const cardIdMap = Array.from(cardMap.entries()).reduce(
         (acc, [card, entry]) => {

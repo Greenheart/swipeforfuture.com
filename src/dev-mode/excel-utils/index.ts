@@ -1,5 +1,10 @@
 import * as Stats from "./stats"
 import {
+    imageDB,
+    imageEntry,
+} from "../content-utils"
+import {
+    loadCharacters,
     loadStandardFile,
     toCardData,
 } from "./from-data"
@@ -10,8 +15,15 @@ import {
 } from "../content-utils"
 export const builder = {
     run(data: any) {
-        const rawData = loadStandardFile(data, undefined)
-        const cards = toCardData(rawData)
+        const rawData = loadStandardFile(data)
+        const characterData = loadCharacters(data)
+        console.log(characterData)
+        const { getImage } = imageDB(
+            characterData.map(char => (
+                imageEntry(char.Source, char.Name)
+            ))
+        )
+        const cards = toCardData(rawData, getImage)
         const scenario: Scenario = {
             id: "donuts",
             stats: Object.values(Stats.definitions),
