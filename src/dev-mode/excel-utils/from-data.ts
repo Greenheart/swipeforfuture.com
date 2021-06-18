@@ -3,6 +3,7 @@ import {
     toString,
     toNumber,
     toStringArray,
+    toBoolean,
     toLowerCaseString,
 } from "../content-utils/xlsx-utils"
 import {
@@ -62,6 +63,34 @@ export function loadCharacters(data: any) {
         },
         {
             sheetIds: ["_characters"],
+        },
+    )
+}
+
+export function loadParams(data: any) {
+    return loadFile<StateDescription>(
+        data,
+        {
+            "Name": toLowerCaseString(""),
+            "Value": toNumber,
+            "Icon": toString(undefined),
+            "IconSize": toNumber
+        },
+        {
+            sheetIds: ["_params"],
+        },
+    )
+}
+
+export function loadFlags(data: any) {
+    return loadFile<FlagDescription>(
+        data,
+        {
+            "Name": toLowerCaseString(""),
+            "Value": toBoolean,
+        },
+        {
+            sheetIds: ["_flags"],
         },
     )
 }

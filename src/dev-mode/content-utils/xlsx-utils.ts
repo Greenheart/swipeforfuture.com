@@ -79,3 +79,17 @@ export function toStringArray(
 export function toNumber(value: any): number {
     return value ? parseFloat(value) : 0
 }
+
+export function toBoolean(value: any): boolean {
+    return (
+        typeof value === "boolean" ? (
+            value
+        ) : (
+            value === "true" ? (
+                true
+            ) : (
+                false
+            )
+        )
+    )
+}
