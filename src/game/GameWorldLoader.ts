@@ -269,8 +269,8 @@ function updateVars(
             modifier.type === 'set' || modifier.type === 'replace'
                 ? value
                 : value + (updatedState[key] || 0)
-
-        updatedState[key] = Math.min(Math.max(newValue, 0), 100)
+        
+        updatedState[key] = newValue
 
         return updatedState
     }, currentVars)
