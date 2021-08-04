@@ -40,6 +40,7 @@ type CardDescription = {
 type FlagDescription = {
     Name: string
     Value: boolean
+    Debug: boolean
 }
 
 type StateDescription = {
@@ -47,6 +48,7 @@ type StateDescription = {
     Icon?: string
     IconSize?: number
     Value: number
+    Debug: boolean
 }
 
 type CharacterDescription = {
@@ -74,7 +76,8 @@ export function loadParams(data: any) {
             "Name": toLowerCaseString(""),
             "Value": toNumber,
             "Icon": toString(undefined),
-            "IconSize": toNumber
+            "IconSize": toNumber,
+            "Debug": toBoolean,
         },
         {
             sheetIds: ["_params"],
@@ -88,6 +91,7 @@ export function loadFlags(data: any) {
         {
             "Name": toLowerCaseString(""),
             "Value": toBoolean,
+            "Debug": toBoolean,
         },
         {
             sheetIds: ["_flags"],

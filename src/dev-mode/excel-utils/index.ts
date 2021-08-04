@@ -60,6 +60,8 @@ export const builder = {
                 },
                 {
                     type: "debug",
+                    flagIds: flagData.filter(f => f.Debug).map(f => f.Name),
+                    stateIds: paramData.filter(p => p.Debug).map(p => p.Name)
                 },
             ],
         }
