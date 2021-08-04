@@ -25,9 +25,11 @@ export function loadFile<T>(
     const requiredFields: (keyof T)[] = Object.keys(fieldMapping) as (keyof T)[]
     const transformedSheets = Object.keys(book.Sheets).map<T[]>((key) => {
         if (
-            sheetIds !== undefined &&
-            !sheetIds.includes(key) &&
-            finalFilter(key)
+            (
+                sheetIds !== undefined &&
+                !sheetIds.includes(key)
+            ) ||
+            !finalFilter(key)
         ) return []
 
         const sheet = book.Sheets[key]
