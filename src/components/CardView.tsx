@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import ReactMarkdown from 'react-markdown'
 import { SwipeDirection } from '../util/constants'
 
 type DummyCardProps = {
@@ -152,7 +153,7 @@ const CardContent = styled.div`
                 padding: ${mediumPadding} ${halfLargePadding};
             }
 
-            & > p.text {
+            & > div.text {
                 font-size: 160%;
                 color: #333;
                 padding: ${doublePadding} ${halfLargePadding} ${quadPadding}
@@ -201,7 +202,9 @@ export const CardView: React.SFC<CardProps> = ({
             <div className="card-text">
                 {location && <em className="location">{location}</em>}
                 <h1 className="title">{title}</h1>
-                <p className="text">{text}</p>
+                <div className="text">
+                    <ReactMarkdown>{text}</ReactMarkdown>
+                </div>
             </div>
         </div>
         <div
@@ -210,7 +213,9 @@ export const CardView: React.SFC<CardProps> = ({
                 (direction === SwipeDirection.Left ? ' active' : '')
             }
         >
-            <div className="description">{leftAction ?? 'No'}</div>
+            <div className="description">
+                <ReactMarkdown>{leftAction ?? 'No'}</ReactMarkdown>
+            </div>
             <div className="arrow">&larr;</div>
         </div>
         <div
@@ -219,7 +224,9 @@ export const CardView: React.SFC<CardProps> = ({
                 (direction === SwipeDirection.Right ? ' active' : '')
             }
         >
-            <div className="description">{rightAction ?? 'Yes'}</div>
+            <div className="description">
+                <ReactMarkdown>{rightAction ?? 'Yes'}</ReactMarkdown>
+            </div>
             <div className="arrow">&rarr;</div>
         </div>
     </CardContent>
