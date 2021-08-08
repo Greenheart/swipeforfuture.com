@@ -1,60 +1,39 @@
 {
     "name": "swipeforfuture",
-    "version": "0.1.0",
-    "repository": "https://github.com/Greenheart/swipeforfuture.com/",
-    "dependencies": {
-        "@types/react": "^17.0.3",
-        "@types/react-dom": "^17.0.2",
-        "@types/styled-components": "^5.1.9",
-        "gh-pages": "^3.1.0",
-        "react": "^17.0.1",
-        "react-dom": "^17.0.1",
-        "react-icons": "^4.2.0",
-        "react-scripts": "^4.0.3",
-        "react-spring": "^8.0.27",
-        "react-with-gesture": "^4.0.8",
-        "styled-components": "^5.2.1",
-        "typescript": "^4.2.3"
-    },
+    "version": "2.0.0",
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
+        "start": "svelte-kit dev",
+        "build": "svelte-kit build && node scripts/postbuild.js",
+        "preview": "svelte-kit preview",
+        "check": "svelte-check --tsconfig ./tsconfig.json",
+        "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+        "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. .",
+        "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
         "predeploy": "npm run build",
-        "prettify": "npx prettier \"src/**/*\" --write",
         "deploy": "gh-pages -d build"
     },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
     "devDependencies": {
-        "husky": "^4.3.8",
-        "prettier": "^2.2.1",
-        "pretty-quick": "^3.1.0",
-        "styled-components.macro": "^1.0.0"
+        "@sveltejs/adapter-static": "^1.0.0-next.13",
+        "@sveltejs/kit": "1.0.0-next.143",
+        "autoprefixer": "^10.3.1",
+        "cssnano": "^5.0.7",
+        "fs-extra": "^10.0.0",
+        "postcss": "^8.3.6",
+        "postcss-load-config": "^3.1.0",
+        "prettier": "^2.3.2",
+        "prettier-plugin-svelte": "^2.2.0",
+        "svelte": "^3.34.0",
+        "svelte-check": "^2.0.0",
+        "svelte-preprocess": "^4.0.0",
+        "tailwindcss": "^2.2.7",
+        "tslib": "^2.0.0",
+        "typescript": "^4.0.0"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged"
-        }
-    },
+    "type": "module",
     "prettier": {
-        "tabWidth": 4,
-        "semi": false,
         "singleQuote": true,
-        "trailingComma": "all"
+        "tabWidth": 4,
+        "trailingComma": "all",
+        "semi": false
     }
 }
