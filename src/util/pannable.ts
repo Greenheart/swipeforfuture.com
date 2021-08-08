@@ -13,7 +13,12 @@ export function pannable(node: HTMLElement) {
 
         node.dispatchEvent(
             new CustomEvent('panstart', {
-                detail: { x, y },
+                detail: {
+                    x,
+                    y,
+                    startX,
+                    startY,
+                },
             }),
         )
 
@@ -24,11 +29,11 @@ export function pannable(node: HTMLElement) {
     function handleMousemove(event: MouseEvent) {
         const dx = event.clientX - x
         const dy = event.clientY - y
-        x = event.clientX
-        y = event.clientY
-
         const totalDeltaX = event.clientX - startX
         const totalDeltaY = event.clientY - startY
+
+        x = event.clientX
+        y = event.clientY
 
         node.dispatchEvent(
             new CustomEvent('panmove', {
@@ -47,12 +52,26 @@ export function pannable(node: HTMLElement) {
     }
 
     function handleMouseup(event: MouseEvent) {
+        const dx = event.clientX - x
+        const dy = event.clientY - y
+        const totalDeltaX = event.clientX - startX
+        const totalDeltaY = event.clientY - startY
+
         x = event.clientX
         y = event.clientY
 
         node.dispatchEvent(
             new CustomEvent('panend', {
-                detail: { x, y },
+                detail: {
+                    x,
+                    y,
+                    dx,
+                    dy,
+                    startX,
+                    startY,
+                    totalDeltaX,
+                    totalDeltaY,
+                },
             }),
         )
 
@@ -69,18 +88,20 @@ export function pannable(node: HTMLElement) {
     }
 }
 
-export type PanStartEvent = CustomEvent<{
-    x: number
-    y: number
-}>
-
-export type PanMoveEvent = CustomEvent<{
+export type PanEvent = CustomEvent<{
     x: number
     y: number
     dx: number
-        dy: number
-        totalDeltaX: number
-        totalDeltaY: number
+    dy: number
+    totalDeltaX: number
+    totalDeltaY: number
+    startX: number
+    startY: number
 }>
 
-export type PanEndEvent = PanStartEvent
+export type PanStartEvent = CustomEvent<{
+    x: number
+    y: number
+    startX: number
+    startY: number
+}>
