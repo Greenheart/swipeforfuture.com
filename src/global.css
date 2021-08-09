@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 html {
-    @apply bg-gray-50 overflow-x-hidden;
+    @apply bg-gray-800 overflow-x-hidden;
 }

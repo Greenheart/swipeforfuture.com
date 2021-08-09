@@ -44,8 +44,8 @@
 <div
     class="grid place-items-center shadow-xl rounded-md cursor-move select-none font-bold text-white text-xl w-[300px] h-[400px]"
     class:bg-gray-700={side === ''}
-    class:bg-red-700={side === 'left'}
-    class:bg-green-700={side === 'right'}
+    class:bg-red-900={side === 'left'}
+    class:bg-green-900={side === 'right'}
     use:pannable
     on:panstart={handlePanStart}
     on:panmove={handlePanMove}
