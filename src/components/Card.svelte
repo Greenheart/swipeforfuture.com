@@ -2,7 +2,6 @@
     import { spring } from 'svelte/motion'
 
     import { pannable } from '$util/pannable'
-    import type { PanEvent } from '$util/pannable'
 
     const THRESHOLD = 100
 
