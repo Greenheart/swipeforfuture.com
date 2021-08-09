@@ -1,0 +1,1 @@
+export const SFF_DEFAULT_SCENARIO = 'https://muthaias.github.io/swipeforfuture-content/default'

@@ -25,6 +25,7 @@ export default {
                 alias: {
                     $components: resolve('./src/components'),
                     $util: resolve('./src/util'),
+                    $game: resolve('./src/game'),
                 },
             },
         },

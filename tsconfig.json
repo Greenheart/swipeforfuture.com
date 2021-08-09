@@ -26,6 +26,7 @@
         "paths": {
             "$lib/*": ["src/lib/*"],
             "$util/*": ["src/util/*"],
+            "$game/*": ["src/game/*"],
             "$components/*": ["src/components/*"]
         }
     },
