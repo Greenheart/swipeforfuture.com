@@ -11,16 +11,9 @@ type PanEvent = CustomEvent<{
     totalDeltaY: number
 }>
 
-type PanStartEvent = CustomEvent<{
-    x: number
-    y: number
-    startX: number
-    startY: number
-}>
-
 declare namespace svelte.JSX {
     interface HTMLProps<T> {
-        onpanstart?: (event: PanStartEvent) => void
+        onpanstart?: (event: PanEvent) => void
         onpanmove?: (event: PanEvent) => void
         onpanend?: (event: PanEvent) => void
     }
