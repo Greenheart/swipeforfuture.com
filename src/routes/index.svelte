@@ -1,6 +1,5 @@
-<script lang="ts">
+<script lang="ts" context="module">
     import Card from '$components/Card.svelte'
-    import '../global.css'
 </script>
 
 <svelte:head>
