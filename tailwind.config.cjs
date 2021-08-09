@@ -16,6 +16,6 @@ module.exports = {
             gray: colors.warmGray,
             white: colors.white,
             black: colors.black,
-        }
+        },
     },
 }
