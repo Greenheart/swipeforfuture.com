@@ -10,4 +10,6 @@
     />
 </svelte:head>
 
-<Card>Swipe Me</Card>
+<div class="grid place-items-center m-auto p-16">
+    <Card>Swipe Me</Card>
+</div>

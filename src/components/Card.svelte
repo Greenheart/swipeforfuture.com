@@ -44,7 +44,7 @@
 </script>
 
 <div
-    class="card grid absolute place-items-center shadow-xl rounded-md cursor-move select-none font-bold text-white text-xl"
+    class="grid place-items-center shadow-xl rounded-md cursor-move select-none font-bold text-white text-xl w-[300px] h-[400px]"
     class:bg-gray-700={side === ''}
     class:bg-red-700={side === 'left'}
     class:bg-green-700={side === 'right'}
@@ -54,18 +54,7 @@
     on:panend={handlePanEnd}
     style="transform:
 		translate({$coords.x}px,{$coords.y}px)
-		rotate({$coords.x * 0.17}deg)"
+		rotate({$coords.x * 0.12}deg)"
 >
     <slot />
 </div>
-
-<style>
-    .card {
-        --width: 300px;
-        --height: 400px;
-        width: var(--width);
-        height: var(--height);
-        left: calc(50% - var(--width) / 2);
-        top: calc(50% - var(--height) / 2);
-    }
-</style>
