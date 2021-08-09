@@ -1,79 +1,49 @@
 export function pannable(node: HTMLElement) {
-    let x: number
-    let y: number
-
+    let lastX: number
+    let lastY: number
     let startX: number
     let startY: number
 
-    function handleMousedown(event: MouseEvent) {
-        x = event.clientX
-        y = event.clientY
-        startX = x
-        startY = y
+    function getPanEvent(type: 'panstart' | 'panmove' | 'panend', clientX: number, clientY: number): PanEvent {
+        if (type === 'panstart') {
+            startX = clientX
+            startY = clientY
+        }
 
-        node.dispatchEvent(
-            new CustomEvent('panstart', {
-                detail: {
-                    x,
-                    y,
-                    startX,
-                    startY,
-                },
-            }),
-        )
+        const detail: PanEvent['detail'] = {
+            // Current position of the cursor.
+            x: clientX,
+            y: clientY,
+            // Delta position since the last `panmove` event.
+            dx: clientX - lastX,
+            dy: clientY - lastY,
+            // Starting position from the `panstart` event.
+            startY,
+            startX,
+            // Total delta position compared to the `panstart` event.
+            totalDeltaX: clientX - startX,
+            totalDeltaY: clientY - startY,
+        }
+
+        lastX = clientX
+        lastY = clientY
+
+        return new CustomEvent(type, { detail })
+    }
+
+    function handleMousedown(event: MouseEvent) {
+        node.dispatchEvent(getPanEvent('panstart', event.clientX, event.clientY))
 
         window.addEventListener('mousemove', handleMousemove)
         window.addEventListener('mouseup', handleMouseup)
     }
 
     function handleMousemove(event: MouseEvent) {
-        const dx = event.clientX - x
-        const dy = event.clientY - y
-        const totalDeltaX = event.clientX - startX
-        const totalDeltaY = event.clientY - startY
-
-        x = event.clientX
-        y = event.clientY
-
-        node.dispatchEvent(
-            new CustomEvent('panmove', {
-                detail: {
-                    x,
-                    y,
-                    dx,
-                    dy,
-                    startX,
-                    startY,
-                    totalDeltaX,
-                    totalDeltaY,
-                },
-            }),
-        )
+        node.dispatchEvent(getPanEvent('panmove', event.clientX, event.clientY))
     }
 
     function handleMouseup(event: MouseEvent) {
-        const dx = event.clientX - x
-        const dy = event.clientY - y
-        const totalDeltaX = event.clientX - startX
-        const totalDeltaY = event.clientY - startY
-
-        x = event.clientX
-        y = event.clientY
-
-        node.dispatchEvent(
-            new CustomEvent('panend', {
-                detail: {
-                    x,
-                    y,
-                    dx,
-                    dy,
-                    startX,
-                    startY,
-                    totalDeltaX,
-                    totalDeltaY,
-                },
-            }),
-        )
+        node.dispatchEvent(getPanEvent('panend', event.clientX, event.clientY))
 
         window.removeEventListener('mousemove', handleMousemove)
         window.removeEventListener('mouseup', handleMouseup)
@@ -87,21 +57,3 @@ export function pannable(node: HTMLElement) {
         },
     }
 }
-
-export type PanEvent = CustomEvent<{
-    x: number
-    y: number
-    dx: number
-    dy: number
-    totalDeltaX: number
-    totalDeltaY: number
-    startX: number
-    startY: number
-}>
-
-export type PanStartEvent = CustomEvent<{
-    x: number
-    y: number
-    startX: number
-    startY: number
-}>
