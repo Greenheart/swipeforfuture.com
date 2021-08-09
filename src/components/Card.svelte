@@ -4,9 +4,7 @@
     import { pannable } from '$util/pannable'
 
     const THRESHOLD = 100
-
     let side = ''
-
     const coords = spring(
         { x: 0, y: 0 },
         {
@@ -53,8 +51,8 @@
     on:panmove={handlePanMove}
     on:panend={handlePanEnd}
     style="transform:
-		translate({$coords.x}px,{$coords.y}px)
-		rotate({$coords.x * 0.12}deg)"
+        translate3d({$coords.x}px,{$coords.y}px, 0)
+        rotate({$coords.x * 0.05}deg)"
 >
     <slot />
 </div>
