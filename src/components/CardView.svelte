@@ -14,9 +14,9 @@
 </script>
 
 <div
-    class="flex flex-col items-center justify-center text-white font-light max-w-prose px-4 m-auto"
+    class="flex flex-col items-center justify-center text-white text-xl font-light max-w-prose px-4 m-auto"
 >
-    <p class="text-center py-4 h-40 flex place-items-center">{card.text}</p>
+    <p class="text-center py-4 h-48 flex place-items-center">{card.text}</p>
     <div class="{imageSize} relative">
         <div class="absolute z-0 {imageSize} top-0 left-0 bg-gray-900" />
         <Card {onSwipe}>
