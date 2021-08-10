@@ -7,5 +7,5 @@
 </header>
 
 <div class="grid place-items-center m-auto p-16">
-    <a href="/play" sveltekit:prefetch>Play</a>
+    <a href="/play" sveltekit:prefetch class="py-4 px-16 text-white text-2xl font-black tracking-widest bg-sky-500 rounded-md hover:bg-sky-600">Play</a>
 </div>

@@ -26,9 +26,13 @@
 </script>
 
 {#if path}
-    {#await fetchWorld(path)}
-        <p>Loading...</p>
-    {:then game}
+    {#await fetchWorld(path) then game}
         <Game {game} />
     {/await}
+{:else}
+    <p
+        class="grid place-items-center mt-32 text-white font-black text-2xl tracking-widest"
+    >
+        Loading...
+    </p>
 {/if}
