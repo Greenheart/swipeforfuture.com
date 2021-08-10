@@ -1,14 +1,15 @@
 <script lang="ts" context="module">
     import { spring } from 'svelte/motion'
 
-    import { SwipeDirection } from '$util/constants'
+    import { SwipeDirection, SWIPE_THRESHOLD, SWIPE_DELAY } from '$util/constants'
+    import { pannable } from '$util/pannable'
+
+    const transition = `transition: transform ${SWIPE_DELAY}ms ease-out`
 </script>
 
 <script lang="ts">
-    import { pannable } from '$util/pannable'
-
-    export let onSwipe: (direction: SwipeDirection) => void
-    export let threshold = 100
+    export let onSwipe: (direction: SwipeDirection) => Promise<void>
+    let isMovingOut = false
 
     const coords = spring(
         { x: 0, y: 0 },
@@ -29,17 +30,22 @@
         }))
     }
 
-    function handlePanEnd(event: PanEvent) {
-        // TODO: Add animation to let card move to the selected side and continue out of the viewport.
-        // TODO: Then unmount the card component.
-        if (event.detail.totalDeltaX > threshold) {
-            onSwipe(SwipeDirection.Right)
-        } else if (event.detail.totalDeltaX < -threshold) {
-            onSwipe(SwipeDirection.Left)
+    async function handlePanEnd(event: PanEvent) {
+        if (event.detail.totalDeltaX > SWIPE_THRESHOLD) {
+            isMovingOut = true
+            $coords.x = 200 + window.innerHeight * SwipeDirection.Right
+            await onSwipe(SwipeDirection.Right)
+            isMovingOut = false
+        } else if (event.detail.totalDeltaX < -SWIPE_THRESHOLD) {
+            isMovingOut = true
+            $coords.x = 200 + window.innerHeight * SwipeDirection.Left
+            await onSwipe(SwipeDirection.Left)
+            isMovingOut = false
+        } else {
+            coords.stiffness = 0.2
+            coords.damping = 0.8
         }
-
-        coords.stiffness = 0.2
-        coords.damping = 0.8
+    
         coords.set({ x: 0, y: 0 })
     }
 </script>
@@ -52,7 +58,8 @@
     on:panend={handlePanEnd}
     style="transform:
         translate3d({$coords.x}px,{$coords.y}px, 0)
-        rotate({$coords.x * 0.05}deg)"
+        rotate({$coords.x * 0.05}deg);
+        {isMovingOut ? transition : ''}"
 >
     <slot />
 </div>

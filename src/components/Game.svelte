@@ -3,7 +3,7 @@
 
     import CardView from '$components/CardView.svelte'
     import Stats from '$components/Stats.svelte'
-    import { SwipeDirection } from '$util/constants'
+    import { SwipeDirection, SWIPE_DELAY } from '$util/constants'
     import type { GameState, Game as GameLogic, Stat } from '$game/Types'
 </script>
 
@@ -23,15 +23,20 @@
         )
     }
 
-    function onSwipe(direction: SwipeDirection): void {
-        if (!$state.card) return
+    function onSwipe(direction: SwipeDirection): Promise<void> {
+        if (!$state.card) return Promise.resolve()
 
         const action =
             direction === SwipeDirection.Left
                 ? $state.card.actions.left.modifier
                 : $state.card.actions.right.modifier
 
-        $state = game.applyAction($state, action)
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                $state = game.applyAction($state, action)
+                resolve()
+            }, SWIPE_DELAY)
+        })
     }
 </script>
 
