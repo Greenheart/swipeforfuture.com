@@ -86,15 +86,16 @@
         rotate({$coords.x * 0.05}deg);
         {isMovingOut ? transition : ''}"
 >
+<!-- TODO: tweak styles for how the action descriptions are displayed -->
     {#if response && dir}
         <div class="absolute overflow-hidden {imageSize}">
             <div
                 class="absolute -top-56 {dir === SwipeDirection.Left
                     ? '-right-40 text-right'
-                    : '-left-40'} bg-gray-800 bg-opacity-50 text-md w-[180%] h-72 p-4 overflow-hidden"
+                    : '-left-40'} bg-gray-800 bg-opacity-50 text-md w-[180%] h-80 p-4 overflow-hidden"
                 style="transform: rotate({$coords.x * -0.05}deg); opacity: {opacity}"
             >
-                <span class="max-w-[150px] relative top-56 {dir === SwipeDirection.Left
+                <span class="relative top-60 {dir === SwipeDirection.Left
                     ? 'right-40'
                     : 'left-40'}">{response}</span>
             </div>
