@@ -13,15 +13,15 @@
 </script>
 
 <div
-    class="flex flex-col items-center justify-center text-white text-xl font-light max-w-prose m-auto"
+    class="flex flex-col items-center justify-center text-white text-lg xs:text-xl font-light max-w-prose m-auto"
 >
-    <p class="text-center py-4 h-48 flex place-items-center px-8">{card.text}</p>
+    <p class="text-center py-4 h-48 xs:h-64 flex place-items-center px-4 xs:px-8">{card.text}</p>
     <div class="{imageSize} relative">
         <div class="absolute z-0 {imageSize} top-0 left-0 bg-gray-900" />
         <Card {onSwipe}>
             <div
                 style="background-image: url({card.image})"
-                class="bg-no-repeat bg-center {imageSize} z-10"
+                class="bg-no-repeat bg-center {imageSize} z-10 bg-cover"
             />
         </Card>
     </div>

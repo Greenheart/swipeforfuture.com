@@ -51,7 +51,7 @@
 </script>
 
 <div
-    class="shadow-xl rounded-md cursor-move select-none bg-gray-700"
+    class="shadow-md rounded-md cursor-move select-none bg-gray-700"
     use:pannable
     on:panstart={handlePanStart}
     on:panmove={handlePanMove}
