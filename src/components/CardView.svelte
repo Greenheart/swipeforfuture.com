@@ -13,7 +13,7 @@
 </script>
 
 <div
-    class="flex flex-col items-center justify-center text-white text-lg xs:text-xl font-light max-w-prose m-auto"
+    class="flex flex-col items-center justify-center text-white xs:text-lg font-light max-w-prose m-auto"
 >
     <p class="text-center py-4 h-48 xs:h-64 flex place-items-center px-4 xs:px-8">{card.text}</p>
     <div class="{imageSize} relative">
