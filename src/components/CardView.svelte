@@ -15,7 +15,7 @@
 <div
     class="flex flex-col items-center justify-center text-white 2xs:text-lg xs:text-xl font-light max-w-prose m-auto"
 >
-    <p class="text-center xs:py-4 h-36 2xs:h-40 xs:h-56 flex place-items-center px-4 xs:px-8">{card.text}</p>
+    <p class="text-center xs:py-4 h-36 2xs:h-44 xs:h-56 flex place-items-center px-4 xs:px-8">{card.text}</p>
     <div class="{imageSize} relative">
         <div class="absolute z-0 {imageSize} top-0 left-0 bg-gray-900" />
         <Card {onSwipe}>
@@ -25,6 +25,6 @@
             />
         </Card>
     </div>
-    <h2 class="mt-2 xs:mb-4">{card.title}</h2>
-    <p class="text-gray-300 mb-2 xs:mt-4">{card.location}</p>
+    <h2 class="mt-2 xs:mt-4">{card.title}</h2>
+    <p class="text-gray-300 mb-2 xs:mb-4">{card.location}</p>
 </div>
