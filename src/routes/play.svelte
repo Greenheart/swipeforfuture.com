@@ -31,7 +31,7 @@
     {/await}
 {:else}
     <p
-        class="grid place-items-center mt-32 text-white font-black text-2xl tracking-widest"
+        class="grid place-items-center mt-40 text-white font-black text-2xl tracking-widest"
     >
         Loading...
     </p>
