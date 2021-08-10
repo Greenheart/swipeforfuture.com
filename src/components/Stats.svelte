@@ -9,7 +9,7 @@
     export let stats: Array<Stat<any> & { value: number }>
 </script>
 
-<header class="flex bg-green-700 xs:space-x-10 justify-around xs:justify-center items-center p-2 2xs:p-4">
+<header class="flex bg-green-700 xs:space-x-10 justify-around xs:justify-center items-center p-2 2xs:p-4 shadow-lg">
     {#each stats as stat}
         <div class="flex justify-between items-center flex-col">
             <div
