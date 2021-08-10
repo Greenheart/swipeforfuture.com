@@ -6,6 +6,7 @@ module.exports = {
     purge: ['./src/**/*.{html,js,svelte,ts}'],
     theme: {
         screens: {
+            '2xs': '400px',
             xs: '475px',
             ...defaultTheme.screens,
         },
