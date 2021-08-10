@@ -1,14 +1,11 @@
-<script lang="ts" context="module">
-    import Card from '$components/Card.svelte'
-</script>
-
-<svelte:head>
-    <meta
-        name="description"
-        content="Solving the climate crisis, one swipe at a time 🌍🔥"
-    />
-</svelte:head>
+<header class="py-16">
+    <h1
+        class="text-3xl font-thin leading-9 tracking-wide text-center text-white"
+    >
+        Swipe for Future
+    </h1>
+</header>
 
 <div class="grid place-items-center m-auto p-16">
-    <Card>Swipe Me</Card>
+    <a href="/play" sveltekit:prefetch>Play</a>
 </div>

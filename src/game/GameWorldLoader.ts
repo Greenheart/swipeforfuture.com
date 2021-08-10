@@ -5,7 +5,14 @@ import type {
     EventCardActionData,
     WorldQuery,
 } from './ContentTypes'
-import type { Game, GameState, Card, CardAction, StateModifier, Stat } from './Types'
+import type {
+    Game,
+    GameState,
+    Card,
+    CardAction,
+    StateModifier,
+    Stat,
+} from './Types'
 import { Params, ParamQuery, hasMatchingParamQuery } from './Params'
 import { BasicGame } from './BasicGame'
 import { stateExtensionsFromData, createParameterCap } from './StateExtensions'
@@ -110,9 +117,8 @@ function cardFromData(
     data: GameWorld['cards'][number] | GameWorld['eventCards'][string],
     defaultParams: Params,
 ): Card<Params> {
-    const paramQueries = ('isAvailableWhen' in data
-        ? data.isAvailableWhen
-        : []
+    const paramQueries = (
+        'isAvailableWhen' in data ? data.isAvailableWhen : []
     ).map(worldQueryToParamQuery)
     return {
         image: data.image,

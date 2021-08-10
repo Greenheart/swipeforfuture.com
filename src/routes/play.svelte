@@ -1,8 +1,10 @@
 <script lang="ts" context="module">
+    import { onMount } from 'svelte'
+
+    import Game from '$components/Game.svelte'
     import { loadScenario } from '$game/load-scenario'
     import { load } from '$game/GameWorldLoader'
     import { SFF_DEFAULT_SCENARIO } from '$util/constants'
-    import { onMount } from 'svelte'
 </script>
 
 <script lang="ts">
@@ -27,6 +29,6 @@
     {#await fetchWorld(path)}
         <p>Loading...</p>
     {:then game}
-        <div>Play, {game}</div>
+        <Game {game} />
     {/await}
 {/if}

@@ -4,7 +4,11 @@ export function pannable(node: HTMLElement) {
     let startX: number
     let startY: number
 
-    function getPanEvent(type: 'panstart' | 'panmove' | 'panend', clientX: number, clientY: number): PanEvent {
+    function getPanEvent(
+        type: 'panstart' | 'panmove' | 'panend',
+        clientX: number,
+        clientY: number,
+    ): PanEvent {
         if (type === 'panstart') {
             startX = clientX
             startY = clientY
@@ -31,19 +35,19 @@ export function pannable(node: HTMLElement) {
         return new CustomEvent(type, { detail })
     }
 
-    function handleMousedown(event: MouseEvent) {
-        node.dispatchEvent(getPanEvent('panstart', event.clientX, event.clientY))
+    function handleMousedown(e: MouseEvent) {
+        node.dispatchEvent(getPanEvent('panstart', e.clientX, e.clientY))
 
         window.addEventListener('mousemove', handleMousemove)
         window.addEventListener('mouseup', handleMouseup)
     }
 
-    function handleMousemove(event: MouseEvent) {
-        node.dispatchEvent(getPanEvent('panmove', event.clientX, event.clientY))
+    function handleMousemove(e: MouseEvent) {
+        node.dispatchEvent(getPanEvent('panmove', e.clientX, e.clientY))
     }
 
-    function handleMouseup(event: MouseEvent) {
-        node.dispatchEvent(getPanEvent('panend', event.clientX, event.clientY))
+    function handleMouseup(e: MouseEvent) {
+        node.dispatchEvent(getPanEvent('panend', e.clientX, e.clientY))
 
         window.removeEventListener('mousemove', handleMousemove)
         window.removeEventListener('mouseup', handleMouseup)
