@@ -6,5 +6,6 @@ export enum SwipeDirection {
     Right = 1,
 }
 
-export const SWIPE_DELAY = 250       // ms
-export const SWIPE_THRESHOLD = 100   // px
+export const SWIPE_DELAY = 250          // ms
+export const SWIPE_THRESHOLD = 100      // px
+export const SWIPE_OPACITY_FACTOR = 1.5 / 100 // multiplier
