@@ -1,10 +1,15 @@
-<script lang="ts">
+<script lang="ts" context="module">
     import { spring } from 'svelte/motion'
 
+    import { SwipeDirection } from '$util/constants'
+</script>
+
+<script lang="ts">
     import { pannable } from '$util/pannable'
 
-    const THRESHOLD = 100
-    let side = ''
+    export let onSwipe: (direction: SwipeDirection) => void
+    export let threshold = 100
+
     const coords = spring(
         { x: 0, y: 0 },
         {
@@ -27,12 +32,10 @@
     function handlePanEnd(event: PanEvent) {
         // TODO: Add animation to let card move to the selected side and continue out of the viewport.
         // TODO: Then unmount the card component.
-        if (event.detail.totalDeltaX > THRESHOLD) {
-            console.log('right')
-            side = 'right'
-        } else if (event.detail.totalDeltaX < -THRESHOLD) {
-            console.log('left')
-            side = 'left'
+        if (event.detail.totalDeltaX > threshold) {
+            onSwipe(SwipeDirection.Right)
+        } else if (event.detail.totalDeltaX < -threshold) {
+            onSwipe(SwipeDirection.Left)
         }
 
         coords.stiffness = 0.2
@@ -42,10 +45,7 @@
 </script>
 
 <div
-    class="grid place-items-center shadow-xl rounded-md cursor-move select-none font-bold text-white text-xl w-[300px] h-[400px]"
-    class:bg-gray-700={side === ''}
-    class:bg-red-900={side === 'left'}
-    class:bg-green-900={side === 'right'}
+    class="shadow-xl rounded-md cursor-move select-none bg-gray-700"
     use:pannable
     on:panstart={handlePanStart}
     on:panmove={handlePanMove}
