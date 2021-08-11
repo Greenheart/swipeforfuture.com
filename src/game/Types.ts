@@ -11,6 +11,7 @@ export type StateModifier<P> = (state: GameState<P>) => GameState<P>
 export interface CardAction<P> {
     description: string
     modifier: StateModifier<P>
+    next?: Card<P>['id']
 }
 
 export type CardPresentation = {
@@ -29,12 +30,14 @@ export type CardPresentation = {
 }
 
 export interface Card<P> extends CardPresentation {
+    id: string
     match(state: GameState<P>): boolean
     weight: number
     actions: {
         left: CardAction<P>
         right: CardAction<P>
     }
+    priority?: number
 }
 
 export type GameState<P> = {

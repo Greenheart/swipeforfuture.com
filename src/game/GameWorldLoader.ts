@@ -84,6 +84,7 @@ function cardFromData(
         'isAvailableWhen' in data ? data.isAvailableWhen : []
     ).map(worldQueryToParamQuery)
     return {
+        id: data.id,
         image: data.image,
         title: data.title,
         text: data.text,
@@ -94,6 +95,7 @@ function cardFromData(
             left: actionFromData(data.actions.left, defaultParams, 'No'),
             right: actionFromData(data.actions.right, defaultParams, 'Yes'),
         },
+        priority: data.priority
     }
 }
 
@@ -113,6 +115,7 @@ function actionFromData(
     return {
         description: data.description ?? defaultDescription,
         modifier: (state) => updateParams(state, data.modifiers, defaultParams),
+        next: data.next
     }
 }
 
