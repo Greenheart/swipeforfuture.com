@@ -12,7 +12,7 @@ async function tryLoadFromLocalStorage(
         const gameWorldId = 'game_world:' + id
         const gameWorld: GameWorld = {
             stats: [],
-            cards: {},
+            cards: [],
             defaultState: {
                 state: {},
                 flags: {},

@@ -9,7 +9,6 @@ import type {
     GameState,
     Card,
     CardAction,
-    StateModifier,
     Stat,
 } from './Types'
 import { Params, ParamQuery, hasMatchingParamQuery } from './Params'
@@ -32,7 +31,7 @@ export function load(
         flags: gameWorld.defaultState.flags,
         vars: gameWorld.defaultState.state,
     }
-    const cards = Object.values(gameWorld.cards).map<Card<Params>>((data) =>
+    const cards = gameWorld.cards.map<Card<Params>>((data) =>
         cardFromData(data, defaultParams),
     )
     const parameterCaps = parameterCapsFromStats(gameWorld.stats)
@@ -40,7 +39,7 @@ export function load(
     const stateExtensions = stateExtensionsFromData(
         gameWorld.worldStateModifiers,
     )
-    return new BasicGame<Params>([...cards], stats, defaultParams, {
+    return new BasicGame<Params>(cards, stats, defaultParams, {
         tickModifiers: [ ...stateExtensions, parameterCaps],
         random,
     })
