@@ -64,7 +64,6 @@ export interface CardActionData {
     description?: string
     modifiers: GameWorldModifier[]
     next?: Card['id']
-    priority?: CardPriority
 }
 
 export interface Card extends CardDescription {
@@ -74,6 +73,7 @@ export interface Card extends CardDescription {
         left: CardActionData
         right: CardActionData
     }
+    priority?: CardPriority
 }
 
 export type WorldStateRange = [number, number]
