@@ -2,7 +2,6 @@ import type {
     GameWorld,
     GameWorldModifier,
     CardActionData,
-    EventCardActionData,
     WorldQuery,
 } from './ContentTypes'
 import type {
@@ -33,53 +32,18 @@ export function load(
         flags: gameWorld.defaultState.flags,
         vars: gameWorld.defaultState.state,
     }
-    const cards = gameWorld.cards.map<Card<Params>>((data) =>
+    const cards = Object.values(gameWorld.cards).map<Card<Params>>((data) =>
         cardFromData(data, defaultParams),
     )
-    const eventCards = eventCardsFromData(gameWorld.eventCards, defaultParams)
-    const events: StateModifier<Params>[] = gameWorld.events.map((event) => {
-        const card = eventCards[event.initialEventCardId]
-        return eventFromData(event, card, random)
-    })
     const parameterCaps = parameterCapsFromStats(gameWorld.stats)
     const stats = statsFromData(gameWorld.stats)
     const stateExtensions = stateExtensionsFromData(
         gameWorld.worldStateModifiers,
     )
     return new BasicGame<Params>([...cards], stats, defaultParams, {
-        tickModifiers: [...events, ...stateExtensions, parameterCaps],
+        tickModifiers: [ ...stateExtensions, parameterCaps],
         random,
     })
-}
-
-/**
- * Creates a StateModifier representing an event using data from GameWorld
- *
- * @param event The event data
- * @param card The card to which the event should be linked
- * @param random The random function used for the probability check
- * @returns An event trigger in the form of a StateModifier
- */
-function eventFromData(
-    event: GameWorld['events'][number],
-    card: Card<Params>,
-    random: () => number,
-): StateModifier<Params> {
-    const paramQueries = event.isAvailableWhen.map(worldQueryToParamQuery)
-    return (state) => {
-        const noPreviousCardSetter = !state.card
-        const propabilityHit = random() <= event.probability
-        const shouldExecute =
-            noPreviousCardSetter &&
-            propabilityHit &&
-            hasMatchingParamQuery(state.params, paramQueries)
-        return shouldExecute
-            ? {
-                  ...state,
-                  card: card,
-              }
-            : state
-    }
 }
 
 /**
@@ -114,7 +78,7 @@ function parameterCapsFromStats(stats: GameWorld['stats']) {
  * @returns A runtime model of a card
  */
 function cardFromData(
-    data: GameWorld['cards'][number] | GameWorld['eventCards'][string],
+    data: GameWorld['cards'][number],
     defaultParams: Params,
 ): Card<Params> {
     const paramQueries = (
@@ -132,67 +96,6 @@ function cardFromData(
             right: actionFromData(data.actions.right, defaultParams, 'Yes'),
         },
     }
-}
-
-/**
- * Creates a map of event cars from GameWorlds event card data
- *
- * @param eventCardsData The event card data
- * @param defaultParams Default params to use for a state reset
- * @returns A map of event cards
- */
-function eventCardsFromData(
-    eventCardsData: GameWorld['eventCards'],
-    defaultParams: Params,
-): { [x: string]: Card<Params> } {
-    const eventCards = Object.keys(eventCardsData).reduce<{
-        [x: string]: Card<Params>
-    }>((acc, key) => {
-        const data = eventCardsData[key]
-        acc[key] = cardFromData(data, defaultParams)
-        return acc
-    }, {})
-
-    for (const cardId in eventCards) {
-        const data = eventCardsData[cardId]
-        const eventCard = eventCards[cardId]
-
-        eventCard.actions.left.modifier = eventCardChain(
-            data.actions.left,
-            eventCards,
-            eventCard.actions.left.modifier,
-        )
-        eventCard.actions.right.modifier = eventCardChain(
-            data.actions.right,
-            eventCards,
-            eventCard.actions.right.modifier,
-        )
-    }
-    return eventCards
-}
-
-/**
- * Completes an event card action modifier by adding trigger for next card
- * in case a nextEventCardId is specified
- *
- * @param data The action data
- * @param eventCards An event cards map
- * @param modifier The current modifier without card trigger
- * @returns A StateModifier with conditionally added next card trigger
- */
-function eventCardChain(
-    data: EventCardActionData,
-    eventCards: { [x: string]: Card<Params> },
-    modifier: StateModifier<Params>,
-): StateModifier<Params> {
-    const targetCard =
-        data.nextEventCardId !== null ? eventCards[data.nextEventCardId] : null
-    return targetCard
-        ? (state) => ({
-              ...modifier(state),
-              card: targetCard,
-          })
-        : modifier
 }
 
 /**
