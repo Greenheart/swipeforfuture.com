@@ -1,9 +1,9 @@
-import type { WorldState, CardData, EventCard } from './ContentTypes'
+import type { WorldState, Card } from './ContentTypes'
 
 // GameTypes are used for the game implementation.
 
 export type GameState = {
     world: WorldState
-    card: CardData | EventCard
+    card: Card
     rounds: number
 }
