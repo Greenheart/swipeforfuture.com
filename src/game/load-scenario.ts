@@ -43,52 +43,10 @@ async function tryLoadFromLocalStorage(
     return null
 }
 
-async function tryLoadFromRestAPI(path: string): Promise<GameWorld | null> {
-    // Default: expect a folder to represent a GameWorld and contain specific JSON-files.
-    const statsPath = path + '/stats.json'
-    const cardsPath = path + '/cards.json'
-    const eventsPath = path + '/events.json'
-    const eventCardsPath = path + '/event-cards.json'
-    const defaultStatePath = path + '/default-state.json'
-    const worldStateModifiersPath = path + '/modifiers.json'
-
-    const [
-        stats,
-        cards,
-        events,
-        eventCards,
-        defaultState,
-        worldStateModifiers,
-    ] = await Promise.all<
-        StatDefinition[],
-        CardData[],
-        WorldEvent[],
-        EventCards,
-        WorldState,
-        WorldStateModifier[]
-    >([
-        fetchJSON(statsPath),
-        fetchJSON(cardsPath),
-        fetchJSON(eventsPath),
-        fetchJSON(eventCardsPath),
-        fetchJSON(defaultStatePath),
-        fetchJSON(worldStateModifiersPath),
-    ])
-
-    return {
-        stats,
-        cards,
-        events,
-        eventCards,
-        defaultState,
-        worldStateModifiers,
-    }
-}
-
-export async function loadScenario(path: string) {
+export async function loadScenario(path: string): Promise<GameWorld | null> {
     return (
         (await tryLoadFromLocalStorage(path)) ||
-        (await tryLoadFromRestAPI(path))
+        (await fetchJSON<GameWorld | null>(path))
     )
 }
 
