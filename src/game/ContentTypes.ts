@@ -2,7 +2,7 @@
 
 export type GameWorld = {
     stats: StatDefinition[]
-    cards: Cards
+    cards: Card[]
     defaultState: WorldState
     worldStateModifiers: WorldStateModifier[]
 }
@@ -55,10 +55,16 @@ export type GameWorldModifier = Partial<WorldState> & {
     type?: 'add' | 'set' | 'replace'
 }
 
+export enum CardPriority {
+    Event = 0,
+    Card = 1
+}
+
 export interface CardActionData {
     description?: string
     modifiers: GameWorldModifier[]
     next?: Card['id']
+    priority?: CardPriority
 }
 
 export interface Card extends CardDescription {
@@ -68,10 +74,6 @@ export interface Card extends CardDescription {
         left: CardActionData
         right: CardActionData
     }
-}
-
-export interface Cards {
-    [id: string]: Card
 }
 
 export type WorldStateRange = [number, number]
