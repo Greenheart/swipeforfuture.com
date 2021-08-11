@@ -1,3 +1,5 @@
+import type { GameWorld } from "./ContentTypes"
+
 export type Stat<P> = {
     getValue: (state: GameState<P>) => number
     id: string
@@ -39,6 +41,8 @@ export interface Card<P> extends CardPresentation {
     }
     priority?: number
 }
+
+export type CardsMap<P> = Record<Card<P>['id'], Card<P>>
 
 export type GameState<P> = {
     card?: Card<P>

@@ -10,6 +10,8 @@ import type {
     Card,
     CardAction,
     Stat,
+    StateModifier,
+    CardsMap,
 } from './Types'
 import { Params, ParamQuery, hasMatchingParamQuery } from './Params'
 import { BasicGame } from './BasicGame'
@@ -31,16 +33,28 @@ export function load(
         flags: gameWorld.defaultState.flags,
         vars: gameWorld.defaultState.state,
     }
-    const cards = gameWorld.cards.map<Card<Params>>((data) =>
-        cardFromData(data, defaultParams),
-    )
+
+    const cardsMap = gameWorld.cards.reduce<
+        Record<GameWorld['cards'][number]['id'], GameWorld['cards'][number]>
+    >((map, card) => {
+        map[card.id] = card
+        return map
+    }, {})
+
+    const cards = cardsFromData(cardsMap, defaultParams)
+
+    console.log(cards)
+
+    // TODO: Add runtime capability to select event cards first based on `priority`
+    // TODO: Add runtime capability to move to the specific next card when it's selected.
+
     const parameterCaps = parameterCapsFromStats(gameWorld.stats)
     const stats = statsFromData(gameWorld.stats)
     const stateExtensions = stateExtensionsFromData(
         gameWorld.worldStateModifiers,
     )
-    return new BasicGame<Params>(cards, stats, defaultParams, {
-        tickModifiers: [ ...stateExtensions, parameterCaps],
+    return new BasicGame<Params>(Object.values(cards), stats, defaultParams, {
+        tickModifiers: [...stateExtensions, parameterCaps],
         random,
     })
 }
@@ -70,7 +84,7 @@ function parameterCapsFromStats(stats: GameWorld['stats']) {
 }
 
 /**
- * Creates a Card<Params> from regular card data or event card data
+ * Creates a Card<Params> from card data
  *
  * @param data The card data
  * @param defaultParams The default parameters to use for state reset
@@ -95,8 +109,69 @@ function cardFromData(
             left: actionFromData(data.actions.left, defaultParams, 'No'),
             right: actionFromData(data.actions.right, defaultParams, 'Yes'),
         },
-        priority: data.priority
+        priority: data.priority,
     }
+}
+
+/**
+ * Creates a map of cards, linked together
+ *
+ * @param cardsMap A map of all cards
+ * @param defaultParams Default params to use for a state reset
+ * @returns A map of all runtime cards
+ */
+function cardsFromData(
+    cardsMap: Record<
+        GameWorld['cards'][number]['id'],
+        GameWorld['cards'][number]
+    >,
+    defaultParams: Params,
+): CardsMap<Params> {
+    const cards = Object.keys(cardsMap).reduce<CardsMap<Params>>((acc, key) => {
+        const data = cardsMap[key]
+        acc[key] = cardFromData(data, defaultParams)
+        return acc
+    }, {})
+
+    for (const cardId in cards) {
+        const data = cardsMap[cardId]
+        const card = cards[cardId]
+
+        card.actions.left.modifier = cardChain(
+            data.actions.left,
+            cards,
+            card.actions.left.modifier,
+        )
+        card.actions.right.modifier = cardChain(
+            data.actions.right,
+            cards,
+            card.actions.right.modifier,
+        )
+    }
+    return cards
+}
+
+/**
+ * Completes a card action modifier by adding trigger for next card
+ * in case a `next` card id is specified
+ *
+ * @param data The action data
+ * @param cards A map of all cards
+ * @param modifier The current modifier without card trigger
+ * @returns A StateModifier with conditionally added next card trigger
+ */
+function cardChain(
+    data: CardActionData,
+    cardsMap: CardsMap<Params>,
+    modifier: StateModifier<Params>,
+): StateModifier<Params> {
+    const targetCard = data.next ? cardsMap[data.next] : undefined
+    return targetCard
+        ? (state) => ({
+              ...modifier(state),
+              card: targetCard,
+          })
+        : modifier
 }
 
 /**
@@ -115,7 +190,7 @@ function actionFromData(
     return {
         description: data.description ?? defaultDescription,
         modifier: (state) => updateParams(state, data.modifiers, defaultParams),
-        next: data.next
+        next: data.next,
     }
 }
 
