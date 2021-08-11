@@ -1,12 +1,4 @@
-import type {
-    WorldState,
-    StatDefinition,
-    CardData,
-    EventCards,
-    WorldEvent,
-    GameWorld,
-    WorldStateModifier,
-} from './ContentTypes'
+import type { GameWorld } from './ContentTypes'
 
 async function tryLoadFromLocalStorage(
     path: string,
@@ -20,9 +12,7 @@ async function tryLoadFromLocalStorage(
         const gameWorldId = 'game_world:' + id
         const gameWorld: GameWorld = {
             stats: [],
-            cards: [],
-            events: [],
-            eventCards: {},
+            cards: {},
             defaultState: {
                 state: {},
                 flags: {},
