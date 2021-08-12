@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 html {
-    @apply bg-gray-800 overflow-x-hidden overscroll-y-contain;
+    @apply bg-gray-800 overflow-hidden;
 }
