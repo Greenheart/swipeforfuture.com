@@ -38,10 +38,10 @@ This project is distributed under the [MIT License](./LICENSE) to allow as many 
 
 -   Join our [Discord](https://discord.gg/JGkQr9raU5) and chat with other contributors!
 
-We use GitHub to collaborate on ideas, improvements, bugs and development. The project has two parts:
+We use GitHub to collaborate on ideas, improvements, bugs and development. This project has two parts:
 
--   📱 [Game client](https://github.com/Greenheart/swipeforfuture.com)
--   📝 [Scenarios and content creation](https://github.com/Muthaias/swipeforfuture-content)
+-   📱 Game client in the `web` directory.
+-   📝 Scenarios and content creation in the `content` directory.
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) to learn more about how you can help improve scenarios and the game itself. Feel free to ask us on [Discord](https://discord.gg/JGkQr9raU5) if you want help getting started!
 
