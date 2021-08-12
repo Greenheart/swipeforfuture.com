@@ -8,4 +8,4 @@ export enum SwipeDirection {
 
 export const SWIPE_DELAY = 250 // ms
 export const SWIPE_THRESHOLD = 100 // px
-export const SWIPE_OPACITY_FACTOR = 1.7 / 100 // Determines how fast the action description is fading in/out.
+export const SWIPE_OPACITY_FACTOR = 1 // Determines how fast the action description is fading in/out.

@@ -21,6 +21,7 @@
     let response = ''
     let dir: SwipeDirection | undefined
     let opacity = 0
+    let borderWidth = ""
 
     const coords = spring(
         { x: 0, y: 0 },
@@ -32,6 +33,7 @@
 
     function handlePanStart() {
         coords.stiffness = coords.damping = 1
+        borderWidth = "2px"
     }
 
     function handlePanMove(event: PanEvent) {
@@ -43,11 +45,15 @@
         if (event.detail.totalDeltaX > 0) {
             response = actions.right.description
             dir = SwipeDirection.Right
-            opacity = event.detail.totalDeltaX * SWIPE_OPACITY_FACTOR
         } else if (event.detail.totalDeltaX < 0) {
             response = actions.left.description
             dir = SwipeDirection.Left
-            opacity = Math.abs(event.detail.totalDeltaX * SWIPE_OPACITY_FACTOR)
+        }
+
+        if (Math.abs(event.detail.totalDeltaX) > 0.5 * SWIPE_THRESHOLD) {
+            opacity = SWIPE_OPACITY_FACTOR
+        } else {
+            opacity = 0
         }
     }
 
@@ -72,6 +78,7 @@
         }
 
         coords.set({ x: 0, y: 0 })
+        borderWidth = "0px"
     }
 </script>
 
@@ -88,20 +95,21 @@
 >
     <!-- TODO: tweak styles for how the action descriptions are displayed -->
     {#if response && dir}
-        <div class="absolute overflow-hidden {imageSize}">
+        <div class="absolute overflow-hidden {imageSize}"
+            style="transition: border-width 0.2s;
+                border-color: #fff;
+                border-style: solid;
+                border-width: {borderWidth};"
+        >
             <div
-                class="absolute -top-56 bg-gray-800 bg-opacity-50 text-md w-[180%] h-80 p-4 overflow-hidden {dir ===
-                SwipeDirection.Left
-                    ? '-right-40 text-right'
-                    : '-left-40'}"
+                class="absolute left-[50%] bg-black bg-opacity-80 text-md w-[160%] px-[40%] py-[10%]"
                 style="transform:
-                    rotate({$coords.x * -0.05}deg);
-                    opacity: {opacity}"
+                    translateX(-50%) rotate({$coords.x * -0.05}deg);
+                    transition: opacity 0.2s;
+                    opacity: {opacity};"
             >
                 <span
-                    class="relative top-60 {dir === SwipeDirection.Left
-                        ? 'right-40'
-                        : 'left-40'}"
+                    class=""
                     style="text-shadow: 0 2px 4px #000"
                 >
                     {response}
