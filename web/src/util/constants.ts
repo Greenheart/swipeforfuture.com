@@ -1,5 +1,5 @@
 export const SFF_DEFAULT_SCENARIO =
-    'https://muthaias.github.io/swipeforfuture-content/default'
+    'https://muthaias.github.io/swipeforfuture-content/default.json'
 
 export enum SwipeDirection {
     Left = -1,
