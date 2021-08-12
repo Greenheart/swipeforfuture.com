@@ -4,8 +4,8 @@
     "description": "Utilities to work with content for swipeforfuture",
     "scripts": {
         "build": "node scripts/esbuild.js",
-        "start": "npm run dev",
-        "dev": "node scripts/esbuild.js --watch",
+        "dev": "concurrently 'npm:compile' 'npm:serve'",
+        "compile": "node scripts/esbuild.js --watch",
         "serve": "sirv dist --port 5000 --cors --dev"
     },
     "dependencies": {
@@ -21,6 +21,7 @@
         "@types/fs-extra": "^9.0.12",
         "@types/glob": "^7.1.4",
         "@types/node": "^16.4.13",
+        "concurrently": "^6.2.1",
         "esbuild": "^0.12.19",
         "fs-extra": "^10.0.0",
         "gh-pages": "^3.2.3",
