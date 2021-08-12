@@ -73,7 +73,7 @@ export interface Card extends CardDescription {
         left: CardActionData
         right: CardActionData
     }
-    priority?: CardPriority
+    priority: CardPriority
 }
 
 export type WorldStateRange = [number, number]
