@@ -1,4 +1,4 @@
-import type { WorldState, Card } from './ContentTypes'
+import type { WorldState, Card } from '$shared/ContentTypes'
 
 // GameTypes are used for the game implementation.
 

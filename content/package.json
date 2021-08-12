@@ -1,0 +1,36 @@
+{
+    "name": "swipeforfuture-content",
+    "version": "2.0.0",
+    "description": "Utilities to work with content for swipeforfuture",
+    "scripts": {
+        "build": "node scripts/esbuild.js",
+        "start": "npm run dev",
+        "dev": "node scripts/esbuild.js --watch",
+        "serve": "sirv dist --port 5000 --cors --dev"
+    },
+    "dependencies": {
+        "xlsx": "^0.17.0"
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "semi": false,
+        "singleQuote": true,
+        "trailingComma": "all"
+    },
+    "devDependencies": {
+        "@types/fs-extra": "^9.0.12",
+        "@types/glob": "^7.1.4",
+        "@types/node": "^16.4.13",
+        "esbuild": "^0.12.19",
+        "fs-extra": "^10.0.0",
+        "gh-pages": "^3.2.3",
+        "glob": "^7.1.7",
+        "sirv-cli": "^1.0.12",
+        "typescript": "^4.3.5"
+    },
+    "type": "module",
+    "engines": {
+        "node": ">= 16"
+    },
+    "engineStrict": true
+}

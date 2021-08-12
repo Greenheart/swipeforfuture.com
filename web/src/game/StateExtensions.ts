@@ -1,5 +1,5 @@
-import type { GameState, StateModifier, Params } from './'
-import type { WorldStateModifier } from './ContentTypes'
+import type { GameState, StateModifier, Params } from '.'
+import type { WorldStateModifier } from '$shared/ContentTypes'
 
 export type StateExtension = StateModifier<Params>
 
