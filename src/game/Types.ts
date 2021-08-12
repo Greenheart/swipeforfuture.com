@@ -39,7 +39,7 @@ export interface Card<P> extends CardPresentation {
         left: CardAction<P>
         right: CardAction<P>
     }
-    priority?: number
+    priority: number
 }
 
 export type CardsMap<P> = Record<Card<P>['id'], Card<P>>

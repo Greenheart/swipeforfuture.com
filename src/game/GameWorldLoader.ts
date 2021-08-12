@@ -1,8 +1,9 @@
-import type {
+import {
     GameWorld,
     GameWorldModifier,
     CardActionData,
     WorldQuery,
+    CardPriority,
 } from './ContentTypes'
 import type {
     Game,
@@ -42,11 +43,7 @@ export function load(
     }, {})
 
     const cards = cardsFromData(cardsMap, defaultParams)
-
-    console.log(cards)
-
-    // TODO: Add runtime capability to select event cards first based on `priority`
-    // TODO: Add runtime capability to move to the specific next card when it's selected.
+    console.log(`Loaded cards:`, cards)
 
     const parameterCaps = parameterCapsFromStats(gameWorld.stats)
     const stats = statsFromData(gameWorld.stats)
@@ -109,7 +106,7 @@ function cardFromData(
             left: actionFromData(data.actions.left, defaultParams, 'No'),
             right: actionFromData(data.actions.right, defaultParams, 'Yes'),
         },
-        priority: data.priority,
+        priority: data.priority ?? CardPriority.Card,
     }
 }
 
