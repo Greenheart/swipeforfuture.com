@@ -1,9 +1,8 @@
-import {
+import type {
     GameWorld,
     GameWorldModifier,
     CardActionData,
     WorldQuery,
-    CardPriority,
 } from './ContentTypes'
 import type {
     Game,
@@ -106,7 +105,7 @@ function cardFromData(
             left: actionFromData(data.actions.left, defaultParams, 'No'),
             right: actionFromData(data.actions.right, defaultParams, 'Yes'),
         },
-        priority: data.priority ?? CardPriority.Card,
+        priority: data.priority,
     }
 }
 
