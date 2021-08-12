@@ -1,5 +1,3 @@
-import type { GameWorld } from "./ContentTypes"
-
 export type Stat<P> = {
     getValue: (state: GameState<P>) => number
     id: string

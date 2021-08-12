@@ -2,7 +2,7 @@
     "compilerOptions": {
         "moduleResolution": "node",
         "module": "esnext",
-        "lib": ["es2020"],
+        "lib": ["esnext"],
         "target": "es2019",
         /**
 			svelte-preprocess cannot figure out whether you have a value or a type, so tell TypeScript
@@ -27,7 +27,8 @@
             "$lib/*": ["src/lib/*"],
             "$util/*": ["src/util/*"],
             "$game/*": ["src/game/*"],
-            "$components/*": ["src/components/*"]
+            "$components/*": ["src/components/*"],
+            "$shared/*": ["../shared/*"]
         }
     },
     "include": [

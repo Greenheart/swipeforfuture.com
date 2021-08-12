@@ -3,7 +3,7 @@ import type {
     GameWorldModifier,
     CardActionData,
     WorldQuery,
-} from './ContentTypes'
+} from '$shared/ContentTypes'
 import type {
     Game,
     GameState,
