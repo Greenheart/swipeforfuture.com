@@ -1,6 +1,6 @@
 import defaultScenario from './default'
 
-import type { Scenario } from '$content-utils'
+import type { Scenario } from '../content-utils'
 const allScenarios = [defaultScenario]
 
 const scenarios: Record<string, Scenario> = allScenarios.reduce(
