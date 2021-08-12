@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="/favicon.png" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, user-scalable=no"
+        />
+        <meta name="theme-color" content="#66aa55" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="description" content="Solving the climate crisis, one swipe at a time 🌍🔥" data-svelte="svelte-wh0ncn">
+
+		
+
+		<link rel="modulepreload" href="/./_app/start-f11e829a.js">
+		<link rel="modulepreload" href="/./_app/chunks/vendor-72d9e3c9.js">
+		<link rel="modulepreload" href="/./_app/pages/__layout.svelte-ff5ef241.js">
+		<link rel="modulepreload" href="/./_app/pages/play.svelte-0352626a.js">
+		<link rel="stylesheet" href="/./_app/assets/start-0826e215.css">
+		<link rel="stylesheet" href="/./_app/assets/pages/__layout.svelte-d1280f74.css">
+
+		<script type="module">
+			import { start } from "/./_app/start-f11e829a.js";
+			start({
+				target: document.querySelector("#svelte"),
+				paths: {"base":"","assets":"/."},
+				session: {},
+				host: location.host,
+				route: true,
+				spa: false,
+				trailing_slash: "never",
+				hydrate: {
+					status: 200,
+					error: null,
+					nodes: [
+						import("/./_app/pages/__layout.svelte-ff5ef241.js"),
+						import("/./_app/pages/play.svelte-0352626a.js")
+					],
+					page: {
+						host: location.host, // TODO this is redundant
+						path: "/play",
+						query: new URLSearchParams(""),
+						params: {}
+					}
+				}
+			});
+		</script>
+    </head>
+    <body>
+        <div id="svelte">
+
+
+
+
+<p class="grid place-items-center mt-40 text-white font-black text-2xl tracking-widest">Loading...
+    </p>
+
+
+
+	
+</div>
+    </body>
+</html>
