@@ -33,5 +33,6 @@
     "engines": {
         "node": ">= 16"
     },
-    "engineStrict": true
+    "engineStrict": true,
+    "private": true
 }
