@@ -65,13 +65,39 @@ export class BasicGame<P> implements Game<P> {
     }
 
     private _getAvailableCards(state: GameState<P>): Card<P>[] {
-        return this._cards.filter((c) => c.match(state))
+        // First do regular matching based on game state.
+        const allAvailable = this._cards.filter((c) => c.match(state))
+
+        const cardsByPriority: Record<number, Card<P>[]> = {}
+
+        for (const card of allAvailable) {
+            cardsByPriority[card.priority] = cardsByPriority[card.priority]
+                ? cardsByPriority[card.priority].concat(card)
+                : [card]
+        }
+
+        // Then select the available set of cards with the highest priority.
+        let highestPriority = Math.min(
+            ...Object.keys(cardsByPriority).map((n) => parseInt(n, 10)),
+        )
+        return cardsByPriority[highestPriority]
     }
 
     private _selectWeightedRandomFrom<T extends { weight: number }>(
         array: T[],
         weightFunc = (element: T) => element.weight,
     ): T {
+        // IDEA 1:  Add custom weight function to calculate weight based on priority
+
+        // IDEA 2:  Update card priority to be called card weight instead and then just use that value
+        //          For this to work, we need to change the CardPriority Enum to use Card = 1 and Event = 2
+
+        //          However, it might cause problems since it won't sort out cards with higher priority to get selected first.
+
+        // IDEA 3:  Update _getAvailableCards() to take priority into account and only return the set of cards with the highest priority
+        //          This way, we can use both `priority` to distinguish between events and regular cards,
+        //          and we can also use the `weight` to determine the mutual priority among the cards of a similar type.
+
         const { selectionList, count } = array.reduce<{
             count: number
             selectionList: number[]

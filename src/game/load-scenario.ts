@@ -41,6 +41,6 @@ export async function loadScenario(path: string): Promise<GameWorld | null> {
 }
 
 async function fetchJSON<T>(path: string): Promise<T> {
-    console.log('fetching path: ', path)
+    console.log('Fetching path: ', path)
     return await (await window.fetch(path)).json()
 }
