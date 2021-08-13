@@ -7,6 +7,7 @@ import {
     addModifier,
     cardRef,
     CardPriority,
+    showOnlyOnce,
 } from '../../content-utils'
 import { ENVIRONMENT, MONEY, PEOPLE, SECURITY, POPULARITY } from './stats'
 import { VARS } from './vars'
@@ -56,7 +57,7 @@ export const otherCards: Card[] = [
         },
         priority: CardPriority.Card,
     },
-    {
+    showOnlyOnce({
         id: cardRef('coal-sale'),
         image: pexelsImage('3044473'),
         title: 'Cheap but dirty brown coal for sale',
@@ -97,5 +98,5 @@ export const otherCards: Card[] = [
             ),
         },
         priority: CardPriority.Card,
-    },
+    }),
 ]
