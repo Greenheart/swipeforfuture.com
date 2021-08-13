@@ -4,9 +4,11 @@
     "description": "Utilities to work with content for swipeforfuture",
     "scripts": {
         "build": "node scripts/esbuild.js",
-        "dev": "concurrently 'npm:compile' 'npm:serve'",
+        "dev": "concurrently --raw 'npm:compile' 'npm:serve'",
+        "dev:host": "concurrently --raw 'npm:compile' 'npm:serve:host'",
         "compile": "node scripts/esbuild.js --watch",
         "serve": "sirv dist --port 5000 --cors --dev",
+        "serve:host": "npm run serve -- --host",
         "deploy": "npm run build && gh-pages -d dist --repo https://github.com/muthaias/swipeforfuture-content"
     },
     "dependencies": {

@@ -3,6 +3,7 @@
     "version": "2.0.0",
     "scripts": {
         "dev": "svelte-kit dev",
+        "dev:host": "svelte-kit dev --host",
         "build": "svelte-kit build && node scripts/postbuild.js",
         "preview": "svelte-kit preview",
         "check": "svelte-check --tsconfig ./tsconfig.json",
