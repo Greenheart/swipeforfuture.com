@@ -38,9 +38,9 @@ To contribute scenario content, you can [play the game](https://swipeforfuture.c
 
 This project consists of the following parts:
 
-- `web` - The core game module.
-- `shared` - Shared TypeScript definitions that describe the structure of game content.
-- `content` - The development tools used to create scenarios.
+- `/web` - The core game module.
+- `/shared` - Shared TypeScript definitions that describe the structure of game content.
+- `/content` - The development tools used to create scenarios.
 
 ### 1. Setup your local environment
 
@@ -50,22 +50,27 @@ This project consists of the following parts:
 ### 2. Setup the game and scenarios locally
 
 1. `git clone` this repository to your computer.
-2. In the `swipeforfuture.com/web` directory, run `npm install`
-3. In the `swipeforfuture.com/content` directory, run `npm install`
+2. Open the `swipeforfuture.com` directory that contains the `/web` and `/content` subdirectories we will be using for the next steps.
+3. Open a terminal in `/web` directory and run `npm install`.
+4. Then do the same for the `/content` directory and run `npm install` there too.
 
 ### 👩‍💻 Start the game in development mode
 
-1. In the `swipeforfuture.com/web` directory, run `npm run dev`. Then you can play at [http://localhost:3000](http://localhost:3000)
-2. To load scenarios from a specific location, you can use `http://localhost:3000/play?path=[SCENARIO_URL]`, replacing `[SCENARIO_URL]` with the web URL to where the scenario is available. This feature also works for `https://swipeforfuture.com/play?path=[SCENARIO_URL]`, allowing you to play scenarios from any source.
+1. In the `/web` directory, run `npm run dev`. This will show two or more URL:s in the terminal where the game now is available to play, for example [http://localhost:3000](http://localhost:3000) will open the game on your computer.
+2. To open the game on your phone, make sure the computer and the phone are both connected to the same local network (WiFi). Then, you can open the other link with the IP address on your phone. For example `http://192.168.x.x:3000`
+3. To load scenarios from a specific location, you can use `http://localhost:3000/play?path=[SCENARIO_URL]`, replacing `[SCENARIO_URL]` with the web URL to where the scenario is available. This feature also works for `https://swipeforfuture.com/play?path=[SCENARIO_URL]`, allowing you to play scenarios from any source, as long as both the scenario and the game support the same version of the scenario format.
 
 ### 📝 Start the scenario development environment
 
-1. In the `swipeforfuture.com/content` directory, run `npm run dev`.
-2. If you already have the game started, you can now play the default scenario at [http://localhost:3000/play?path=http://localhost:5000/default.json](http://localhost:3000/play?path=http://localhost:5000/default.json).
-3. You can also access other local scenarios by changing the final part of the above URL to end with `http://localhost:5000/[SCENARIO_ID]`, where `[SCENARIO_ID]` matches one of the directories in `swipeforfuture.com/content/scenarios`.
+1. In the `/content` directory, run `npm run dev`.
+2. If you already have the game started, you can now play the default scenario at [http://localhost:3000/play?dev=default](http://localhost:3000/play?dev=default).
+3. You can also play other local scenarios by changing the final part of the above URL to end with `?dev=[SCENARIO_ID]`, where `[SCENARIO_ID]` matches one of the directories in `/content/scenarios`.
+4. To make changes to scenarios, open the `swipeforfuture.com` directory in VS Code. Then use the file explorer (top left of your screen by default) to find the `/content/scenarios` directory and find the scenario you want to edit.
+5. When making changes, the project will automatically rebuild scenarios and prepare them into `JSON` files that can be loaded by the game. However, you need to manually refresh the browser to play the scenario with your latest changes.
+6. When you are ready to save your changes, you can commit them using Git and publish a pull request on GitHub. Don't worry if you're new to Git and GitHub - just write in the [Discord](https://discord.gg/JGkQr9raU5) chat and know and we'll help you! :)
 
 #### More info about scenario development
 
-1. Go to the `swipeforfuture.com/content` directory.
-2. Find example scenarios that you can use as a foundation for your own in `swipeforfuture.com/content/scenarios`. The folder name of each scenario represents
-3. If you want to add new scenarios, note that the file `content/scenarios/index.ts` controls what scenarios are available in the game.
+1. To start a new scenario, you can use existing ones from `/content/scenarios` as a foundation to get a structure to start working with. The directory name of each scenario is the unique identifier.
+2. **NOTE:** When adding a new scenario, remember to add them in `/content/scenarios/index.ts` to make the new scenario available to play in the game. If you forget to do this, it won't be possible to load the scenario using `?dev=[SCENARIO_ID]`. To verify that the scenario got built correctly during development, you can check if it has exported the scenario JSON file correctly to `/web/static/dev-only/[SCENARIO_ID].json`.
+3. Sometimes changes in the game or the scenarios cause things to crash. If that happens, you will usually see errors in one of the two terminals. and then need to restart both the game client and the scenario development script. If the error persists, see if you have made some mistake in the code that need to be fixed.
