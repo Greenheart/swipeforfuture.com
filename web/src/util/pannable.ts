@@ -38,8 +38,8 @@ export function pannable(node: HTMLElement) {
     function handleMousedown(e: MouseEvent) {
         node.dispatchEvent(getPanEvent('panstart', e.clientX, e.clientY))
 
-        window.addEventListener('mousemove', handleMousemove)
-        window.addEventListener('mouseup', handleMouseup)
+        window.addEventListener('pointermove', handleMousemove)
+        window.addEventListener('pointerup', handleMouseup)
     }
 
     function handleMousemove(e: MouseEvent) {
@@ -49,15 +49,15 @@ export function pannable(node: HTMLElement) {
     function handleMouseup(e: MouseEvent) {
         node.dispatchEvent(getPanEvent('panend', e.clientX, e.clientY))
 
-        window.removeEventListener('mousemove', handleMousemove)
-        window.removeEventListener('mouseup', handleMouseup)
+        window.removeEventListener('pointermove', handleMousemove)
+        window.removeEventListener('pointerup', handleMouseup)
     }
 
-    node.addEventListener('mousedown', handleMousedown)
+    node.addEventListener('pointerdown', handleMousedown)
 
     return {
         destroy() {
-            node.removeEventListener('mousedown', handleMousedown)
+            node.removeEventListener('pointerdown', handleMousedown)
         },
     }
 }
