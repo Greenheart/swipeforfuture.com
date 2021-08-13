@@ -30,7 +30,7 @@ Seriously though, no pressure. You got this (we hope...) 😬
 
 ## We 💚 Open Source
 
-This project is distributed under the [MIT License](./LICENSE) to allow as many people as possible to explore, create and share scenarios for a sustainable future.
+This game is free software, licensed under the [GNU GPL v3](./LICENSE) license to allow as many people as possible to explore, create and share scenarios for a sustainable future.
 
 **[Join us and let's get creative together!](./CONTRIBUTING.md)**
 
