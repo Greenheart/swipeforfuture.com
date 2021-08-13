@@ -38,9 +38,15 @@
             }, SWIPE_DELAY)
         })
     }
+
+    function noop(e: Event) {
+        e.preventDefault()
+        e.stopPropagation()
+        return false
+    }
 </script>
 
-<main class="text-white">
+<main class="text-white" on:contextmenu={noop} on:dragstart={noop} on:select={noop}>
     <Stats {stats} />
 
     {#if $state.card}
