@@ -76,14 +76,14 @@
 </script>
 
 <div
-    class="shadow-md rounded-md cursor-move select-none relative"
+    class="shadow-md rounded-md cursor-move relative"
     use:pannable
     on:panstart={handlePanStart}
     on:panmove={handlePanMove}
     on:panend={handlePanEnd}
     style="transform:
         translate3d({$coords.x}px, {$coords.y}px, 0)
-        rotate({$coords.x * 0.05}deg);
+        rotate3d(0, 0, 1, {$coords.x * 0.05}deg);
         {isMovingOut ? transition : ''}"
 >
     <!-- TODO: tweak styles for how the action descriptions are displayed -->
@@ -95,7 +95,7 @@
                     ? '-right-40 text-right'
                     : '-left-40'}"
                 style="transform:
-                    rotate({$coords.x * -0.05}deg);
+                    rotate3d(0, 0, 1, {$coords.x * -0.05}deg);
                     opacity: {opacity}"
             >
                 <span

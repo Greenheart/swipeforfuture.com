@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 html {
-    @apply bg-gray-800 overflow-hidden;
+    @apply bg-gray-800 overflow-hidden select-none;
+    touch-action: none;
 }

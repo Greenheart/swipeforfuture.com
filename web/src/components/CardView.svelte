@@ -16,7 +16,7 @@
 <!-- TODO: Maybe preload manually using JS and caching using a service worker. -->
 
 <div
-    class="flex flex-col items-center justify-center text-white 2xs:text-lg xs:text-xl font-light max-w-prose m-auto"
+    class="flex flex-col items-center justify-center text-white 2xs:text-lg xs:text-xl font-light max-w-prose m-auto card"
 >
     <p class="text-center xs:py-4 h-36 2xs:h-44 xs:h-56 flex place-items-center px-4 xs:px-8">{card.text}</p>
     <div class="{imageSize} relative">
@@ -31,3 +31,15 @@
     <h2 class="mt-2 xs:mt-4">{card.title}</h2>
     <p class="text-gray-300 mb-2 xs:mb-4">{card.location}</p>
 </div>
+
+<style>
+    /* 
+     * Improve browser rendering performance by giving hinting that the size and layout 
+     * of the childrens within the card won't affect other parts of the page.
+     * Less work for the browser = better performance.
+     * https://developer.mozilla.org/en-US/docs/Web/CSS/contain
+     */
+    .card {
+        contain: size, layout;
+    }
+</style>
