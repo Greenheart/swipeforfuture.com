@@ -26,19 +26,21 @@ const infranRoad = cardRef('infran-road')
 export const infranCards: Card[] = [
     createCardFromTemplate(infranIntro, infranTemplate, {
         title: 'The constructor',
-        text: "Hello sir! I'm Infran. I'll be sure to keep you updated on the nation's infrastructure. Should we get started right away?",
+        text: "Good day! I'm Infran and I'll be sure to keep you updated on the nation's infrastructure. Should we get started right away?",
         actions: {
             left: action(
                 addModifier(
                     { [MONEY]: 10, [POPULARITY]: -10 },
                     { [FLAGS.INFRAN_INIT]: true },
                 ),
+                'That can wait'
             ),
             right: action(
                 addModifier(
                     { [MONEY]: -10, [POPULARITY]: 10 },
                     { [FLAGS.INFRAN_INIT]: true },
                 ),
+                'Sure'
             ),
         },
         isAvailableWhen: [
@@ -100,6 +102,7 @@ export const infranCards: Card[] = [
                     [VARS.ROADS_SUGGESTED]: 1,
                     [VARS.ROAD_EXPANSION]: 1,
                 }),
+                'Not right now'
             ),
             right: action(
                 addModifier({
@@ -109,6 +112,7 @@ export const infranCards: Card[] = [
                     [VARS.ROADS_SUGGESTED]: 1,
                     [VARS.ROAD_EXPANSION]: 1,
                 }),
+                'Sure, whatever'
             ),
         },
     }),

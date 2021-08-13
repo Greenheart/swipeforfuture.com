@@ -28,12 +28,12 @@ export const mariaCards = [
         actions: {
             left: action(
                 [],
-                "Nah. I'm good. I think I can handle things on my own.",
+                "Nah, I'm good",
                 welcomeLoop,
             ),
             right: action(
                 [],
-                "That sounds great. Let's do it ASAP",
+                "Sure",
                 welcomeLunch,
             ),
         },
@@ -46,28 +46,28 @@ export const mariaCards = [
         title: 'Seriously!',
         text: 'We need to talk! Get your head in the game. Do you want to take a lunch to get up to speed with your new duties?',
         actions: {
-            left: action([], 'Get off my back.', welcomeLoop),
-            right: action([], "Alright. Let's do this.", welcomeLunch),
+            left: action([], 'Get off my back!', welcomeLoop),
+            right: action([], "Alright, let's do this", welcomeLunch),
         },
         isAvailableWhen: [],
     }),
     createCardFromTemplate(welcomeLunch, mariaTemplate, {
         title: 'The lunch meeting',
-        text: 'Really nice lunch! Now your first big decision has come. Should you prioritize the economy (left) or environment (right)?',
+        text: 'Really nice lunch! Now your first big decision has come. Will you prioritize the economy or environment?',
         actions: {
             left: action(
                 setModifier(
                     { [MONEY]: 70, [POPULARITY]: 52 },
                     { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
                 ),
-                'Nice talk. Love the economy!',
+                'The economy, of couse',
             ),
             right: action(
                 setModifier(
                     { [ENVIRONMENT]: 70, [POPULARITY]: 65 },
                     { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
                 ),
-                'Nice talk. We should think about our future.',
+                'We should think about our future',
             ),
         },
         isAvailableWhen: [],

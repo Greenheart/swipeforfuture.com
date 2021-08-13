@@ -18,8 +18,8 @@ export const endGameCards: Card[] = [
         text: 'Please find a new planet to destroy, if you want to proceed. And do not try to swipe. Please.',
         weight: 1000,
         actions: {
-            left: action(replaceModifier({}, {})),
-            right: action(replaceModifier({}, {})),
+            left: action(replaceModifier({}, {}), "Sorry, not sorry!"),
+            right: action(replaceModifier({}, {}), 'Again!'),
         },
         isAvailableWhen: [
             worldQuery({

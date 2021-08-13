@@ -27,19 +27,21 @@ const enviraCoal = cardRef('envira-coal')
 export const enviraCards: Card[] = [
     createCardFromTemplate(enviraIntro, enviraTemplate, {
         title: 'The activist',
-        text: "Hi! My name is Envira and I'm a climate lobbyist. You'll see me from time to time. I wish you good luck and I hope we'll have constructive meetings in the future.",
+        text: "Hi! My name is Envira and I'm a climate activist. You'll see me from time to time. I wish you good luck and I hope we'll have constructive meetings in the future.",
         actions: {
             left: action(
                 addModifier(
                     { [ENVIRONMENT]: -10 },
                     { [FLAGS.ENVIRA_INIT]: true },
                 ),
+                "Hah, I wouldn't think so!",
             ),
             right: action(
                 addModifier(
                     { [ENVIRONMENT]: 10 },
                     { [FLAGS.ENVIRA_INIT]: true },
                 ),
+                'See you soon!'
             ),
         },
         isAvailableWhen: [
