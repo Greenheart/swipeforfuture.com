@@ -7,7 +7,7 @@
         SWIPE_DELAY,
         SWIPE_OPACITY_FACTOR,
     } from '$util/constants'
-    import { pannable } from '$util/pannable'
+    import pannable from '$util/pannable'
     import type { CardPresentation } from '$game/Types'
 
     const transition = `transition: transform ${SWIPE_DELAY}ms ease-out`

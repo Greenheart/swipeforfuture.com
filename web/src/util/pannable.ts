@@ -1,4 +1,4 @@
-export function pannable(node: HTMLElement) {
+export default function pannable(node: HTMLElement) {
     let lastX: number
     let lastY: number
     let startX: number
