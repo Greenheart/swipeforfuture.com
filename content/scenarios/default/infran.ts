@@ -54,8 +54,7 @@ export const infranCards: Card[] = [
     }),
     createCardFromTemplate(infranSolar, infranTemplate, {
         title: 'Invest in solar?',
-        location: 'In the bathroom',
-        text: 'The Germans are on to us!! We need to invest in solar power. Yay (right) or nay (left)?',
+        text: 'The Germans are rapidly expanding their solar power plants! Should we invest in new solar too?',
         isAvailableWhen: [
             worldQuery(
                 {
