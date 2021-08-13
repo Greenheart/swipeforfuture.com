@@ -12,7 +12,11 @@
 
     onMount(() => {
         const urlParams = new URLSearchParams(window.location.search)
-        path = urlParams.get('path') ?? SFF_DEFAULT_SCENARIO
+        // Use the `?dev=[SCENARIO_ID]` query param to simplify local development
+        // For example: http://localhost:3000/play?dev=default
+        const devScenario = urlParams.get('dev')
+        const devPath = devScenario ? `//${window.location.host}/dev-only/${devScenario}.json` : undefined
+        path = devPath ? devPath : urlParams.get('path') ?? SFF_DEFAULT_SCENARIO
     })
 
     async function fetchWorld(path: string) {
