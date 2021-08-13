@@ -1,7 +1,6 @@
 import { stateExtensionsFromData } from './StateExtensions'
 import type { WorldState, WorldStateModifier } from '$shared/ContentTypes'
-import type { StateExtension } from './StateExtensions'
-import type { Params, GameState } from '.'
+import type { Params, GameState, StateExtension } from '.'
 
 export type WorldStateExtension = (worldState: WorldState) => WorldState
 

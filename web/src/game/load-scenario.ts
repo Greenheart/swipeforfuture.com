@@ -1,4 +1,4 @@
-import type { GameWorld } from './ContentTypes'
+import type { GameWorld } from '$shared/ContentTypes'
 
 async function tryLoadFromLocalStorage(
     path: string,
