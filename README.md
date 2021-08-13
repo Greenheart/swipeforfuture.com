@@ -36,12 +36,12 @@ This project is distributed under the [MIT License](./LICENSE) to allow as many 
 
 ## Do you have ideas for the game or scenarios you want to explore?
 
--   Join our [Discord](https://discord.gg/JGkQr9raU5) and chat with other contributors!
+- Join our [Discord](https://discord.gg/JGkQr9raU5) and chat with other contributors!
 
 We use GitHub to collaborate on ideas, improvements, bugs and development. This project has two parts:
 
--   📱 Game client in the `web` directory.
--   📝 Scenarios and content creation in the `content` directory.
+- 📱 Game client in the `web` directory.
+- 📝 Scenarios and content creation in the `content` directory.
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) to learn more about how you can help improve scenarios and the game itself. Feel free to ask us on [Discord](https://discord.gg/JGkQr9raU5) if you want help getting started!
 
@@ -49,14 +49,20 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) to learn more about how you can help im
 
 This game is a community effort, created together with these awesome people:
 
--   [Marie Dubremetz](https://github.com/mardub1635)
--   Theresa Weber-Qvarfort
--   [Tianmin Lyu](http://github.com/thecrossed)
--   [Dimitrios Tsamis](https://github.com/dtsamis)
--   [Johannes Ridderstedt](https://github.com/johannesl)
--   [Tobias Holle](https://twitter.com/tobias_holle)
--   [Mattias Nyberg](https://github.com/Muthaias)
--   Hugo Bille
--   Amanda Lagos Sallhed
--   Malin Jansson
--   Clayton Whittle
+- [Marie Dubremetz](https://github.com/mardub1635)
+- Theresa Weber-Qvarfort
+- [Tianmin Lyu](http://github.com/thecrossed)
+- [Dimitrios Tsamis](https://github.com/dtsamis)
+- [Johannes Ridderstedt](https://github.com/johannesl)
+- [Tobias Holle](https://twitter.com/tobias_holle)
+- [Mattias Nyberg](https://github.com/Muthaias)
+- Hugo Bille
+- Amanda Lagos Sallhed
+- Malin Jansson
+- Clayton Whittle
+
+## License
+
+Copyright (c) 2019-2021 Samuel Plumppu, Mattias Nyberg
+
+This game is free software, licensed under the [GNU GPL v3](./LICENSE) license.
