@@ -10,12 +10,6 @@
     "dependencies": {
         "xlsx": "^0.17.0"
     },
-    "prettier": {
-        "tabWidth": 4,
-        "semi": false,
-        "singleQuote": true,
-        "trailingComma": "all"
-    },
     "devDependencies": {
         "@types/fs-extra": "^9.0.12",
         "@types/glob": "^7.1.4",

@@ -29,12 +29,6 @@
         "gh-pages": "^3.2.3"
     },
     "type": "module",
-    "prettier": {
-        "singleQuote": true,
-        "tabWidth": 4,
-        "trailingComma": "all",
-        "semi": false
-    },
     "engines": {
         "node": ">= 16"
     },
