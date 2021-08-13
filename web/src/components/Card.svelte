@@ -9,6 +9,7 @@
     } from '$util/constants'
     import { pannable } from '$util/pannable'
     import type { CardPresentation } from '$game/Types'
+    import sleep from '$util/sleep'
 
     const transition = `transition: transform ${SWIPE_DELAY}ms ease-out`
 </script>
@@ -17,10 +18,10 @@
     export let onSwipe: (direction: SwipeDirection) => Promise<void>
     export let actions: CardPresentation['actions']
     export let imageSize: string
-    let isMovingOut = false
     let response = ''
     let dir: SwipeDirection | undefined
     let opacity = 0
+    let card: HTMLElement
 
     const coords = spring(
         { x: 0, y: 0 },
@@ -57,15 +58,9 @@
         opacity = 0
 
         if (event.detail.totalDeltaX > SWIPE_THRESHOLD) {
-            isMovingOut = true
-            $coords.x = 200 + window.innerHeight * SwipeDirection.Right
-            await onSwipe(SwipeDirection.Right)
-            isMovingOut = false
+            await swipe(SwipeDirection.Right)
         } else if (event.detail.totalDeltaX < -SWIPE_THRESHOLD) {
-            isMovingOut = true
-            $coords.x = 200 + window.innerHeight * SwipeDirection.Left
-            await onSwipe(SwipeDirection.Left)
-            isMovingOut = false
+            await swipe(SwipeDirection.Left)
         } else {
             coords.stiffness = 0.2
             coords.damping = 0.8
@@ -73,9 +68,39 @@
 
         coords.set({ x: 0, y: 0 })
     }
+
+    async function swipe(direction: SwipeDirection, withKeyboard = false) {
+        card.style.transition = transition
+        if (withKeyboard) await sleep(60)
+        $coords.x = 200 + Math.max(window.innerHeight, window.innerWidth) * direction
+        await onSwipe(direction)
+        card.style.transition = ''
+    }
+
+    // const isDown: Record<string, boolean> = {}
+    let currentKey: string = ''
+
+    const keys = ['ArrowLeft', 'ArrowRight']
+
+    async function downHandler(event: KeyboardEvent) {
+        if (keys.includes(event.key)) {
+            // isDown[event.key] = true
+            if (!currentKey) {  
+                currentKey = event.key
+                const direction = event.key === 'ArrowLeft' ? SwipeDirection.Left : SwipeDirection.Right
+
+                await swipe(direction, true)
+                coords.set({ x: 0, y: 0 })
+                currentKey = ''
+            }
+        }
+    }
 </script>
 
+<svelte:window on:keydown={downHandler} />
+
 <div
+    bind:this={card}
     class="shadow-md rounded-md cursor-move relative"
     use:pannable
     on:panstart={handlePanStart}
@@ -83,8 +108,7 @@
     on:panend={handlePanEnd}
     style="transform:
         translate3d({$coords.x}px, {$coords.y}px, 0)
-        rotate3d(0, 0, 1, {$coords.x * 0.05}deg);
-        {isMovingOut ? transition : ''}"
+        rotate3d(0, 0, 1, {$coords.x * 0.05}deg)"
 >
     <!-- TODO: tweak styles for how the action descriptions are displayed -->
     {#if response && dir}
