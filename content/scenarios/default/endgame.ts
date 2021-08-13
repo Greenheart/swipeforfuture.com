@@ -38,6 +38,6 @@ export const endGameCards: Card[] = [
                 [POPULARITY]: [0, 0],
             }),
         ],
-        priority: CardPriority.Card,
+        priority: CardPriority.Event,
     },
 ]
