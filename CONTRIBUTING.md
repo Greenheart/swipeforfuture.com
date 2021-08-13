@@ -74,3 +74,9 @@ This project consists of the following parts:
 1. To start a new scenario, you can use existing ones from `/content/scenarios` as a foundation to get a structure to start working with. The directory name of each scenario is the unique identifier.
 2. **NOTE:** When adding a new scenario, remember to add them in `/content/scenarios/index.ts` to make the new scenario available to play in the game. If you forget to do this, it won't be possible to load the scenario using `?dev=[SCENARIO_ID]`. To verify that the scenario got built correctly during development, you can check if it has exported the scenario JSON file correctly to `/web/static/dev-only/[SCENARIO_ID].json`.
 3. Sometimes changes in the game or the scenarios cause things to crash. If that happens, you will usually see errors in one of the two terminals. and then need to restart both the game client and the scenario development script. If the error persists, see if you have made some mistake in the code that need to be fixed.
+
+
+#### Best practices for scenarios
+
+- For yes/no cards, use the right action for "yes" and the left action for "no"
+- For cards with other options than yes/no, feel free to mix up the order so not all *good* cards always are right swipes. The game is more fun when players have to be ready to sometimes swipe left too!
