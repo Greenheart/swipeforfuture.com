@@ -20,7 +20,7 @@ export const otherCards: Card[] = [
         title: 'Our solar project is ready!',
         location: 'The greener other side',
         text: 'Congratulations! Thanks to your ambitions investments, we beat the initial German energy expansion ⚡️',
-        weight: 30,
+        weight: 500,
         isAvailableWhen: [
             worldQuery(
                 {
@@ -61,7 +61,7 @@ export const otherCards: Card[] = [
         title: 'Cheap but dirty brown coal for sale',
         location: 'Working class district',
         text: "We've got an interesting offer: Buy a \"modern\" brown coal power plant cheaply to generate electricity. Deal? Great!",
-        weight: 30,
+        weight: 500,
         isAvailableWhen: [
             worldQuery({
                 [ENVIRONMENT]: [21, 100],

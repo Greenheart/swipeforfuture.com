@@ -16,7 +16,7 @@ import { VARS } from './vars'
 export const infranTemplate = createCardTemplate({
     image: unsplashImage('1529088746738-c4c0a152fb2c'),
     location: 'On the phone',
-    weight: 30,
+    weight: 300,
 })
 
 const infranIntro = cardRef('infran-intro')
@@ -79,7 +79,6 @@ export const infranCards: Card[] = [
                 "Let's do it!",
             ),
         },
-        weight: 100,
     }),
     createCardFromTemplate(infranRoad, infranTemplate, {
         title: 'Road expansion',

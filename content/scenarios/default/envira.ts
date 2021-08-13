@@ -15,7 +15,7 @@ import { FLAGS } from './flags'
 export const enviraTemplate = createCardTemplate({
     image: unsplashImage('1546541612-82d19b258cd5'),
     location: 'Outside parliament',
-    weight: 10,
+    weight: 300,
 })
 
 // NOTE: These card refs might be hard to track. Could be nice to group them together in an object, to easily know that they are card refs.
@@ -94,6 +94,5 @@ export const enviraCards: Card[] = [
                 'Yeah, just think about the jobs!',
             ),
         },
-        weight: 40,
     }),
 ]
