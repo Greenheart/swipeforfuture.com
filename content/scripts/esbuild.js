@@ -20,14 +20,16 @@ const scenarioPaths = await glob('./scenarios/**/*.ts')
 /**
  * Export JSON files for selected scenarios.
  *
+ * @param {string} mode Either `watch` for development or `build` for production build.
  * @param {string[]} ids Scenario ids to build.
  */
-function exportScenarioJSON(ids) {
+function exportScenarios(mode, ids) {
     execFile(
         'node',
         [
             '--experimental-specifier-resolution=node',
             'compiled/content/scripts/build-scenarios.js',
+            mode,
             ...ids,
         ],
         (error, stdout, stderr) => {
@@ -60,14 +62,14 @@ esbuild
                       onRebuild(error) {
                           if (error) console.error('watch build failed:', error)
                           else {
-                              // Rebuild TS files when changes are detected
-                              exportScenarioJSON(ids)
+                              // Rebuild Scenarios when changes are detected
+                              exportScenarios(mode, ids)
                           }
                       },
                   }
                 : undefined,
     })
-    .then(() => exportScenarioJSON(ids))
+    .then(() => exportScenarios(mode, ids))
     .catch((e) => {
         console.error(e)
         process.exit(1)

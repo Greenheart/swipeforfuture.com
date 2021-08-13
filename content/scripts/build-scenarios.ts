@@ -36,10 +36,11 @@ export async function buildScenarios(ids: string[], outputDir: string) {
     )
 }
 
-const ids =
-    process.argv.length > 2 ? process.argv.slice(2) : Object.keys(scenarios)
+const [mode, ...args] = process.argv.slice(2)
+const ids = args.length > 2 ? args : Object.keys(scenarios)
+const outputDir = resolve(mode === 'build' ? 'dist' : '../web/static/dev-only')
+
 console.log('Building:', ids)
-const outputDir = resolve(process.cwd(), 'dist')
 
 Promise.all([
     buildScenarios(ids, outputDir),
