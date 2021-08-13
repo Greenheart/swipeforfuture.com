@@ -5,6 +5,7 @@
     import Stats from '$components/Stats.svelte'
     import { SwipeDirection, SWIPE_DELAY } from '$util/constants'
     import type { GameState, Game as GameLogic, Stat } from '$game/Types'
+import { onMount } from 'svelte';
 </script>
 
 <script lang="ts">
@@ -44,6 +45,13 @@
         e.stopPropagation()
         return false
     }
+
+    onMount(
+        () => {
+            document.documentElement.classList.add('in-game')
+            return () => document.documentElement.classList.remove('in-game')
+        }
+    )
 </script>
 
 <main class="text-white" on:contextmenu={noop} on:dragstart={noop} on:select={noop}>
