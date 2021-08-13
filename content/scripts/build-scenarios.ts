@@ -4,8 +4,6 @@ import { resolve } from 'path'
 import scenarios from '../scenarios'
 import type { Scenario, ScenarioManifest } from '../content-utils'
 
-const MANIFEST_FILENAME = 'scenarios.json'
-
 async function buildScenarioManifest(
     scenarios: { [id: string]: Scenario },
     outputDir: string,
@@ -18,7 +16,7 @@ async function buildScenarioManifest(
     }
 
     return outputFile(
-        resolve(outputDir, MANIFEST_FILENAME),
+        resolve(outputDir, 'scenarios.json'),
         JSON.stringify(manifest, null, 4),
     )
 }
