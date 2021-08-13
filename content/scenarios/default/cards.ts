@@ -14,13 +14,13 @@ import { VARS } from './vars'
 import { FLAGS } from './flags'
 
 export const otherCards: Card[] = [
-    {
+    showOnlyOnce({
         id: cardRef('solar-ready'),
         image: unsplashImage('1497435334941-8c899ee9e8e9'),
         title: 'Our solar project is ready!',
         location: 'The greener other side',
         text: 'Congratulations! Thanks to your ambitions investments, we beat the initial German energy expansion ⚡️',
-        weight: 100,
+        weight: 30,
         isAvailableWhen: [
             worldQuery(
                 {
@@ -39,7 +39,6 @@ export const otherCards: Card[] = [
                     [SECURITY]: 15,
                     [MONEY]: 5,
                     [POPULARITY]: 20,
-                    [VARS.SOLAR_INVESTMENTS]: 100,
                 }),
                 'Nice work!',
             ),
@@ -50,20 +49,19 @@ export const otherCards: Card[] = [
                     [SECURITY]: 15,
                     [MONEY]: 5,
                     [POPULARITY]: 20,
-                    [VARS.SOLAR_INVESTMENTS]: 100,
                 }),
                 'Great news!',
             ),
         },
         priority: CardPriority.Card,
-    },
+    }),
     showOnlyOnce({
         id: cardRef('coal-sale'),
         image: pexelsImage('3044473'),
         title: 'Cheap but dirty brown coal for sale',
         location: 'Working class district',
         text: "We've got an interesting offer: Buy a \"modern\" brown coal power plant cheaply to generate electricity. Deal? Great!",
-        weight: 100,
+        weight: 30,
         isAvailableWhen: [
             worldQuery({
                 [ENVIRONMENT]: [21, 100],

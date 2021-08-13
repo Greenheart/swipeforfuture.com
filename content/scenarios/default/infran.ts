@@ -16,7 +16,7 @@ import { VARS } from './vars'
 export const infranTemplate = createCardTemplate({
     image: unsplashImage('1529088746738-c4c0a152fb2c'),
     location: 'On the phone',
-    weight: 1000,
+    weight: 30,
 })
 
 const infranIntro = cardRef('infran-intro')
@@ -60,7 +60,7 @@ export const infranCards: Card[] = [
         isAvailableWhen: [
             worldQuery(
                 {
-                    [ENVIRONMENT]: [60, 100],
+                    [ENVIRONMENT]: [50, 100],
                     [MONEY]: [30, 100],
                     [VARS.SOLAR_INVESTMENTS]: [0, 0],
                 },
@@ -79,10 +79,11 @@ export const infranCards: Card[] = [
                 "Let's do it!",
             ),
         },
+        weight: 100,
     }),
     createCardFromTemplate(infranRoad, infranTemplate, {
         title: 'Road expansion',
-        text: 'The people needs roads to support future market growth. Let me take charge and make this happen.',
+        text: 'The people need roads to support future economic growth. Let me take charge and make this happen.',
         isAvailableWhen: [
             worldQuery(
                 { [PEOPLE]: [50, 100], [VARS.ROADS_SUGGESTED]: [0, 0] },

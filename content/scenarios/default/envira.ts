@@ -94,6 +94,6 @@ export const enviraCards: Card[] = [
                 'Yeah, just think about the jobs!',
             ),
         },
-        weight: 1,
+        weight: 40,
     }),
 ]

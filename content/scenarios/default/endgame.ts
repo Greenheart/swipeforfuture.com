@@ -15,11 +15,11 @@ export const endGameCards: Card[] = [
         image: unsplashImage('1497039465987-61d305728610'),
         title: 'The World Has Ended.',
         location: '',
-        text: 'Please find a new planet to destroy, if you want to proceed. And do not try to swipe. Please.',
+        text: "Wow, that's NOT how you do it! Please find a new planet to destroy...",
         weight: 1000,
         actions: {
             left: action(replaceModifier({}, {}), "Sorry, not sorry!"),
-            right: action(replaceModifier({}, {}), 'Again!'),
+            right: action(replaceModifier({}, {}), "Hah, we'll find another one!"),
         },
         isAvailableWhen: [
             worldQuery({

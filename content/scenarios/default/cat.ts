@@ -26,8 +26,8 @@ export const catastrophicCards = statIds.map<Card>((stat) => {
             }),
         ],
         actions: {
-            left: action(addModifier({ [stat]: -10 })),
-            right: action(addModifier({ [stat]: 10 })),
+            left: action(addModifier({ [stat]: -20 })),
+            right: action(addModifier({ [stat]: 20 })),
         },
     }
     return createCardFromTemplate(cardRef(`cat-${stat}`), catTemplate, partial)

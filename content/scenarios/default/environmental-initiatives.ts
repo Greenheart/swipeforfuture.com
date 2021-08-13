@@ -37,7 +37,7 @@ const truckPartnershipInit = cardContent(
     '21st Century Truck Partnership',
     'This initiative aims to combine efforts from government and industry to reduce fuel usage and emissions and increase safety by targeted support of research of commercially viable products.',
     'In parliament',
-    ['Move along', 'Interesting. Tell me more'],
+    ['Move along', 'Interesting! Tell me more'],
 )
 
 // Reference: http://climateinitiativesplatform.org/index.php/ACT_Assessing_Low-Carbon_Transition
@@ -47,7 +47,7 @@ const actInit = cardContent(
     'Assessing low Carbon Transition',
     "ACT is an initiative that creates an accountability framework and sectorial methodologies to assess how companies' strategies and actions are contributing to the Paris Agreement mitigation goals.",
     'In parliament',
-    ['Do we need it?', 'How do we apply it?'],
+    ['Do we really need it?', 'Sounds good'],
 )
 
 export const environmentalInitiativeCards: Card[] = [
