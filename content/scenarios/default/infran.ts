@@ -33,14 +33,14 @@ export const infranCards: Card[] = [
                     { [MONEY]: 10, [POPULARITY]: -10 },
                     { [FLAGS.INFRAN_INIT]: true },
                 ),
-                'That can wait'
+                'That can wait',
             ),
             right: action(
                 addModifier(
                     { [MONEY]: -10, [POPULARITY]: 10 },
                     { [FLAGS.INFRAN_INIT]: true },
                 ),
-                'Sure'
+                'Sure',
             ),
         },
         isAvailableWhen: [
@@ -72,9 +72,11 @@ export const infranCards: Card[] = [
         actions: {
             left: action(
                 addModifier({ [MONEY]: -5, [VARS.SOLAR_INVESTMENTS]: 100 }),
+                'No, what about rainy days?',
             ),
             right: action(
                 addModifier({ [MONEY]: -10, [VARS.SOLAR_INVESTMENTS]: 1 }),
+                "Let's do it!",
             ),
         },
     }),
@@ -102,7 +104,7 @@ export const infranCards: Card[] = [
                     [VARS.ROADS_SUGGESTED]: 1,
                     [VARS.ROAD_EXPANSION]: 1,
                 }),
-                'Not right now'
+                'Not right now',
             ),
             right: action(
                 addModifier({
@@ -112,7 +114,7 @@ export const infranCards: Card[] = [
                     [VARS.ROADS_SUGGESTED]: 1,
                     [VARS.ROAD_EXPANSION]: 1,
                 }),
-                'Sure, whatever'
+                'Sure, whatever',
             ),
         },
     }),

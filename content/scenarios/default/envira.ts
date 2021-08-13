@@ -11,12 +11,11 @@ import {
 } from '../../content-utils'
 import { ENVIRONMENT, PEOPLE, SECURITY, MONEY } from './stats'
 import { FLAGS } from './flags'
-import { VARS } from './vars'
 
 export const enviraTemplate = createCardTemplate({
     image: unsplashImage('1546541612-82d19b258cd5'),
     location: 'Outside parliament',
-    weight: 100,
+    weight: 10,
 })
 
 // NOTE: These card refs might be hard to track. Could be nice to group them together in an object, to easily know that they are card refs.
@@ -41,7 +40,7 @@ export const enviraCards: Card[] = [
                     { [ENVIRONMENT]: 10 },
                     { [FLAGS.ENVIRA_INIT]: true },
                 ),
-                'See you soon!'
+                'Thanks, see you soon!',
             ),
         },
         isAvailableWhen: [
@@ -60,8 +59,11 @@ export const enviraCards: Card[] = [
         text: 'This is insane! Are you really investing in this brown coal plant and prioritizing short-term profits over the future of the planet - and your people!?',
         isAvailableWhen: [
             worldQuery(
-                { [VARS.BROWN_COAL_PLANTS]: [1, 1] },
-                { [FLAGS.ENVIRA_INIT]: true },
+                {},
+                {
+                    [FLAGS.ENVIRA_INIT]: true,
+                    [FLAGS.BROWN_COAL_PLANT]: true,
+                },
             ),
         ],
         actions: {
@@ -69,22 +71,29 @@ export const enviraCards: Card[] = [
             // Instead of disabling the brown coal power plant cards from appearing again using the state 100,
             // consider using a flag to disable it in a clearer way. Booleans are much better on/off switches than arbitrary numbers that could be misinterpreted
             left: action(
-                addModifier({
-                    [ENVIRONMENT]: 10,
-                    [PEOPLE]: 10,
-                    [SECURITY]: 5,
-                    [VARS.BROWN_COAL_PLANTS]: 100,
-                }),
+                addModifier(
+                    {
+                        [ENVIRONMENT]: 10,
+                        [PEOPLE]: 10,
+                        [SECURITY]: 5,
+                    },
+                    { [FLAGS.BROWN_COAL_PLANT]: false },
+                ),
+                "Actually, it's time to shut it down",
             ),
             right: action(
-                addModifier({
-                    [ENVIRONMENT]: -15,
-                    [PEOPLE]: -15,
-                    [SECURITY]: -5,
-                    [MONEY]: 35,
-                    [VARS.BROWN_COAL_PLANTS]: 0,
-                }),
+                addModifier(
+                    {
+                        [ENVIRONMENT]: -15,
+                        [PEOPLE]: -15,
+                        [SECURITY]: -5,
+                        [MONEY]: 35,
+                    },
+                    { [FLAGS.BROWN_COAL_PLANT]: true },
+                ),
+                'Yeah, just think about the jobs!',
             ),
         },
+        weight: 1,
     }),
 ]

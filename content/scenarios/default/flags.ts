@@ -10,4 +10,5 @@ export const FLAGS = {
     LUNCH_MEETING_COMPLETED: propRef('lunch-meeting-completed'),
     ENVIRA_INIT: propRef('envira-init'),
     INFRAN_INIT: propRef('infran-init'),
+    BROWN_COAL_PLANT: propRef('brown-coal-plant'),
 }

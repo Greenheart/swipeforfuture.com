@@ -18,7 +18,7 @@ export const otherCards: Card[] = [
         image: unsplashImage('1497435334941-8c899ee9e8e9'),
         title: 'Our solar project is ready!',
         location: 'The greener other side',
-        text: 'Congratulations! We beat the initial German energy expansion ⚡️',
+        text: 'Congratulations! Thanks to your ambitions investments, we beat the initial German energy expansion ⚡️',
         weight: 100,
         isAvailableWhen: [
             worldQuery(
@@ -61,13 +61,14 @@ export const otherCards: Card[] = [
         image: pexelsImage('3044473'),
         title: 'Cheap but dirty brown coal for sale',
         location: 'Working class district',
-        text: "We've got an interesting offer: Buy a modern brown coal power plant cheaply to generate electricity. Deal? Great! (WATCH OUT FOR ENVIRA though...)",
+        text: "We've got an interesting offer: Buy a \"modern\" brown coal power plant cheaply to generate electricity. Deal? Great!",
         weight: 100,
         isAvailableWhen: [
             worldQuery({
                 [ENVIRONMENT]: [21, 100],
                 [MONEY]: [15, 100],
-                [VARS.BROWN_COAL_PLANTS]: [0, 0],
+            }, {
+                [FLAGS.BROWN_COAL_PLANT]: false,
             }),
         ],
         actions: {
@@ -78,8 +79,8 @@ export const otherCards: Card[] = [
                     [SECURITY]: 15,
                     [MONEY]: -5,
                     [POPULARITY]: 25,
-                    [VARS.BROWN_COAL_PLANTS]: 0,
                 }),
+                'No way, shut it down!'
             ),
             right: action(
                 addModifier({
@@ -88,8 +89,11 @@ export const otherCards: Card[] = [
                     [SECURITY]: -10,
                     [MONEY]: 40,
                     [POPULARITY]: -20,
-                    [VARS.BROWN_COAL_PLANTS]: 1,
+                    
+                }, {
+                    [FLAGS.BROWN_COAL_PLANT]: true,
                 }),
+                "Sweet! We'll get rich"
             ),
         },
         priority: CardPriority.Card,

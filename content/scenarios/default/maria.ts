@@ -26,16 +26,8 @@ export const mariaCards = [
         title: 'Welcome!',
         text: 'Hi! My name is Maria. You must be the new president. Do you want to take a lunch to get up to speed with your new duties?',
         actions: {
-            left: action(
-                [],
-                "Nah, I'm good",
-                welcomeLoop,
-            ),
-            right: action(
-                [],
-                "Sure",
-                welcomeLunch,
-            ),
+            left: action([], "Nah, I'm good", welcomeLoop),
+            right: action([], 'Sure', welcomeLunch),
         },
         isAvailableWhen: [
             worldQuery({}, { [FLAGS.LUNCH_MEETING_COMPLETED]: false }),
@@ -57,17 +49,17 @@ export const mariaCards = [
         actions: {
             left: action(
                 setModifier(
-                    { [MONEY]: 70, [POPULARITY]: 52 },
-                    { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
-                ),
-                'The economy, of couse',
-            ),
-            right: action(
-                setModifier(
                     { [ENVIRONMENT]: 70, [POPULARITY]: 65 },
                     { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
                 ),
                 'We should think about our future',
+            ),
+            right: action(
+                setModifier(
+                    { [MONEY]: 70, [POPULARITY]: 52 },
+                    { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
+                ),
+                'The economy, of couse',
             ),
         },
         isAvailableWhen: [],
