@@ -40,6 +40,7 @@ export const otherCards: Card[] = [
                     [POPULARITY]: 20,
                     [VARS.SOLAR_INVESTMENTS]: 100,
                 }),
+                'Nice work!',
             ),
             right: action(
                 addModifier({
@@ -50,6 +51,7 @@ export const otherCards: Card[] = [
                     [POPULARITY]: 20,
                     [VARS.SOLAR_INVESTMENTS]: 100,
                 }),
+                'Great news!',
             ),
         },
         priority: CardPriority.Card,
