@@ -39,6 +39,8 @@ export type WorldState = {
 export type StatDefinition = {
     id: string
     name: string
+    min: number
+    max: number
     icon: string
     iconSize?: string
 }

@@ -1,5 +1,5 @@
 import type { GameState, StateModifier, Params } from '.'
-import type { WorldStateModifier } from '$shared/ContentTypes'
+import type { GameWorld, WorldStateModifier } from '$shared/ContentTypes'
 
 export type StateExtension = StateModifier<Params>
 
@@ -120,15 +120,11 @@ export function createDebugger(
 /**
  * Cap a number of identified parameters to be contained within a range
  *
- * @param ids Ids of the params which to limit to the range [min, max]
- * @param min The minimum number of the range
- * @param max The maximum number of the range
- * @returns a state extension which caps params with ids to the range [min, max]
+ * @param params The params which to limit to their the range [min, max]
+ * @returns a state extension which caps params to the range [min, max]
  */
 export function createParameterCap(
-    ids: string[],
-    min: number,
-    max: number,
+    params: GameWorld['stats'],
 ): StateModifier<Params> {
     return (state) => ({
         ...state,
@@ -136,10 +132,10 @@ export function createParameterCap(
             flags: state.params.flags,
             vars: {
                 ...state.params.vars,
-                ...ids.reduce<Params['vars']>((acc, id) => {
-                    const value = state.params.vars[id]
+                ...params.reduce<Params['vars']>((acc, param) => {
+                    const value = state.params.vars[param.id]
                     if (value !== undefined) {
-                        acc[id] = Math.max(min, Math.min(max, value))
+                        acc[param.id] = Math.max(param.min, Math.min(param.max, value))
                     }
                     return acc
                 }, {}),

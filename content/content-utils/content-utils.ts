@@ -273,11 +273,16 @@ function createRefFactory(type: string) {
  */
 export function stat(
     name: string,
+    min: number,
+    max: number,
     icon: string,
     iconSize?: string,
 ): StatDefinition {
+    if (max <= min) throw 'Error: `max` must be larger than `min`'
     return {
         id: slugify(name),
+        min,
+        max,
         name,
         icon,
         iconSize,

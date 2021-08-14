@@ -50,7 +50,9 @@ export function load(
         gameWorld.worldStateModifiers,
     )
     return new BasicGame<Params>(Object.values(cards), stats, defaultParams, {
-        tickModifiers: [...stateExtensions, parameterCaps],
+        // After each swipe, run the tickModifiers to perform common tasks.
+        // NOTE: Ensure parameterCaps runs before debug logging and the other StateExtensions
+        tickModifiers: [parameterCaps, ...stateExtensions],
         random,
     })
 }
@@ -72,11 +74,10 @@ function statsFromData(stats: GameWorld['stats']): Stat<Params>[] {
  * Creates the standard parameters caps used for a standard GameWorld
  *
  * @param stats The stats data
- * @returns A stat modifier which caps all the vars matched to ids in stats to [0, 100]
+ * @returns A stat modifier which caps all the vars matched to ids in stats to their respective [min, max]
  */
 function parameterCapsFromStats(stats: GameWorld['stats']) {
-    const statVarIds = stats.map((stat) => stat.id)
-    return createParameterCap(statVarIds, 0, 100)
+    return createParameterCap(stats)
 }
 
 /**
@@ -252,7 +253,7 @@ function updateVars(
                 ? value
                 : value + (updatedState[key] || 0)
 
-        updatedState[key] = Math.min(Math.max(newValue, 0), 100)
+        updatedState[key] = newValue
 
         return updatedState
     }, currentVars)
