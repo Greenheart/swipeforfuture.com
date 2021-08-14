@@ -79,6 +79,12 @@ export function cardLogic(
     }
 }
 
+/**
+ * Combine multiple WorldQueries into a single one.
+ * 
+ * @param queries WorldQueries to combine
+ * @returns A single WorldQuery
+ */
 export function combineWorldQueries(...queries: WorldQuery[]): WorldQuery {
     return queries.reduce((acc, q) => ({
         state: {
