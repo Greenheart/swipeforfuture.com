@@ -29,7 +29,7 @@ export const enviraCards: Card[] = [
         text: "Hi! My name is Envira and I'm a climate activist. You'll see me from time to time. I wish you good luck and I hope we'll have constructive meetings in the future.",
         actions: {
             left: action(
-                addModifier({ [ENVIRONMENT]: -10, [VARS.ENVIRA_INIT]: 1 }, {}),
+                addModifier({ [ENVIRONMENT]: -10, [VARS.ENVIRA_INIT]: 1 }),
                 "Hah, I wouldn't think so!",
             ),
             right: action(

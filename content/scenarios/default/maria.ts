@@ -29,9 +29,7 @@ export const mariaCards = [
             left: action([], "Nah, I'm good", welcomeLoop),
             right: action([], 'Sure', welcomeLunch),
         },
-        isAvailableWhen: [
-            worldQuery({ [VARS.LUNCH_MEETING_COMPLETED]: 0},),
-        ],
+        isAvailableWhen: [worldQuery({ [VARS.LUNCH_MEETING_COMPLETED]: 0 })],
         priority: CardPriority.Event,
     }),
     cardFromTemplate(welcomeLoop, mariaTemplate, {
@@ -48,15 +46,19 @@ export const mariaCards = [
         text: 'Really nice lunch! Now your first big decision has come. Will you prioritize the economy or environment?',
         actions: {
             left: action(
-                setModifier(
-                    { [ENVIRONMENT]: 70, [POPULARITY]: 65, [VARS.LUNCH_MEETING_COMPLETED]: 1 },
-                ),
+                setModifier({
+                    [ENVIRONMENT]: 70,
+                    [POPULARITY]: 65,
+                    [VARS.LUNCH_MEETING_COMPLETED]: 1,
+                }),
                 'We should think about our future',
             ),
             right: action(
-                setModifier(
-                    { [MONEY]: 70, [POPULARITY]: 52, [VARS.LUNCH_MEETING_COMPLETED]: 1 },
-                ),
+                setModifier({
+                    [MONEY]: 70,
+                    [POPULARITY]: 52,
+                    [VARS.LUNCH_MEETING_COMPLETED]: 1,
+                }),
                 'The economy, of couse',
             ),
         },

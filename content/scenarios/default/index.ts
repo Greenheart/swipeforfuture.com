@@ -48,7 +48,6 @@ const scenario: Scenario = {
             [VARS.BROWN_COAL_PLANT]: 0,
             ...getDynamicVars(),
         },
-        flags: {}
     },
     worldStateModifiers: [
         {

@@ -91,9 +91,5 @@ export function combineWorldQueries(...queries: WorldQuery[]): WorldQuery {
             ...(acc.state ? acc.state : {}),
             ...(q.state ? q.state : {}),
         },
-        flags: {
-            ...(acc.flags ? acc.flags : {}),
-            ...(q.flags ? q.flags : {}),
-        },
     }))
 }

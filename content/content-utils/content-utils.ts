@@ -115,14 +115,8 @@ function slugify(text: string): string {
  * @param state A set of WorldStateRanges that need to exist when this query should match
  * @param flags A set of flags that need to exist when this query should match
  */
-export function worldQuery(
-    state: WorldQuery['state'] = {},
-    flags: WorldQuery['flags'] = {},
-): WorldQuery {
-    return {
-        state,
-        flags,
-    }
+export function worldQuery(state: WorldQuery['state'] = {}): WorldQuery {
+    return { state }
 }
 
 /**
@@ -157,7 +151,6 @@ export function showOnlyOnce(card: Card) {
             ...query.state,
             ...expectedState,
         },
-        flags: query.flags
     }))
     card.actions.left.modifiers.push(modifier)
     card.actions.right.modifiers.push(modifier)
@@ -225,12 +218,11 @@ export const replaceModifier = modifier('replace')
  */
 export function modifier(
     type: Modifier['type'],
-): (state?: Modifier['state'], flags?: Modifier['flags']) => Modifier {
-    return (state = {}, flags = {}) => {
+): (state?: Modifier['state']) => Modifier {
+    return (state = {}) => {
         return {
             type,
             state,
-            flags,
         }
     }
 }

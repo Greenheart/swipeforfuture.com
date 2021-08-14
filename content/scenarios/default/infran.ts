@@ -36,10 +36,11 @@ export const infranCards: Card[] = [
                 'That can wait',
             ),
             right: action(
-                addModifier(
-                    { [MONEY]: -10, [POPULARITY]: 10, [VARS.INFRAN_INIT]: 1 },
-                    {},
-                ),
+                addModifier({
+                    [MONEY]: -10,
+                    [POPULARITY]: 10,
+                    [VARS.INFRAN_INIT]: 1,
+                }),
                 'Sure',
             ),
         },

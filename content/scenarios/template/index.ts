@@ -23,7 +23,6 @@ const scenario: Scenario = {
             [POPULARITY]: 53,
             ...getDynamicVars(),
         },
-        flags: {},
     },
     worldStateModifiers: [
         {
