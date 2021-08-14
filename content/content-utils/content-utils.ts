@@ -284,18 +284,6 @@ export function stat(
     }
 }
 
-export function createIdContext(namespace?: string) {
-    let index = 0
-    const map = new Map<unknown, string>()
-    return (obj: unknown) => {
-        const id =
-            map.get(obj) ||
-            [namespace, index++].filter((v) => v !== undefined).join(':')
-        map.set(obj, id)
-        return id
-    }
-}
-
 /**
  * Get the scenario ID based on the containing directory name.
  * This is used to ensure scenarios have a single source of truth for their id: the directory name.
