@@ -1,4 +1,4 @@
-import { Scenario, getDynamicFlags } from '../../content-utils'
+import { Scenario, getDynamicFlags, getScenarioId } from '../../content-utils'
 import {
     ENVIRONMENT,
     PEOPLE,
@@ -20,7 +20,7 @@ import { mariaCards } from './maria'
 import { environmentalInitiativeCards } from './environmental-initiatives'
 
 const scenario: Scenario = {
-    id: 'default',
+    id: getScenarioId(import.meta.url),
     stats: Object.values(STATS),
     cards: [
         ...catastrophicCards,

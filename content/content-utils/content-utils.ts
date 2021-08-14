@@ -1,3 +1,5 @@
+import { basename, dirname } from 'path'
+import { fileURLToPath } from 'url'
 import {
     Card,
     GameWorld,
@@ -292,4 +294,15 @@ export function createIdContext(namespace?: string) {
         map.set(obj, id)
         return id
     }
+}
+
+/**
+ * Get the scenario ID based on the containing directory name.
+ * This is used to ensure scenarios have a single source of truth for their id: the directory name.
+ *
+ * @param url The `import.meta.url` value from the scenario
+ * @returns The scenario id
+ */
+export function getScenarioId(url: ImportMeta['url']) {
+    return basename(dirname(fileURLToPath(url)))
 }
