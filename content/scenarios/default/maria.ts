@@ -1,17 +1,17 @@
 import {
-    createCardTemplate,
+    cardTemplate,
     cardRef,
     setModifier,
     action,
     worldQuery,
-    createCardFromTemplate,
+    cardFromTemplate,
     CardPriority,
 } from '../../content-utils'
 import { POPULARITY, MONEY, ENVIRONMENT } from './stats'
 import { FLAGS } from './flags'
 import image from './images'
 
-export const mariaTemplate = createCardTemplate({
+export const mariaTemplate = cardTemplate({
     image: image('maria'),
     location: 'In parliament',
     weight: 1,
@@ -22,7 +22,7 @@ const welcomeLoop = cardRef('welcome-loop')
 const welcomeLunch = cardRef('welcome-lunch')
 
 export const mariaCards = [
-    createCardFromTemplate(welcome, mariaTemplate, {
+    cardFromTemplate(welcome, mariaTemplate, {
         title: 'Welcome!',
         text: 'Hi! My name is Maria. You must be the new president. Do you want to take a lunch to get up to speed with your new duties?',
         actions: {
@@ -34,7 +34,7 @@ export const mariaCards = [
         ],
         priority: CardPriority.Event,
     }),
-    createCardFromTemplate(welcomeLoop, mariaTemplate, {
+    cardFromTemplate(welcomeLoop, mariaTemplate, {
         title: 'Seriously!',
         text: 'We need to talk! Get your head in the game. Do you want to take a lunch to get up to speed with your new duties?',
         actions: {
@@ -43,7 +43,7 @@ export const mariaCards = [
         },
         isAvailableWhen: [],
     }),
-    createCardFromTemplate(welcomeLunch, mariaTemplate, {
+    cardFromTemplate(welcomeLunch, mariaTemplate, {
         title: 'The lunch meeting',
         text: 'Really nice lunch! Now your first big decision has come. Will you prioritize the economy or environment?',
         actions: {

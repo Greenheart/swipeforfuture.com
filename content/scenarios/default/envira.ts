@@ -1,9 +1,9 @@
 import {
     Card,
-    createCardTemplate,
+    cardTemplate,
     cardRef,
     worldQuery,
-    createCardFromTemplate,
+    cardFromTemplate,
     action,
     addModifier,
     CardPriority,
@@ -12,7 +12,7 @@ import { ENVIRONMENT, PEOPLE, SECURITY, MONEY } from './stats'
 import { FLAGS } from './flags'
 import image from './images'
 
-export const enviraTemplate = createCardTemplate({
+export const enviraTemplate = cardTemplate({
     image: image('envira'),
     location: 'Outside parliament',
     weight: 300,
@@ -24,7 +24,7 @@ const enviraIntro = cardRef('envira-intro')
 const enviraCoal = cardRef('envira-coal')
 
 export const enviraCards: Card[] = [
-    createCardFromTemplate(enviraIntro, enviraTemplate, {
+    cardFromTemplate(enviraIntro, enviraTemplate, {
         title: 'The activist',
         text: "Hi! My name is Envira and I'm a climate activist. You'll see me from time to time. I wish you good luck and I hope we'll have constructive meetings in the future.",
         actions: {
@@ -54,7 +54,7 @@ export const enviraCards: Card[] = [
         ],
         priority: CardPriority.Event,
     }),
-    createCardFromTemplate(enviraCoal, enviraTemplate, {
+    cardFromTemplate(enviraCoal, enviraTemplate, {
         title: 'Keep it in the ground!',
         text: 'This is insane! Are you really investing in this brown coal plant and prioritizing short-term profits over the future of the planet - and your people!?',
         isAvailableWhen: [

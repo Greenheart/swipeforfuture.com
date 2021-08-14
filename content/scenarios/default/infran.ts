@@ -1,9 +1,9 @@
 import {
     Card,
-    createCardTemplate,
+    cardTemplate,
     cardRef,
     worldQuery,
-    createCardFromTemplate,
+    cardFromTemplate,
     action,
     addModifier,
     CardPriority,
@@ -13,7 +13,7 @@ import image from './images'
 import { POPULARITY, MONEY, ENVIRONMENT, PEOPLE } from './stats'
 import { VARS } from './vars'
 
-export const infranTemplate = createCardTemplate({
+export const infranTemplate = cardTemplate({
     image: image('infran'),
     location: 'On the phone',
     weight: 300,
@@ -24,7 +24,7 @@ const infranSolar = cardRef('infran-solar')
 const infranRoad = cardRef('infran-road')
 
 export const infranCards: Card[] = [
-    createCardFromTemplate(infranIntro, infranTemplate, {
+    cardFromTemplate(infranIntro, infranTemplate, {
         title: 'The constructor',
         text: "Good day! I'm Infran and I'll be sure to keep you updated on the nation's infrastructure. Should we get started right away?",
         actions: {
@@ -54,7 +54,7 @@ export const infranCards: Card[] = [
         ],
         priority: CardPriority.Event,
     }),
-    createCardFromTemplate(infranSolar, infranTemplate, {
+    cardFromTemplate(infranSolar, infranTemplate, {
         title: 'Invest in solar?',
         text: 'The Germans are rapidly expanding their solar power plants! Should we invest in new solar too?',
         isAvailableWhen: [
@@ -80,7 +80,7 @@ export const infranCards: Card[] = [
             ),
         },
     }),
-    createCardFromTemplate(infranRoad, infranTemplate, {
+    cardFromTemplate(infranRoad, infranTemplate, {
         title: 'Road expansion',
         text: 'The people need roads to support future economic growth. Let me take charge and make this happen.',
         isAvailableWhen: [

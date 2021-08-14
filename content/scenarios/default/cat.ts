@@ -1,8 +1,8 @@
 import {
     Card,
     worldQuery,
-    createCardFromTemplate,
-    createCardTemplate,
+    cardFromTemplate,
+    cardTemplate,
     addModifier,
     action,
     cardRef,
@@ -10,7 +10,7 @@ import {
 import { statIds } from './stats'
 import image from './images'
 
-export const catTemplate = createCardTemplate({
+export const catTemplate = cardTemplate({
     image: image('cat'),
     location: '',
     weight: 1,
@@ -30,5 +30,5 @@ export const catastrophicCards = statIds.map<Card>((stat) => {
             right: action(addModifier({ [stat]: 20 })),
         },
     }
-    return createCardFromTemplate(cardRef(`cat-${stat}`), catTemplate, partial)
+    return cardFromTemplate(cardRef(`cat-${stat}`), catTemplate, partial)
 })

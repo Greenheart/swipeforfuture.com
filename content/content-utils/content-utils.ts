@@ -38,7 +38,7 @@ export interface ScenarioManifest {
  * @param cardData The must have data for a template card
  * @param extras Optional additional data that is seldom reused from a template
  */
-export function createCardTemplate(
+export function cardTemplate(
     cardData: Pick<Card, 'image' | 'location' | 'weight'>,
     extras: Partial<Pick<Card, 'title' | 'text'>> = {},
 ): Omit<Card, 'id'> {
@@ -65,7 +65,7 @@ export function createCardTemplate(
  * @param template The card template to extend
  * @param override Fields to override
  */
-export function createCardFromTemplate(
+export function cardFromTemplate(
     id: Card['id'],
     template: Omit<Card, 'id'>,
     override: Partial<Card>,
