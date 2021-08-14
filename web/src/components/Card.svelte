@@ -58,12 +58,12 @@
 
         if (event.detail.totalDeltaX > SWIPE_THRESHOLD) {
             isMovingOut = true
-            $coords.x = 200 + window.innerHeight * SwipeDirection.Right
+            $coords.x = (event.target as HTMLDivElement).clientWidth + Math.max(window.innerHeight, window.innerWidth) * SwipeDirection.Right
             await onSwipe(SwipeDirection.Right)
             isMovingOut = false
         } else if (event.detail.totalDeltaX < -SWIPE_THRESHOLD) {
             isMovingOut = true
-            $coords.x = 200 + window.innerHeight * SwipeDirection.Left
+            $coords.x = (event.target as HTMLDivElement).clientWidth + Math.max(window.innerHeight, window.innerWidth) * SwipeDirection.Left
             await onSwipe(SwipeDirection.Left)
             isMovingOut = false
         } else {
