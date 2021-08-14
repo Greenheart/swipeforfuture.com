@@ -47,7 +47,7 @@
         } else if (event.detail.totalDeltaX < 0) {
             response = actions.left.description
             dir = SwipeDirection.Left
-            opacity = Math.abs(event.detail.totalDeltaX * SWIPE_OPACITY_FACTOR)
+            opacity = event.detail.totalDeltaX * -SWIPE_OPACITY_FACTOR
         }
     }
 
