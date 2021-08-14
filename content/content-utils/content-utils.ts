@@ -143,7 +143,7 @@ export function getDynamicFlags() {
  * Add flags to ensure a card only will show once.
  *
  * @param card Card to modify
- * @returns Updated card that only will shows once.
+ * @returns Updated card that only will show once.
  */
 export function showOnlyOnce(card: Card) {
     const hasBeenShown = propRef('once')

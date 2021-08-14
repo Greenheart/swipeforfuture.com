@@ -1,7 +1,6 @@
 import {
     Card,
     createCardTemplate,
-    unsplashImage,
     cardRef,
     worldQuery,
     createCardFromTemplate,
@@ -11,9 +10,10 @@ import {
 } from '../../content-utils'
 import { ENVIRONMENT, PEOPLE, SECURITY, MONEY } from './stats'
 import { FLAGS } from './flags'
+import image from './images'
 
 export const enviraTemplate = createCardTemplate({
-    image: unsplashImage('1546541612-82d19b258cd5'),
+    image: image('envira'),
     location: 'Outside parliament',
     weight: 300,
 })

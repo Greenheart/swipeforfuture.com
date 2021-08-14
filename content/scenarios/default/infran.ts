@@ -1,7 +1,6 @@
 import {
     Card,
     createCardTemplate,
-    unsplashImage,
     cardRef,
     worldQuery,
     createCardFromTemplate,
@@ -10,11 +9,12 @@ import {
     CardPriority,
 } from '../../content-utils'
 import { FLAGS } from './flags'
+import image from './images'
 import { POPULARITY, MONEY, ENVIRONMENT, PEOPLE } from './stats'
 import { VARS } from './vars'
 
 export const infranTemplate = createCardTemplate({
-    image: unsplashImage('1529088746738-c4c0a152fb2c'),
+    image: image('infran'),
     location: 'On the phone',
     weight: 300,
 })

@@ -7,13 +7,13 @@ export type ImageDBEntry = {
 /**
  * Create and image database entry fron parameters
  *
- * @param url The image URL
  * @param id The selection id
+ * @param url The image URL
  * @param variant The selection variant
  */
 export function imageEntry(
-    url: string,
     id: string,
+    url: string,
     variant: number | string = 'default',
 ) {
     return {
@@ -39,9 +39,9 @@ export function imageDB(
 ) {
     const entries: ImageDBEntry[] = [...initialEntries]
     return {
-        addImage: (
-            url: string,
+        add: (
             id: string,
+            url: string,
             variant: number | string = 'default',
         ) => {
             entries.push({
@@ -50,7 +50,7 @@ export function imageDB(
                 variant,
             })
         },
-        getImage: (id: string, variant: number | string = 'default') => {
+        image: (id: string, variant: number | string = 'default') => {
             const entriesWithId = entries.filter((entry) => entry.id === id)
             if (entriesWithId.length > 0) {
                 const entryWithVariant = entriesWithId.find(

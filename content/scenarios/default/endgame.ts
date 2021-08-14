@@ -2,17 +2,17 @@ import {
     Card,
     cardRef,
     worldQuery,
-    unsplashImage,
     replaceModifier,
     action,
     CardPriority,
 } from '../../content-utils'
 import { ENVIRONMENT, PEOPLE, MONEY, POPULARITY, SECURITY } from './stats'
+import image from './images'
 
 export const endGameCards: Card[] = [
     {
-        id: cardRef('end-game'),
-        image: unsplashImage('1497039465987-61d305728610'),
+        id: cardRef('endgame'),
+        image: image('desert'),
         title: 'The World Has Ended.',
         location: '',
         text: "Wow, that's NOT how you do it! Please find a new planet to destroy...",

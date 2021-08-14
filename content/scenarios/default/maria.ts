@@ -1,6 +1,5 @@
 import {
     createCardTemplate,
-    unsplashImage,
     cardRef,
     setModifier,
     action,
@@ -10,9 +9,10 @@ import {
 } from '../../content-utils'
 import { POPULARITY, MONEY, ENVIRONMENT } from './stats'
 import { FLAGS } from './flags'
+import image from './images'
 
 export const mariaTemplate = createCardTemplate({
-    image: unsplashImage('1573497019940-1c28c88b4f3e'),
+    image: image('maria'),
     location: 'In parliament',
     weight: 1,
 })

@@ -2,16 +2,16 @@ import {
     Card,
     worldQuery,
     createCardFromTemplate,
-    unsplashImage,
     createCardTemplate,
     addModifier,
     action,
     cardRef,
 } from '../../content-utils'
 import { statIds } from './stats'
+import image from './images'
 
 export const catTemplate = createCardTemplate({
-    image: unsplashImage('1548247416-ec66f4900b2e'),
+    image: image('cat'),
     location: '',
     weight: 1,
 })

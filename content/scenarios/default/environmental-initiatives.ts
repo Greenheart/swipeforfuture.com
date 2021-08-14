@@ -8,7 +8,7 @@ import {
     BaseCard,
     showOnlyOnce,
 } from '../../content-utils'
-import { getImage } from './image'
+import image from './images'
 import { ENVIRONMENT } from './stats'
 
 const alwaysState: WorldQuery['state'] = { [ENVIRONMENT]: [0, 100] }
@@ -33,7 +33,7 @@ const actInitiative = cardRef('act-initiative')
 // Reference: http://climateinitiativesplatform.org/index.php/21st_Century_Truck_Partnership
 const truckPartnershipInit = cardContent(
     truckPartnership,
-    getImage('envira'),
+    image('envira'),
     '21st Century Truck Partnership',
     'This initiative aims to combine efforts from government and industry to reduce fuel usage and emissions and increase safety by targeted support of research of commercially viable products.',
     'In parliament',
@@ -43,7 +43,7 @@ const truckPartnershipInit = cardContent(
 // Reference: http://climateinitiativesplatform.org/index.php/ACT_Assessing_Low-Carbon_Transition
 const actInit = cardContent(
     actInitiative,
-    getImage('envira'),
+    image('envira'),
     'Assessing low Carbon Transition',
     "ACT is an initiative that creates an accountability framework and sectorial methodologies to assess how companies' strategies and actions are contributing to the Paris Agreement mitigation goals.",
     'In parliament',

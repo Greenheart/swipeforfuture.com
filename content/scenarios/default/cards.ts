@@ -1,8 +1,6 @@
 import {
     Card,
     worldQuery,
-    unsplashImage,
-    pexelsImage,
     action,
     addModifier,
     cardRef,
@@ -12,11 +10,12 @@ import {
 import { ENVIRONMENT, MONEY, PEOPLE, SECURITY, POPULARITY } from './stats'
 import { VARS } from './vars'
 import { FLAGS } from './flags'
+import image from './images'
 
 export const otherCards: Card[] = [
     showOnlyOnce({
         id: cardRef('solar-ready'),
-        image: unsplashImage('1497435334941-8c899ee9e8e9'),
+        image: image('powerplant', 'solar'),
         title: 'Our solar project is ready!',
         location: 'The greener other side',
         text: 'Congratulations! Thanks to your ambitions investments, we beat the initial German energy expansion ⚡️',
@@ -57,7 +56,7 @@ export const otherCards: Card[] = [
     }),
     showOnlyOnce({
         id: cardRef('coal-sale'),
-        image: pexelsImage('3044473'),
+        image: image('powerplant', 'coal'),
         title: 'Cheap but dirty brown coal for sale',
         location: 'Working class district',
         text: "We've got an interesting offer: Buy a \"modern\" brown coal power plant cheaply to generate electricity. Deal? Great!",
