@@ -1,4 +1,4 @@
-import { Scenario, getDynamicFlags, getScenarioId } from '../../content-utils'
+import { Scenario, getDynamicVars, getScenarioId } from '../../content-utils'
 import {
     ENVIRONMENT,
     PEOPLE,
@@ -13,9 +13,7 @@ import cards from './cards'
 const scenario: Scenario = {
     id: getScenarioId(import.meta.url),
     stats: Object.values(STATS),
-    cards: [
-        ...cards,
-    ],
+    cards: [...cards],
     defaultState: {
         state: {
             [ENVIRONMENT]: 40,
@@ -23,10 +21,9 @@ const scenario: Scenario = {
             [SECURITY]: 75,
             [MONEY]: 55,
             [POPULARITY]: 53,
+            ...getDynamicVars(),
         },
-        flags: {
-            ...getDynamicFlags(),
-        },
+        flags: {},
     },
     worldStateModifiers: [
         {

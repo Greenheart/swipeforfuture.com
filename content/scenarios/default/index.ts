@@ -1,4 +1,4 @@
-import { Scenario, getDynamicFlags, getScenarioId } from '../../content-utils'
+import { Scenario, getDynamicVars, getScenarioId } from '../../content-utils'
 import {
     ENVIRONMENT,
     PEOPLE,
@@ -8,8 +8,7 @@ import {
     STATS,
 } from './stats'
 
-import { VARS } from './vars'
-import { FLAGS } from './flags'
+import VARS from './vars'
 
 import { catastrophicCards } from './cat'
 import { enviraCards } from './envira'
@@ -43,14 +42,13 @@ const scenario: Scenario = {
             [VARS.ROADS_SUGGESTED]: 0,
             [VARS.ROAD_EXPANSION]: 0,
             [VARS.SOLAR_INVESTMENTS]: 0,
+            [VARS.LUNCH_MEETING_COMPLETED]: 0,
+            [VARS.ENVIRA_INIT]: 0,
+            [VARS.INFRAN_INIT]: 0,
+            [VARS.BROWN_COAL_PLANT]: 0,
+            ...getDynamicVars(),
         },
-        flags: {
-            [FLAGS.LUNCH_MEETING_COMPLETED]: false,
-            [FLAGS.ENVIRA_INIT]: false,
-            [FLAGS.INFRAN_INIT]: false,
-            [FLAGS.BROWN_COAL_PLANT]: false,
-            ...getDynamicFlags(),
-        },
+        flags: {}
     },
     worldStateModifiers: [
         {

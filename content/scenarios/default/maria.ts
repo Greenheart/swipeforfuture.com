@@ -8,7 +8,7 @@ import {
     CardPriority,
 } from '../../content-utils'
 import { POPULARITY, MONEY, ENVIRONMENT } from './stats'
-import { FLAGS } from './flags'
+import VARS from './vars'
 import image from './images'
 
 export const mariaTemplate = cardTemplate({
@@ -30,7 +30,7 @@ export const mariaCards = [
             right: action([], 'Sure', welcomeLunch),
         },
         isAvailableWhen: [
-            worldQuery({}, { [FLAGS.LUNCH_MEETING_COMPLETED]: false }),
+            worldQuery({ [VARS.LUNCH_MEETING_COMPLETED]: 0},),
         ],
         priority: CardPriority.Event,
     }),
@@ -49,15 +49,13 @@ export const mariaCards = [
         actions: {
             left: action(
                 setModifier(
-                    { [ENVIRONMENT]: 70, [POPULARITY]: 65 },
-                    { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
+                    { [ENVIRONMENT]: 70, [POPULARITY]: 65, [VARS.LUNCH_MEETING_COMPLETED]: 1 },
                 ),
                 'We should think about our future',
             ),
             right: action(
                 setModifier(
-                    { [MONEY]: 70, [POPULARITY]: 52 },
-                    { [FLAGS.LUNCH_MEETING_COMPLETED]: true },
+                    { [MONEY]: 70, [POPULARITY]: 52, [VARS.LUNCH_MEETING_COMPLETED]: 1 },
                 ),
                 'The economy, of couse',
             ),

@@ -126,18 +126,18 @@ export function worldQuery(
 }
 
 /**
- * Dynamic flags created by content utils to alter card behaviors.
+ * Dynamic vars created by content utils to alter card behaviors.
  */
-const dynamicFlags = {
+const dynamicVars = {
     showOnlyOnce: {},
 }
 
 /**
- * Returns all dynamic flags created by content utils
+ * Returns all dynamic vars created by content utils
  */
-export function getDynamicFlags() {
+export function getDynamicVars() {
     return {
-        ...dynamicFlags.showOnlyOnce,
+        ...dynamicVars.showOnlyOnce,
     }
 }
 
@@ -149,20 +149,20 @@ export function getDynamicFlags() {
  */
 export function showOnlyOnce(card: Card) {
     const hasBeenShown = propRef('once')
-    const expectedState = { [hasBeenShown]: false }
-    const modifier = setModifier({}, { [hasBeenShown]: true })
+    const expectedState = { [hasBeenShown]: 0 }
+    const modifier = setModifier({ [hasBeenShown]: 1 })
 
     card.isAvailableWhen = card.isAvailableWhen.map((query) => ({
-        state: query.state,
-        flags: {
-            ...query.flags,
+        state: {
+            ...query.state,
             ...expectedState,
         },
+        flags: query.flags
     }))
     card.actions.left.modifiers.push(modifier)
     card.actions.right.modifiers.push(modifier)
 
-    Object.assign(dynamicFlags.showOnlyOnce, expectedState)
+    Object.assign(dynamicVars.showOnlyOnce, expectedState)
 
     return card
 }

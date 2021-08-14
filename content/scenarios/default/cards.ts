@@ -8,8 +8,7 @@ import {
     showOnlyOnce,
 } from '../../content-utils'
 import { ENVIRONMENT, MONEY, PEOPLE, SECURITY, POPULARITY } from './stats'
-import { VARS } from './vars'
-import { FLAGS } from './flags'
+import VARS from './vars'
 import image from './images'
 
 export const otherCards: Card[] = [
@@ -21,14 +20,10 @@ export const otherCards: Card[] = [
         text: 'Congratulations! Thanks to your ambitions investments, we beat the initial German energy expansion ⚡️',
         weight: 500,
         isAvailableWhen: [
-            worldQuery(
-                {
-                    [VARS.SOLAR_INVESTMENTS]: [1, 1],
-                },
-                {
-                    [FLAGS.INFRAN_INIT]: true,
-                },
-            ),
+            worldQuery({
+                [VARS.SOLAR_INVESTMENTS]: [1, 1],
+                [VARS.INFRAN_INIT]: 1,
+            }),
         ],
         actions: {
             left: action(
@@ -59,14 +54,13 @@ export const otherCards: Card[] = [
         image: image('powerplant', 'coal'),
         title: 'Cheap but dirty brown coal for sale',
         location: 'Working class district',
-        text: "We've got an interesting offer: Buy a \"modern\" brown coal power plant cheaply to generate electricity. Deal? Great!",
+        text: 'We\'ve got an interesting offer: Buy a "modern" brown coal power plant cheaply to generate electricity. Deal? Great!',
         weight: 500,
         isAvailableWhen: [
             worldQuery({
                 [ENVIRONMENT]: [21, 100],
                 [MONEY]: [15, 100],
-            }, {
-                [FLAGS.BROWN_COAL_PLANT]: false,
+                [VARS.BROWN_COAL_PLANT]: 0,
             }),
         ],
         actions: {
@@ -78,7 +72,7 @@ export const otherCards: Card[] = [
                     [MONEY]: -5,
                     [POPULARITY]: 25,
                 }),
-                'No way, shut it down!'
+                'No way, shut it down!',
             ),
             right: action(
                 addModifier({
@@ -87,11 +81,10 @@ export const otherCards: Card[] = [
                     [SECURITY]: -10,
                     [MONEY]: 40,
                     [POPULARITY]: -20,
-                    
-                }, {
-                    [FLAGS.BROWN_COAL_PLANT]: true,
+
+                    [VARS.BROWN_COAL_PLANT]: 1,
                 }),
-                "Sweet! We'll get rich"
+                "Sweet! We'll get rich",
             ),
         },
         priority: CardPriority.Card,

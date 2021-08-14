@@ -78,7 +78,11 @@ export interface Card extends CardDescription {
     priority: CardPriority
 }
 
-export type WorldStateRange = [number, number]
+/**
+ * [number, number] = matches any value in the given range
+ * number           = matches when the value is exactly equal, useful to simulate booleans or specific state.
+ */
+export type WorldStateRange = [number, number] | number
 
 export interface WorldQuery {
     state?: {

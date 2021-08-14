@@ -8,10 +8,9 @@ import {
     addModifier,
     CardPriority,
 } from '../../content-utils'
-import { FLAGS } from './flags'
 import image from './images'
 import { POPULARITY, MONEY, ENVIRONMENT, PEOPLE } from './stats'
-import { VARS } from './vars'
+import VARS from './vars'
 
 export const infranTemplate = cardTemplate({
     image: image('infran'),
@@ -29,28 +28,26 @@ export const infranCards: Card[] = [
         text: "Good day! I'm Infran and I'll be sure to keep you updated on the nation's infrastructure. Should we get started right away?",
         actions: {
             left: action(
-                addModifier(
-                    { [MONEY]: 10, [POPULARITY]: -10 },
-                    { [FLAGS.INFRAN_INIT]: true },
-                ),
+                addModifier({
+                    [MONEY]: 10,
+                    [POPULARITY]: -10,
+                    [VARS.INFRAN_INIT]: 1,
+                }),
                 'That can wait',
             ),
             right: action(
                 addModifier(
-                    { [MONEY]: -10, [POPULARITY]: 10 },
-                    { [FLAGS.INFRAN_INIT]: true },
+                    { [MONEY]: -10, [POPULARITY]: 10, [VARS.INFRAN_INIT]: 1 },
+                    {},
                 ),
                 'Sure',
             ),
         },
         isAvailableWhen: [
-            worldQuery(
-                {},
-                {
-                    [FLAGS.LUNCH_MEETING_COMPLETED]: true,
-                    [FLAGS.INFRAN_INIT]: false,
-                },
-            ),
+            worldQuery({
+                [VARS.LUNCH_MEETING_COMPLETED]: 1,
+                [VARS.INFRAN_INIT]: 0,
+            }),
         ],
         priority: CardPriority.Event,
     }),
@@ -58,16 +55,12 @@ export const infranCards: Card[] = [
         title: 'Invest in solar?',
         text: 'The Germans are rapidly expanding their solar power plants! Should we invest in new solar too?',
         isAvailableWhen: [
-            worldQuery(
-                {
-                    [ENVIRONMENT]: [50, 100],
-                    [MONEY]: [30, 100],
-                    [VARS.SOLAR_INVESTMENTS]: [0, 0],
-                },
-                {
-                    [FLAGS.INFRAN_INIT]: true,
-                },
-            ),
+            worldQuery({
+                [ENVIRONMENT]: [50, 100],
+                [MONEY]: [30, 100],
+                [VARS.SOLAR_INVESTMENTS]: [0, 0],
+                [VARS.INFRAN_INIT]: 1,
+            }),
         ],
         actions: {
             left: action(
@@ -84,18 +77,21 @@ export const infranCards: Card[] = [
         title: 'Road expansion',
         text: 'The people need roads to support future economic growth. Let me take charge and make this happen.',
         isAvailableWhen: [
-            worldQuery(
-                { [PEOPLE]: [50, 100], [VARS.ROADS_SUGGESTED]: [0, 0] },
-                { [FLAGS.INFRAN_INIT]: true },
-            ),
-            worldQuery(
-                { [PEOPLE]: [70, 100], [VARS.ROADS_SUGGESTED]: [1, 1] },
-                { [FLAGS.INFRAN_INIT]: true },
-            ),
-            worldQuery(
-                { [PEOPLE]: [90, 100], [VARS.ROADS_SUGGESTED]: [2, 2] },
-                { [FLAGS.INFRAN_INIT]: true },
-            ),
+            worldQuery({
+                [PEOPLE]: [50, 100],
+                [VARS.ROADS_SUGGESTED]: [0, 0],
+                [VARS.INFRAN_INIT]: 1,
+            }),
+            worldQuery({
+                [PEOPLE]: [70, 100],
+                [VARS.ROADS_SUGGESTED]: [1, 1],
+                [VARS.INFRAN_INIT]: 1,
+            }),
+            worldQuery({
+                [PEOPLE]: [90, 100],
+                [VARS.ROADS_SUGGESTED]: [2, 2],
+                [VARS.INFRAN_INIT]: 1,
+            }),
         ],
         actions: {
             left: action(
