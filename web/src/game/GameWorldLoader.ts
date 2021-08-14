@@ -198,17 +198,7 @@ function actionFromData(
  */
 function worldQueryToParamQuery(query: WorldQuery): ParamQuery {
     return {
-        // The following expression converts shorthand values from `n` to `[n, n]`
-        // IDEA: Maybe remove the need for all values to be an range,
-        //       and allow the shorthand syntax even in the game runtime, to save conversion costs.
-        vars: query.state ? Object.fromEntries(
-            Object.entries(query.state).map(([stateVar, value]) => [
-                stateVar,
-                Array.isArray(value)
-                    ? value
-                    : ([value, value] as [number, number]),
-            ]),
-        ): undefined,
+        vars: query.state
     }
 }
 

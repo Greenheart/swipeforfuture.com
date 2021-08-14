@@ -6,7 +6,7 @@ export type Params = {
 
 export type ParamQuery = {
     vars?: {
-        [id: string]: [number, number]
+        [id: string]: [number, number] | number
     }
 }
 
@@ -22,8 +22,16 @@ export function isMatchingParamQuery(
     { vars = {} }: ParamQuery,
 ): boolean {
     const hasStateMatch = Object.entries(vars).every(
-        ([key, [min, max]]) =>
-            params.vars[key] >= min && params.vars[key] <= max,
+        ([key, value]) => {
+            if (Array.isArray(value)) {
+                // Match if value is within the range
+                const [min, max] = value
+                return params.vars[key] >= min && params.vars[key] <= max
+            } else {
+                // Shorthand syntax used: Match if value is exact match
+                return params.vars[key] === value
+            }
+        }
     )
 
     return hasStateMatch
