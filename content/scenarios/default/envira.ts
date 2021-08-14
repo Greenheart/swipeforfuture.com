@@ -55,9 +55,6 @@ export const enviraCards: Card[] = [
             }),
         ],
         actions: {
-            // TODO: improve how this works.
-            // Instead of disabling the brown coal power plant cards from appearing again using the state 100,
-            // consider using a flag to disable it in a clearer way. Booleans are much better on/off switches than arbitrary numbers that could be misinterpreted
             left: action(
                 addModifier({
                     [ENVIRONMENT]: 10,

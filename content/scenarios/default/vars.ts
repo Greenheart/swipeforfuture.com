@@ -3,7 +3,7 @@ import { propRef } from '../../content-utils'
 /**
  * Global vars used by multiple parts of the scenario.
  *
- * When creating content, try adding local flags used in a single file to begin with.
+ * When creating content, try adding local vars used in a single file to begin with.
  * Only add to these global vars when using multiple files.
  */
 const VARS = {

@@ -24,7 +24,6 @@ export type WorldStateModifier =
     | {
           type: 'debug'
           stateIds?: string[]
-          flagIds?: string[]
       }
 
 export type WorldState = {
@@ -83,7 +82,7 @@ export type WorldStateRange = [number, number] | number
 
 /**
  * IDEA: Maybe refactor this to only keep a single level of the object, like { [x: string]: WorldStateRange }
- * This could save additional scenario output data size, as well as simplifying the codebase further compared to just removing the flags.
+ * This could save additional scenario output data size, as well as simplifying the codebase further
  */
 export interface WorldQuery {
     state?: {

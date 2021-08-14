@@ -113,7 +113,6 @@ function slugify(text: string): string {
  * WorldQueries are used to define when cards should be available, or when events should trigger.
  *
  * @param state A set of WorldStateRanges that need to exist when this query should match
- * @param flags A set of flags that need to exist when this query should match
  */
 export function worldQuery(state: WorldQuery['state'] = {}): WorldQuery {
     return { state }
@@ -136,7 +135,7 @@ export function getDynamicVars() {
 }
 
 /**
- * Add flags to ensure a card only will show once.
+ * Add vars to ensure a card only will show once.
  *
  * @param card Card to modify
  * @returns Updated card that only will show once.
@@ -184,30 +183,27 @@ export function action(
 /**
  * Easily create a `set` modifier, to be used within an action
  *
- * Modifiers update the game state and flags
+ * Modifiers update the game state
  *
  * @param state The state to modify
- * @param flags The flags to modify
  */
 export const setModifier = modifier('set')
 
 /**
  * Easily create an `add` modifier, to be used within an action
  *
- * Modifiers update the game state and flags
+ * Modifiers update the game state
  *
  * @param state The state to modify
- * @param flags The flags to modify
  */
 export const addModifier = modifier('add')
 
 /**
  * Easily create a `replace` modifier, to be used within an action
  *
- * Modifiers update the game state and flags
+ * Modifiers update the game state
  *
  * @param state The state to modify
- * @param flags The flags to modify
  */
 export const replaceModifier = modifier('replace')
 
