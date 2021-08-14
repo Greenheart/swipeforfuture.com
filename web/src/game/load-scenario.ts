@@ -15,7 +15,6 @@ async function tryLoadFromLocalStorage(
             cards: [],
             defaultState: {
                 state: {},
-                flags: {},
             },
             worldStateModifiers: [],
         }

@@ -31,9 +31,6 @@ export type WorldState = {
     state: {
         [stateProperty: string]: number
     }
-    flags: {
-        [flagProperty: string]: boolean
-    }
 }
 
 export type StatDefinition = {
@@ -84,11 +81,12 @@ export interface Card extends CardDescription {
  */
 export type WorldStateRange = [number, number] | number
 
+/**
+ * IDEA: Maybe refactor this to only keep a single level of the object, like { [x: string]: WorldStateRange }
+ * This could save additional scenario output data size, as well as simplifying the codebase further compared to just removing the flags.
+ */
 export interface WorldQuery {
     state?: {
         [x: string]: WorldStateRange
-    }
-    flags?: {
-        [x: string]: boolean
     }
 }

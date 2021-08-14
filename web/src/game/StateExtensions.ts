@@ -17,7 +17,6 @@ export const useRounds: StateExtension = (state: GameState<Params>) => {
                 ...state.params.vars,
                 rounds: (state.params.vars.rounds ?? 0) + 1,
             },
-            flags: state.params.flags,
         },
     }
 }
@@ -38,7 +37,6 @@ export function createCycle(id: string, length: number): StateExtension {
                     ...state.params.vars,
                     [id]: ((state.params.vars[id] ?? 0) + 1) % length,
                 },
-                flags: state.params.flags,
             },
         }
     }
@@ -68,7 +66,6 @@ export function createReducer(
         return {
             ...state,
             params: {
-                flags: state.params.flags,
                 vars: {
                     ...state.params.vars,
                     [targetId]: result,
@@ -84,13 +81,9 @@ export function createReducer(
  *
  * @param worldState The world state on which to operate
  * @param stateIds Optional ids of the states to log
- * @param flagIds Optional ids of the flags to log
  * @returns A configured debug world state extension that logs state and flags to tables
  */
-export function createDebugger(
-    stateIds?: string[],
-    flagIds?: string[],
-): StateExtension {
+export function createDebugger(stateIds?: string[]): StateExtension {
     return (worldState: GameState<Params>) => {
         const params = worldState.params
         const outState =
@@ -100,18 +93,8 @@ export function createDebugger(
                       acc[id] = params.vars[id]
                       return acc
                   }, {})
-        const outFlags =
-            flagIds === undefined
-                ? params.flags
-                : flagIds.reduce<Params['flags']>((acc, id) => {
-                      acc[id] = params.flags[id]
-                      return acc
-                  }, {})
         if (Object.keys(outState).length > 0) {
             console.table(outState)
-        }
-        if (Object.keys(outFlags).length > 0) {
-            console.table(outFlags)
         }
         return worldState
     }
@@ -129,13 +112,15 @@ export function createParameterCap(
     return (state) => ({
         ...state,
         params: {
-            flags: state.params.flags,
             vars: {
                 ...state.params.vars,
                 ...params.reduce<Params['vars']>((acc, param) => {
                     const value = state.params.vars[param.id]
                     if (value !== undefined) {
-                        acc[param.id] = Math.max(param.min, Math.min(param.max, value))
+                        acc[param.id] = Math.max(
+                            param.min,
+                            Math.min(param.max, value),
+                        )
                     }
                     return acc
                 }, {}),
@@ -178,7 +163,7 @@ export function stateExtensionsFromData(
                     0,
                 )
             case 'debug':
-                return createDebugger(modifier.stateIds, modifier.flagIds)
+                return createDebugger(modifier.stateIds)
             default:
                 throw new Error(
                     'Missing modifier type: ' + (modifier as any).type,

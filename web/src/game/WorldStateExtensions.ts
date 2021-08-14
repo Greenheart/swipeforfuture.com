@@ -11,14 +11,12 @@ function worldStateExtensionFromStateExtension(
         const state: GameState<Params> = {
             params: {
                 vars: worldState.state,
-                flags: worldState.flags,
             },
         }
         const newState = extension(state)
 
         return {
             state: newState.params.vars,
-            flags: newState.params.flags,
         }
     }
 }

@@ -30,7 +30,6 @@ export function load(
     random: () => number = Math.random,
 ): Game<Params> {
     const defaultParams = {
-        flags: gameWorld.defaultState.flags,
         vars: gameWorld.defaultState.state,
     }
 
@@ -210,7 +209,6 @@ function worldQueryToParamQuery(query: WorldQuery): ParamQuery {
                     : ([value, value] as [number, number]),
             ]),
         ): undefined,
-        flags: query.flags,
     }
 }
 
@@ -234,11 +232,6 @@ function updateParams(
                 (acc, modifier) =>
                     updateVars(acc, modifier, defaultParams.vars),
                 state.params.vars,
-            ),
-            flags: modifiers.reduce(
-                (acc, modifier) =>
-                    updateFlags(acc, modifier, defaultParams.flags),
-                state.params.flags,
             ),
         },
     }
@@ -269,25 +262,4 @@ function updateVars(
     }, currentVars)
 
     return updatedWorldState
-}
-
-function updateFlags(
-    flags: Params['flags'],
-    modifier: GameWorldModifier,
-    defaultFlags: Params['flags'],
-): Params['flags'] {
-    const currentFlags: Params['flags'] =
-        modifier.type === 'replace'
-            ? Object.assign({}, defaultFlags)
-            : Object.assign({}, flags)
-
-    const flagsModifier = modifier.flags || {}
-    const updatedWorldFlags = Object.entries(flagsModifier).reduce<
-        Params['flags']
-    >((updatedFlags, [key, value]) => {
-        updatedFlags[key] = value
-        return updatedFlags
-    }, currentFlags)
-
-    return updatedWorldFlags
 }

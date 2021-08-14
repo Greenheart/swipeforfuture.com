@@ -2,17 +2,11 @@ export type Params = {
     vars: {
         [id: string]: number
     }
-    flags: {
-        [id: string]: boolean
-    }
 }
 
 export type ParamQuery = {
     vars?: {
         [id: string]: [number, number]
-    }
-    flags?: {
-        [id: string]: boolean
     }
 }
 
@@ -25,18 +19,12 @@ export function hasMatchingParamQuery(
 
 export function isMatchingParamQuery(
     params: Params,
-    { vars = {}, flags = {} }: ParamQuery,
+    { vars = {} }: ParamQuery,
 ): boolean {
     const hasStateMatch = Object.entries(vars).every(
         ([key, [min, max]]) =>
             params.vars[key] >= min && params.vars[key] <= max,
     )
 
-    const result =
-        hasStateMatch &&
-        Object.entries(flags).every(
-            ([flag, value]) => !!params.flags[flag] === value,
-        )
-
-    return result
+    return hasStateMatch
 }
