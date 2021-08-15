@@ -43,7 +43,7 @@ export function parseScenario(
     ]
     const { image } = imageDB(
         characterData.map(char => (
-            imageEntry(char.Source, char.Name)
+            imageEntry(char.Name, char.Source)
         ))
     )
     const cards = toCardData(rawData, image)

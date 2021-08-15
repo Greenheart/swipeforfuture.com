@@ -212,10 +212,9 @@ function parseWorldQuery(data: string): WorldQuery | undefined {
             } else {
                 const match = e.match(/(\w+)\s*=\s*(true|false)/)
                 if (match) {
+                    const value = match[2] === "true" ? Flag.True : Flag.False
                     return {
-                        [match[1]]: (
-                            match[2] === "true" ? Flag.True : Flag.False
-                        ),
+                        [match[1]]: [value, value],
                     }
                 }
             }
@@ -242,9 +241,9 @@ export function toCardData(
     data: CardDescription[],
     getImage: (id: string, variant?: string) => string
 ): Card[] {
-    const cardMap = data.reduce((acc, entry, index) => {
+    const cardMap = data.reduce((acc, entry) => {
         const card = cardContent(
-            `card-${index}`,
+            entry["Card Name"],
             getImage(entry["Character"]),
             entry["Title"],
             entry["Text of card"],
