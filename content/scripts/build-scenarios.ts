@@ -27,7 +27,7 @@ export async function buildScenarios(ids: string[], outputDir: string) {
             .filter((scenario) => ids.includes(scenario.id))
             .map(async (scenario) => {
                 const outputPath = resolve(outputDir, `${scenario.id}.json`)
-                await outputFile(outputPath, JSON.stringify(scenario))
+                await outputFile(outputPath, JSON.stringify(scenario, undefined, "  "))
 
                 console.log(`✅ Built "${scenario.id}"   -->   ${outputPath}`)
             }),

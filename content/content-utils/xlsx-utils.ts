@@ -1,31 +1,36 @@
-import xlsx from 'xlsx'
-import fs from 'fs'
+import xlsx from "xlsx"
 
 export type TypeMapping<T> = {
     [A in keyof T]: (value: unknown) => T[A]
 }
 
 export function loadFile<T>(
-    path: string,
+    data: any,
     fieldMapping: TypeMapping<T>,
     {
         sheetIds,
         sheetFilter,
     }: Partial<{
-        sheetIds: string[]
+        sheetIds: string[],
         sheetFilter: (id: string) => boolean
     }> = {},
 ): (T & { __sheet?: string })[] {
-    const book = xlsx.read(fs.readFileSync(path))
+    const book = xlsx.read(
+        data,
+        {
+            type: 'binary'
+        }
+    )
     const finalFilter = sheetFilter || (() => true)
     const requiredFields: (keyof T)[] = Object.keys(fieldMapping) as (keyof T)[]
     const transformedSheets = Object.keys(book.Sheets).map<T[]>((key) => {
         if (
-            sheetIds !== undefined &&
-            !sheetIds.includes(key) &&
-            finalFilter(key)
-        )
-            return []
+            (
+                sheetIds !== undefined &&
+                !sheetIds.includes(key)
+            ) ||
+            !finalFilter(key)
+        ) return []
 
         const sheet = book.Sheets[key]
         const data = xlsx.utils.sheet_to_json<{ [A in keyof T]: unknown }>(
@@ -52,7 +57,7 @@ export function loadFile<T>(
 
 export function toString<T>(base: T): (v: any) => string | T {
     return (value: any) => {
-        return value === undefined ? base : value + ''
+        return value === undefined ? base : value + ""
     }
 }
 
@@ -64,15 +69,30 @@ export function toLowerCaseString<T>(base: T): (v: any) => string | T {
 }
 
 export function toStringArray(
-    split = ';',
-    processValue: (val: any) => string = toString(''),
+    split = ";",
+    processValue: (val: any) => string = toString(""),
 ): (value: any) => string[] {
     return (value: any) => {
         const result = processValue(value)
-        return result === '' ? [] : result.split(split).map((v) => v.trim())
+        return result === "" ? [] : result.split(split).map((v) => v.trim())
     }
 }
 
 export function toNumber(value: any): number {
     return value ? parseFloat(value) : 0
+}
+
+export function toBoolean(value: any): boolean {
+    const v = (
+        typeof value === "boolean" ? (
+            value
+        ) : (
+            value === "true" ? (
+                true
+            ) : (
+                false
+            )
+        )
+    )
+    return v
 }

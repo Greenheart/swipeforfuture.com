@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  build-dev:
+    environment:
+      - BROWSER=${BROWSER}
+    build: .
+    volumes:
+      - ./data:/exec/content/data
+      - ./content-utils:/exec/content/content-utils
+      - ./scenarios:/exec/content/scenarios
+      - ./scripts:/exec/content/scripts
+      - ../shared:/exec/shared
+      - ../web:/exec/web
+
+    entrypoint: ["npm", "run", "dev"]

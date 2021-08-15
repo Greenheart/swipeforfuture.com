@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  build-dev:
+    environment:
+      - BROWSER=${BROWSER}
+    ports:
+      - "3000:3000"
+    build: .
+    volumes:
+      - ./src:/exec/src
+      - ./scripts:/exec/scripts
+      - ./static:/exec/static
+      - ./build:/exec/build
+    entrypoint: ["npm", "run", "dev"]
