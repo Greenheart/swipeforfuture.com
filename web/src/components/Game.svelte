@@ -24,20 +24,13 @@ import { onMount } from 'svelte';
         )
     }
 
-    function onSwipe(direction: SwipeDirection): Promise<void> {
-        if (!$state.card) return Promise.resolve()
-
+    function onSwipe(direction: SwipeDirection) {
         const action =
             direction === SwipeDirection.Left
                 ? $state.card.actions.left.modifier
                 : $state.card.actions.right.modifier
-
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                $state = game.applyAction($state, action)
-                resolve()
-            }, SWIPE_DELAY)
-        })
+        
+        $state = game.applyAction($state, action)
     }
 
     function noop(e: Event) {
