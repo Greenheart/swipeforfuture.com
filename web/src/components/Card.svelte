@@ -17,7 +17,6 @@
     export let actions: CardPresentation['actions']
     export let imageSize: string
     let isMovingOut = false
-    let response = ''
     let dir: SwipeDirection | undefined
     let opacity = 0
     let borderWidth = ""
@@ -42,15 +41,13 @@
         }))
 
         if (event.detail.totalDeltaX > 0) {
-            response = actions.right.description
             dir = SwipeDirection.Right
         } else if (event.detail.totalDeltaX < 0) {
-            response = actions.left.description
             dir = SwipeDirection.Left
         }
 
 
-        if (Math.abs(event.detail.totalDeltaX) > 0.5 * SWIPE_THRESHOLD) {
+        if (Math.abs(event.detail.totalDeltaX) > 0.25 * SWIPE_THRESHOLD) {
             opacity = 1
         } else {
             opacity = 0
@@ -74,7 +71,6 @@
     }
 
     function handlePanEnd(event: PanEvent) {
-        response = ''
         dir = undefined
         opacity = 0
 
@@ -109,7 +105,7 @@
         {isMovingOut ? transition : ''}"
 >
     <!-- TODO: tweak styles for how the action descriptions are displayed -->
-    {#if response && dir}
+    {#if dir}
         <div class="absolute overflow-hidden {imageSize}"
             style="transition: border-width 0.2s;
                 border-color: #fff;
@@ -117,19 +113,38 @@
                 border-width: {borderWidth};"
         >
             <div
-                class="absolute left-[50%] top-[-20%] bg-black bg-opacity-80 text-md w-[160%] px-[40%] py-[10%] pt-[30%]"
+                class="absolute top-[-20%] left-[50%] w-[160%]"
                 style="transform:
                     translateX(-50%) rotate({$coords.x * -0.05}deg);
-                    transition: opacity 0.2s;
-                    opacity: {opacity};"
+                    overflow: hidden;"
             >
                 <span
-                    class=""
-                    style="text-shadow: 0 2px 4px #000"
+                    class="relative block bg-black bg-opacity-80 text-md w-[100%] px-[25%] py-[5%] pt-[20%]"
+                    style="text-shadow: 0 2px 4px #000;
+                        text-align: right;
+                        transition: transform 0.2s;
+                        transform: translateY({dir === 1 && opacity ? "0%" : "-100%"});"
                 >
-                    {response}
+                    {actions.right.description}
                 </span>
             </div>
+            <div
+                class="absolute top-[-20%] left-[50%] w-[160%]"
+                style="transform:
+                    translateX(-50%) rotate({$coords.x * -0.05}deg);
+                    overflow: hidden;"
+            >
+                <span
+                    class="relative block bg-black bg-opacity-80 text-md w-[100%] px-[25%] py-[5%] pt-[20%]"
+                    style="text-shadow: 0 2px 4px #000;
+                        text-align: left;
+                        transition: transform 0.2s;
+                        transform: translateY({dir === -1 && opacity ? "0%" : "-100%"});"
+                >
+                    {actions.left.description}
+                </span>
+            </div>
+            
         </div>
     {/if}
 
