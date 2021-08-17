@@ -20,6 +20,9 @@
     let dir: SwipeDirection | undefined
     let opacity = 0
     let borderWidth = ""
+    let actionIds: ("left" | "right")[] = (
+        Object.keys(actions) as (keyof CardPresentation['actions'])[]
+    )
 
     const coords = spring(
         { x: 0, y: 0 },
@@ -39,13 +42,8 @@
             x: $coords.x + event.detail.dx,
             y: $coords.y + event.detail.dy,
         }))
-
-        if (event.detail.totalDeltaX > 0) {
-            dir = SwipeDirection.Right
-        } else if (event.detail.totalDeltaX < 0) {
-            dir = SwipeDirection.Left
-        }
-
+        
+        dir = Math.sign(event.detail.totalDeltaX)
 
         if (Math.abs(event.detail.totalDeltaX) > 0.25 * SWIPE_THRESHOLD) {
             opacity = 1
@@ -56,40 +54,43 @@
 
     function swipe(
         direction: SwipeDirection,
-        targetX: number
-    ) {
-        isMovingOut = true
-        $coords.x = targetX
-        setTimeout(
-            function() {
-                onSwipe(direction)
-                isMovingOut = false
-                coords.set({ x: 0, y: 0 })
-            },
-            SWIPE_DELAY
+    ): Promise<void> {
+        return new Promise<void>(
+            function(resolve) {
+                setTimeout(
+                    function() {
+                        onSwipe(direction)
+                        resolve()
+                    },
+                    SWIPE_DELAY
+                )
+            }
         )
     }
 
-    function handlePanEnd(event: PanEvent) {
-        dir = undefined
+    async function handlePanEnd(event: PanEvent) {
         opacity = 0
 
-        if (event.detail.totalDeltaX > SWIPE_THRESHOLD) {
-            swipe(
-                SwipeDirection.Right,
-                (event.target as HTMLDivElement).clientWidth + Math.max(window.innerHeight, window.innerWidth) * SwipeDirection.Right
+        if (
+            Math.abs(event.detail.totalDeltaX) > SWIPE_THRESHOLD
+            && dir !== undefined
+        ) {
+            isMovingOut = true
+            $coords.x = (
+                (event.target as HTMLDivElement).clientWidth +
+                Math.max(window.innerHeight, window.innerWidth) *
+                dir
             )
-        } else if (event.detail.totalDeltaX < -SWIPE_THRESHOLD) {
-            swipe(
-                SwipeDirection.Left,
-                (event.target as HTMLDivElement).clientWidth + Math.max(window.innerHeight, window.innerWidth) * SwipeDirection.Left
-            )
+            await swipe(dir)
+            isMovingOut = false
+
         } else {
             coords.stiffness = 0.2
             coords.damping = 0.8
-            coords.set({ x: 0, y: 0 })
         }
         borderWidth = "0px"
+        dir = undefined
+        coords.set({ x: 0, y: 0 })
     }
 </script>
 
@@ -112,38 +113,26 @@
                 border-style: solid;
                 border-width: {borderWidth};"
         >
-            <div
-                class="absolute top-[-20%] left-[50%] w-[160%]"
-                style="transform:
-                    translateX(-50%) rotate({$coords.x * -0.05}deg);
-                    overflow: hidden;"
-            >
-                <span
-                    class="relative block bg-black bg-opacity-80 text-md w-[100%] px-[25%] py-[5%] pt-[20%]"
-                    style="text-shadow: 0 2px 4px #000;
-                        text-align: right;
-                        transition: transform 0.2s;
-                        transform: translateY({dir === 1 && opacity ? "0%" : "-100%"});"
+            {#each actionIds as actionId, i}
+                <div
+                    class="absolute top-[-20%] left-[50%] w-[160%]"
+                    style="transform:
+                        translateX(-50%) rotate({$coords.x * -0.05}deg);
+                        transition: opacity 0.2s;
+                        opacity: {opacity};
+                        overflow: hidden;"
                 >
-                    {actions.right.description}
-                </span>
-            </div>
-            <div
-                class="absolute top-[-20%] left-[50%] w-[160%]"
-                style="transform:
-                    translateX(-50%) rotate({$coords.x * -0.05}deg);
-                    overflow: hidden;"
-            >
-                <span
-                    class="relative block bg-black bg-opacity-80 text-md w-[100%] px-[25%] py-[5%] pt-[20%]"
-                    style="text-shadow: 0 2px 4px #000;
-                        text-align: left;
-                        transition: transform 0.2s;
-                        transform: translateY({dir === -1 && opacity ? "0%" : "-100%"});"
-                >
-                    {actions.left.description}
-                </span>
-            </div>
+                    <span
+                        class="relative block bg-black bg-opacity-80 text-md w-[100%] px-[25%] py-[5%] pt-[20%]"
+                        style="text-shadow: 0 2px 4px #000;
+                            text-align: {actionId};
+                            transition: transform 0.2s;
+                            transform: translateY({dir === (i * 2 - 1) && opacity ? "0%" : "-100%"});"
+                    >
+                        {actions[actionId].description}
+                    </span>
+                </div>
+            {/each}
             
         </div>
     {/if}
