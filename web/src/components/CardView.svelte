@@ -6,7 +6,7 @@
 
 <script lang="ts">
     export let card: CardPresentation
-    export let onSwipe: (direction: SwipeDirection) => Promise<void>
+    export let onSwipe: (direction: SwipeDirection) => void
 
     const imageSize =
         'w-[60vmin] h-[60vmin] 2xs:w-[85vmin] 2xs:h-[85vmin] max-w-[400px] max-h-[400px] rounded-lg'

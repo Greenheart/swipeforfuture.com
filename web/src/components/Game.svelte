@@ -3,13 +3,12 @@
 
     import CardView from '$components/CardView.svelte'
     import Stats from '$components/Stats.svelte'
-    import { SwipeDirection, SWIPE_DELAY } from '$util/constants'
+    import { SwipeDirection } from '$util/constants'
     import type { GameState, Game as GameLogic, Stat } from '$game/Types'
 import { onMount } from 'svelte';
 </script>
 
 <script lang="ts">
-    // NOTE: Should these generic types use any or something more specific?
     export let game: GameLogic<any>
 
     const state = writable<GameState<any>>(game.initialState)
@@ -47,7 +46,7 @@ import { onMount } from 'svelte';
     )
 </script>
 
-<main class="text-white" on:contextmenu={noop} on:dragstart={noop} on:select={noop}>
+<main class="text-white" on:dragstart={noop} on:select={noop}>
     <Stats {stats} />
 
     {#if $state.card}

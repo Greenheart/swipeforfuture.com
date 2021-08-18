@@ -43,7 +43,7 @@ export interface Card<P> extends CardPresentation {
 export type CardsMap<P> = Record<Card<P>['id'], Card<P>>
 
 export type GameState<P> = {
-    card?: Card<P>
+    card: Card<P>
     params: P
 }
 
