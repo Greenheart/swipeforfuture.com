@@ -1,10 +1,10 @@
 import defaultScenario from './default'
-import coalMining from "./coal-mining-xlsx"
+// import coalMining from "./coal-mining-xlsx"
 
 import type { Scenario } from '../content-utils'
 const allScenarios = [
     defaultScenario,
-    coalMining,
+    // coalMining,
 ]
 
 const scenarios: Record<string, Scenario> = allScenarios.reduce(
