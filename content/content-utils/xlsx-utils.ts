@@ -87,7 +87,7 @@ export function toBoolean(value: any): boolean {
         typeof value === "boolean" ? (
             value
         ) : (
-            value === "true" ? (
+            value === "true" || value == 1 ? (
                 true
             ) : (
                 false
