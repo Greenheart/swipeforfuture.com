@@ -102,7 +102,7 @@
     on:panend={handlePanEnd}
     style="transform:
         translate3d({$coords.x}px, {$coords.y}px, 0)
-        rotate({$coords.x * 0.05}deg);
+        rotate3d(0, 0, 1, {$coords.x * 0.05}deg);
         {isMovingOut ? transition : ''}"
 >
     <!-- TODO: tweak styles for how the action descriptions are displayed -->
@@ -115,19 +115,19 @@
         >
             {#each actionIds as actionId, i}
                 <div
-                    class="absolute top-[-20%] left-[50%] w-[160%]"
+                    class="absolute top-[-50%] left-[50%] w-[200%]"
                     style="transform:
-                        translateX(-50%) rotate({$coords.x * -0.05}deg);
+                        translate3d(-50%, 0, 0) rotate3d(0, 0, 1, {$coords.x * -0.05}deg);
                         transition: opacity 0.2s;
-                        opacity: {opacity};
+                        opacity: {actionId === "left" ? (dir >= 0 ? 0 : opacity) : (dir > 0 ? opacity : 0)};
                         overflow: hidden;"
                 >
                     <span
-                        class="relative block bg-black bg-opacity-80 text-md w-[100%] px-[25%] py-[5%] pt-[20%]"
+                        class="relative block bg-black bg-opacity-80 text-md w-[100%] px-[30%] py-[5%] pt-[30%]"
                         style="text-shadow: 0 2px 4px #000;
-                            text-align: {actionId};
+                            text-align: {actionId === "left" ? "right" : "left"};
                             transition: transform 0.2s;
-                            transform: translateY({dir === (i * 2 - 1) && opacity ? "0%" : "-100%"});"
+                            transform: translate3d(0, {dir === (i * 2 - 1) && opacity ? "0%" : "-25%"}, 0);"
                     >
                         {actions[actionId].description}
                     </span>
