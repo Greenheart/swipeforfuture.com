@@ -5,6 +5,7 @@ services:
       - BROWSER=${BROWSER}
     ports:
       - "3000:3000"
+      - "24678:24678"
     build: .
     volumes:
       - ./src:/exec/src
