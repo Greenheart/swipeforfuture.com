@@ -10,6 +10,7 @@
     import type { CardPresentation } from '$game/Types'
 
     const transition = `transition: transform ${SWIPE_DELAY}ms ease-out`
+    const actionIds: ("left" | "right")[] = ["left", "right"]
 </script>
 
 <script lang="ts">
@@ -18,11 +19,9 @@
     export let imageSize: string
     let isMovingOut = false
     let dir: SwipeDirection | undefined
-    let opacity = 0
     let borderWidth = ""
-    let actionIds: ("left" | "right")[] = (
-        Object.keys(actions) as (keyof CardPresentation['actions'])[]
-    )
+    let currentAction: "left" | "right" | undefined = undefined
+    
 
     const coords = spring(
         { x: 0, y: 0 },
@@ -34,7 +33,6 @@
 
     function handlePanStart() {
         coords.stiffness = coords.damping = 1
-        borderWidth = "2px"
     }
 
     function handlePanMove(event: PanEvent) {
@@ -46,9 +44,9 @@
         dir = Math.sign(event.detail.totalDeltaX)
 
         if (Math.abs(event.detail.totalDeltaX) > 0.25 * SWIPE_THRESHOLD) {
-            opacity = 1
+            currentAction = (dir > 0) ? "left" : "right"
         } else {
-            opacity = 0
+            currentAction = undefined
         }
     }
 
@@ -69,7 +67,7 @@
     }
 
     async function handlePanEnd(event: PanEvent) {
-        opacity = 0
+        currentAction = undefined
 
         if (
             Math.abs(event.detail.totalDeltaX) > SWIPE_THRESHOLD
@@ -88,7 +86,6 @@
             coords.stiffness = 0.2
             coords.damping = 0.8
         }
-        borderWidth = "0px"
         dir = undefined
         coords.set({ x: 0, y: 0 })
     }
@@ -119,7 +116,7 @@
                     style="transform:
                         translate3d(-50%, 0, 0) rotate3d(0, 0, 1, {$coords.x * -0.05}deg);
                         transition: opacity 0.2s;
-                        opacity: {actionId === "left" ? (dir >= 0 ? 0 : opacity) : (dir > 0 ? opacity : 0)};
+                        opacity: {actionId === currentAction ? 1 : 0};
                         overflow: hidden;"
                 >
                     <span
@@ -127,7 +124,7 @@
                         style="text-shadow: 0 2px 4px #000;
                             text-align: {actionId === "left" ? "right" : "left"};
                             transition: transform 0.2s;
-                            transform: translate3d(0, {dir === (i * 2 - 1) && opacity ? "0%" : "-25%"}, 0);"
+                            transform: translate3d(0, {actionId === currentAction ? "0" : "-10px"}, 0);"
                     >
                         {actions[actionId].description}
                     </span>
