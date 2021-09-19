@@ -10,7 +10,7 @@
             Swipe for Future
         </h1>
         <h2 class="mt-8 font-thin text-sm xs:text-base sm:text-lg">🌍 Solving the climate crisis, one swipe at a time 🔥</h2>
-        <p class="mt-8">A community-driven game where players explore, create and share scenarios for a sustainable future.</p>
+        <p class="mt-8">A community-driven game where players explore, create and share stories for a sustainable future.</p>
     </header>
     
     <div class="grid place-items-center m-auto p-16 select-none">
@@ -27,7 +27,7 @@
     </div>
 
     <p class="my-8">
-        Welcome to co-create scenarios and develop the game!
+        Welcome to co-create stories and develop the game!
     </p>
 
     <Link external href="https://github.com/Greenheart/swipeforfuture.com" class="no-underline text-sky-500 hover:underline">
