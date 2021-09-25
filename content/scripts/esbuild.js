@@ -1,11 +1,9 @@
 import { execFile } from 'child_process'
 import esbuild from 'esbuild'
 import { emptyDir } from 'fs-extra'
-import _glob from 'glob'
+import glob from 'fast-glob'
 import { resolve } from 'path'
-import { promisify } from 'util'
 
-const glob = promisify(_glob)
 const outdir = './compiled'
 const compiledDir = resolve(outdir)
 
