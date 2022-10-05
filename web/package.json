@@ -2,7 +2,8 @@
     "name": "swipeforfuture",
     "version": "2.0.0",
     "scripts": {
-        "dev": "svelte-kit dev --host",
+        "dev": "svelte-kit dev",
+        "dev:host": "svelte-kit dev --host",
         "build": "node scripts/prebuild.js && svelte-kit build",
         "preview": "svelte-kit preview",
         "check": "svelte-check --tsconfig ./tsconfig.json",
