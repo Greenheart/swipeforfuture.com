@@ -1,6 +1,6 @@
 import { stateExtensionsFromData } from './StateExtensions'
 import type { WorldState, WorldStateModifier } from '$shared/ContentTypes'
-import type { Params, GameState, StateExtension } from '.'
+import type { Params, GameState, StateExtension, Card } from '.'
 
 export type WorldStateExtension = (worldState: WorldState) => WorldState
 
@@ -12,6 +12,7 @@ function worldStateExtensionFromStateExtension(
             params: {
                 vars: worldState.state,
             },
+            card: undefined as unknown as Card<Params>,
         }
         const newState = extension(state)
 

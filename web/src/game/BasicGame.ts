@@ -34,7 +34,7 @@ export class BasicGame<P> implements Game<P> {
         return this.applyAction(
             {
                 params: this._initialParams,
-            },
+            } as unknown as GameState<P>,
             (s) => s,
         )
     }
@@ -43,7 +43,7 @@ export class BasicGame<P> implements Game<P> {
         const nextState = this._applyModifiers(
             {
                 ...state,
-                card: undefined,
+                card: undefined as unknown as Card<P>,
             },
             [action, ...this._tickModifiers],
         )
