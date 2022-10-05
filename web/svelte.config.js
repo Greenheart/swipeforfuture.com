@@ -10,6 +10,6 @@ export default {
     ],
     kit: {
         adapter: adapter(),
-        trailingSlash: 'always',
+        trailingSlash: 'never',
     },
 }
