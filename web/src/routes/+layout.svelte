@@ -1,7 +1,3 @@
-<script context="module">
-    import '../global.css'
-</script>
-
 <svelte:head>
     <meta
         name="description"
