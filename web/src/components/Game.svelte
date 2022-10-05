@@ -5,7 +5,7 @@
     import Stats from '$components/Stats.svelte'
     import { SwipeDirection } from '$util/constants'
     import type { GameState, Game as GameLogic, Stat } from '$game/Types'
-import { onMount } from 'svelte';
+    import { onMount } from 'svelte'
 </script>
 
 <script lang="ts">
@@ -28,7 +28,7 @@ import { onMount } from 'svelte';
             direction === SwipeDirection.Left
                 ? $state.card.actions.left.modifier
                 : $state.card.actions.right.modifier
-        
+
         $state = game.applyAction($state, action)
     }
 
@@ -38,12 +38,10 @@ import { onMount } from 'svelte';
         return false
     }
 
-    onMount(
-        () => {
-            document.documentElement.classList.add('in-game')
-            return () => document.documentElement.classList.remove('in-game')
-        }
-    )
+    onMount(() => {
+        document.documentElement.classList.add('in-game')
+        return () => document.documentElement.classList.remove('in-game')
+    })
 </script>
 
 <main class="text-white" on:dragstart={noop} on:select={noop}>
