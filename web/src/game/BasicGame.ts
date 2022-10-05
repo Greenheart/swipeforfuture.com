@@ -39,6 +39,10 @@ export class BasicGame<P> implements Game<P> {
         )
     }
 
+    get preloadAssets() {
+        return this._cards.map((c) => c.image)
+    }
+
     applyAction(state: GameState<P>, action: StateModifier<P>): GameState<P> {
         const nextState = this._applyModifiers(
             {

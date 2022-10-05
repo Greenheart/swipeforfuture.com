@@ -44,6 +44,12 @@
     })
 </script>
 
+<svelte:head>
+    {#each game.preloadAssets as href}
+        <link rel="preload" as="image" {href} />
+    {/each}
+</svelte:head>
+
 <main class="text-white" on:dragstart={noop} on:select={noop}>
     <Stats {stats} />
 

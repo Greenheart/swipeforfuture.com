@@ -44,8 +44,6 @@ export function load(
     const cards = cardsFromData(cardsMap, defaultParams)
     console.log(`Loaded cards:`, cards)
 
-    // Idea: Preload all images by adding them as links to <head>
-
     const parameterCaps = parameterCapsFromStats(gameWorld.stats)
     const stats = statsFromData(gameWorld.stats)
     const stateExtensions = stateExtensionsFromData(

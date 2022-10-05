@@ -12,13 +12,14 @@
         'w-[60vmin] h-[60vmin] 2xs:w-[85vmin] 2xs:h-[85vmin] max-w-[400px] max-h-[400px] rounded-lg'
 </script>
 
-<!-- TODO: Find a way to preload card images when the scenario starts, to avoid interrupting the player experience -->
-<!-- TODO: Maybe preload manually using JS and caching using a service worker. -->
-
 <div
     class="flex flex-col items-center justify-center text-white 2xs:text-lg xs:text-xl font-light max-w-prose m-auto card"
 >
-    <p class="text-center xs:py-4 h-36 2xs:h-44 xs:h-56 flex place-items-center px-4 xs:px-8">{card.text}</p>
+    <p
+        class="text-center xs:py-4 h-36 2xs:h-44 xs:h-56 flex place-items-center px-4 xs:px-8"
+    >
+        {card.text}
+    </p>
     <div class="{imageSize} relative">
         <div class="absolute z-0 {imageSize} top-0 left-0 bg-gray-900" />
         <Card {onSwipe} actions={card.actions} {imageSize}>

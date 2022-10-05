@@ -51,4 +51,8 @@ export interface Game<P> {
     initialState: GameState<P>
     applyAction(prevState: GameState<P>, action: StateModifier<P>): GameState<P>
     stats: Stat<P>[]
+    /**
+     * List of URLs to preload, for example images and other static assets.
+     */
+    preloadAssets: string[]
 }
