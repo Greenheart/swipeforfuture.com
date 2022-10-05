@@ -48,12 +48,13 @@ const ids = args.length > 2 ? args : Object.keys(scenarios)
 const outputDir = resolve(
     mode === 'build' ? '../web/static/scenarios' : '../web/static/dev-only',
 )
+const minify = mode === 'build'
 
 console.log('Building:', ids)
 
 Promise.all([
-    buildScenarios(ids, outputDir, mode === 'build'),
-    buildScenarioManifest(scenarios, outputDir, mode === 'build'),
+    buildScenarios(ids, outputDir, minify),
+    buildScenarioManifest(scenarios, outputDir, minify),
 ]).catch((reason: string) => {
     console.error('❌ Build error: ', reason)
 })
