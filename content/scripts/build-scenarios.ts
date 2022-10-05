@@ -7,6 +7,7 @@ import type { Scenario, ScenarioManifest } from '../content-utils'
 async function buildScenarioManifest(
     scenarios: { [id: string]: Scenario },
     outputDir: string,
+    minify: boolean,
 ) {
     const manifest: ScenarioManifest = {
         buildDate: new Date().toISOString(),
@@ -17,17 +18,24 @@ async function buildScenarioManifest(
 
     return outputFile(
         resolve(outputDir, 'scenarios.json'),
-        JSON.stringify(manifest, null, 4),
+        JSON.stringify(manifest, null, minify ? 0 : 2),
     )
 }
 
-export async function buildScenarios(ids: string[], outputDir: string) {
+export async function buildScenarios(
+    ids: string[],
+    outputDir: string,
+    minify: boolean,
+) {
     return Promise.all(
         Object.values(scenarios)
             .filter((scenario) => ids.includes(scenario.id))
             .map(async (scenario) => {
                 const outputPath = resolve(outputDir, `${scenario.id}.json`)
-                await outputFile(outputPath, JSON.stringify(scenario, undefined, "  "))
+                await outputFile(
+                    outputPath,
+                    JSON.stringify(scenario, null, minify ? 0 : 2),
+                )
 
                 console.log(`✅ Built "${scenario.id}"   -->   ${outputPath}`)
             }),
@@ -36,13 +44,16 @@ export async function buildScenarios(ids: string[], outputDir: string) {
 
 const [mode, ...args] = process.argv.slice(2)
 const ids = args.length > 2 ? args : Object.keys(scenarios)
-const outputDir = resolve(mode === 'build' ? 'dist' : '../web/static/dev-only')
+// IDEA: Maybe always build to the same folder to simplify?
+const outputDir = resolve(
+    mode === 'build' ? '../web/static/scenarios' : '../web/static/dev-only',
+)
 
 console.log('Building:', ids)
 
 Promise.all([
-    buildScenarios(ids, outputDir),
-    buildScenarioManifest(scenarios, outputDir),
+    buildScenarios(ids, outputDir, mode === 'build'),
+    buildScenarioManifest(scenarios, outputDir, mode === 'build'),
 ]).catch((reason: string) => {
     console.error('❌ Build error: ', reason)
 })
