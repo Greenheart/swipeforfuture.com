@@ -7,6 +7,5 @@ html {
 }
 
 .in-game {
-    @apply select-none overflow-hidden;
-    touch-action: none;
+    @apply select-none overflow-hidden touch-none;
 }
