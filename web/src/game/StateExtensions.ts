@@ -79,7 +79,6 @@ export function createReducer(
  * Creates a configured debug log extension that logs either the entire world state
  * or a number of specified state parameters.
  *
- * @param worldState The world state on which to operate
  * @param stateIds Optional ids of the states to log
  * @returns A configured debug world state extension that logs state to tables
  */
