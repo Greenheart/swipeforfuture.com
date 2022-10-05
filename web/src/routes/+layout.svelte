@@ -9,4 +9,6 @@
     />
 </svelte:head>
 
-<slot />
+<div data-sveltekit-prefetch>
+    <slot />
+</div>

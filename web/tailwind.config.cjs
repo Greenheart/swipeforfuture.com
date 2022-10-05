@@ -2,8 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-    mode: 'jit',
-    purge: ['./src/**/*.{html,js,svelte,ts}'],
+    content: ['./src/**/*.{html,js,svelte,ts}'],
     theme: {
         screens: {
             '2xs': '400px',
@@ -14,7 +13,7 @@ module.exports = {
             red: colors.red,
             green: colors.green,
             sky: colors.sky,
-            gray: colors.warmGray,
+            gray: colors.stone,
             white: colors.white,
             black: colors.black,
         },

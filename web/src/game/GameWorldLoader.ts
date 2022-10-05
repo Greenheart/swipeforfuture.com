@@ -13,7 +13,8 @@ import type {
     StateModifier,
     CardsMap,
 } from './Types'
-import { Params, ParamQuery, hasMatchingParamQuery } from './Params'
+import { hasMatchingParamQuery } from './Params'
+import type { Params, ParamQuery } from './Params'
 import { BasicGame } from './BasicGame'
 import { stateExtensionsFromData, createParameterCap } from './StateExtensions'
 
@@ -42,6 +43,8 @@ export function load(
 
     const cards = cardsFromData(cardsMap, defaultParams)
     console.log(`Loaded cards:`, cards)
+
+    // Idea: Preload all images by adding them as links to <head>
 
     const parameterCaps = parameterCapsFromStats(gameWorld.stats)
     const stats = statsFromData(gameWorld.stats)
@@ -198,7 +201,7 @@ function actionFromData(
  */
 function worldQueryToParamQuery(query: WorldQuery): ParamQuery {
     return {
-        vars: query.state
+        vars: query.state,
     }
 }
 
