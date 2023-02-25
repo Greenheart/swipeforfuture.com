@@ -1,5 +1,8 @@
 import { sveltekit } from '@sveltejs/kit/vite'
 import { resolve } from 'path'
+import { setDefaultResultOrder } from 'dns'
+
+setDefaultResultOrder('verbatim')
 
 /** @type {import('vite').UserConfig} */
 const config = {
