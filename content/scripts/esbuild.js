@@ -38,37 +38,61 @@ function exportScenarios(mode, ids) {
     )
 }
 
-esbuild
-    .build({
-        entryPoints: [
-            ...scenarioPaths,
-            ...(await glob('./content-utils/*.ts')),
-            './scripts/build-scenarios.ts',
-            '../shared/ContentTypes.ts',
-        ],
-        outdir,
-        bundle: false,
-        sourcemap: false,
-        minify: false,
-        splitting: false,
-        format: 'esm',
-        target: ['esnext'],
-        platform: 'node',
-        watch:
-            mode === 'watch'
-                ? {
-                      onRebuild(error) {
-                          if (error) console.error('watch build failed:', error)
-                          else {
-                              // Rebuild Scenarios when changes are detected
-                              exportScenarios(mode, ids)
-                          }
+// @ts-expect-error Unknown error type
+const stopOnError = (e) => {
+    console.log(e)
+    process.exit(1)
+}
+
+// @ts-expect-error
+const buildContent = ({ errors, warnings }) => {
+    if (errors) {
+        for (const error of errors) {
+            console.error('watch build failed:', error)
+        }
+    }
+    if (warnings) {
+        for (const warning of warnings) {
+            console.log('watch build failed:', warning)
+        }
+    }
+    exportScenarios(mode, ids)
+}
+
+const triggerBuild = () => context.rebuild().then(buildContent)
+
+const context = await esbuild.context({
+    entryPoints: [
+        ...scenarioPaths,
+        ...(await glob('./content-utils/*.ts')),
+        './scripts/build-scenarios.ts',
+        '../shared/ContentTypes.ts',
+    ],
+    plugins:
+        mode === 'watch'
+            ? [
+                  {
+                      name: 'rebuildContent',
+                      setup: (build) => {
+                          build.onEnd(buildContent)
                       },
-                  }
-                : undefined,
-    })
-    .then(() => exportScenarios(mode, ids))
-    .catch((e) => {
-        console.error(e)
-        process.exit(1)
-    })
+                  },
+              ]
+            : undefined,
+    outdir,
+    bundle: false,
+    sourcemap: false,
+    minify: false,
+    splitting: false,
+    format: 'esm',
+    target: ['esnext'],
+    platform: 'node',
+})
+
+if (mode === 'watch') {
+    console.log('start watching')
+    await context.watch()
+} else {
+    await triggerBuild()
+    await context.dispose()
+}
