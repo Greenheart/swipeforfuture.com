@@ -44,7 +44,7 @@
         dir = Math.sign(event.detail.totalDeltaX)
 
         if (Math.abs(event.detail.totalDeltaX) > 0.25 * SWIPE_THRESHOLD) {
-            currentAction = (dir > 0) ? "left" : "right"
+            currentAction = (dir < 0) ? "left" : "right"
         } else {
             currentAction = undefined
         }
