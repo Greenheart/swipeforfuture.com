@@ -10,16 +10,17 @@
         <meta name="theme-color" content="#66aa55" />
         <link rel="manifest" href="/manifest.json" />
         <meta http-equiv="content-security-policy" content="">
-		<link href="./_app/immutable/assets/_layout-48595f1c.css" rel="stylesheet">
-		<link href="./_app/immutable/assets/_page-9d5c8dc2.css" rel="stylesheet">
-		<link rel="modulepreload" href="./_app/immutable/start-a24529f5.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/index-f00670b2.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/singletons-5ed77fae.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/index-cde342c9.js">
-		<link rel="modulepreload" href="./_app/immutable/components/pages/_layout.svelte-1f7db567.js">
-		<link rel="modulepreload" href="./_app/immutable/modules/pages/_layout.ts-e251ea7f.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/_layout-f324016d.js">
-		<link rel="modulepreload" href="./_app/immutable/components/pages/play/_page.svelte-5b8554ec.js"><!-- HEAD_svelte-wh0ncn_START --><meta name="description" content="Solving the climate crisis, one swipe at a time 🌍🔥"><!-- HEAD_svelte-wh0ncn_END -->
+		<link href="./_app/immutable/assets/_layout.449496a2.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/_page.9e8a7248.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.d1df3add.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.12160b6a.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.39a4275b.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.5310207a.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.fc667325.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/_layout.svelte.ff877f65.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/_layout.ts.4ea76a06.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/_layout.8ca444c4.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/play-page.svelte.70d49654.js"><!-- HEAD_svelte-wh0ncn_START --><meta name="description" content="Solving the climate crisis, one swipe at a time 🌍🔥"><!-- HEAD_svelte-wh0ncn_END -->
     </head>
     <body>
         <div id="svelte">
@@ -31,25 +32,30 @@
     </p></div>
 
 
-		<script type="module" data-sveltekit-hydrate="19jmyeh">
-			import { start } from "./_app/immutable/start-a24529f5.js";
+			
+			<script>
+				{
+					__sveltekit_1x7d9i6 = {
+						env: {},
+						assets: new URL(".", location.href).pathname.replace(/^\/$/, ''),
+						element: document.currentScript.parentElement
+					};
 
-			start({
-				env: {},
-				hydrate: {
-					status: 200,
-					error: null,
-					node_ids: [0, 3],
-					params: {},
-					route: {"id":"/play"},
-					data: [null,null],
-					form: null
-				},
-				paths: {"base":"","assets":""},
-				target: document.querySelector('[data-sveltekit-hydrate="19jmyeh"]').parentNode,
-				trailing_slash: "never"
-			});
-		</script>
-	</div>
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.d1df3add.js"),
+						import("./_app/immutable/entry/app.fc667325.js")
+					]).then(([kit, app]) => {
+						kit.start(app, __sveltekit_1x7d9i6.element, {
+							node_ids: [0, 3],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
     </body>
 </html>
