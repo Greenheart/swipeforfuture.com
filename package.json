@@ -1,0 +1,7 @@
+{
+    "name": "swipeforfuture",
+    "private": true,
+    "scripts": {
+        "dev": "pnpm --filter \"./(web|content)\" --parallel dev"
+    }
+}
