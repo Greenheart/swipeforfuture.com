@@ -1,5 +1,5 @@
 {
-    "name": "swipeforfuture-content",
+    "name": "content",
     "version": "2.0.0",
     "description": "Utilities to work with content for swipeforfuture",
     "scripts": {
