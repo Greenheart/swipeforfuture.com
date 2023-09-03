@@ -25,7 +25,6 @@ function exportScenarios(mode, ids) {
     execFile(
         'node',
         [
-            '--experimental-specifier-resolution=node',
             'compiled/content/scripts/build-scenarios.js',
             mode,
             ...ids,

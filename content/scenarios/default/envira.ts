@@ -7,10 +7,10 @@ import {
     action,
     addModifier,
     CardPriority,
-} from '../../content-utils'
-import { ENVIRONMENT, PEOPLE, SECURITY, MONEY } from './stats'
-import VARS from './vars'
-import image from './images'
+} from '../../content-utils/index.js'
+import { ENVIRONMENT, PEOPLE, SECURITY, MONEY } from './stats.js'
+import VARS from './vars.js'
+import image from './images.js'
 
 export const enviraTemplate = cardTemplate({
     image: image('envira'),

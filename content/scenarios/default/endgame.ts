@@ -5,9 +5,9 @@ import {
     replaceModifier,
     action,
     CardPriority,
-} from '../../content-utils'
-import { ENVIRONMENT, PEOPLE, MONEY, POPULARITY, SECURITY } from './stats'
-import image from './images'
+} from '../../content-utils/index.js'
+import { ENVIRONMENT, PEOPLE, MONEY, POPULARITY, SECURITY } from './stats.js'
+import image from './images.js'
 
 export const endGameCards: Card[] = [
     {
@@ -18,7 +18,7 @@ export const endGameCards: Card[] = [
         text: "Wow, that's NOT how you do it! Please find a new planet to destroy...",
         weight: 1000,
         actions: {
-            left: action(replaceModifier({}), "Sorry, not sorry!"),
+            left: action(replaceModifier({}), 'Sorry, not sorry!'),
             right: action(replaceModifier({}), "Hah, we'll find another one!"),
         },
         isAvailableWhen: [

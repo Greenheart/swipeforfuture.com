@@ -5,7 +5,7 @@ import {
     WorldQuery,
     addModifier,
     action,
-} from '.'
+} from './index.js'
 
 export type BaseCard = Omit<Card, 'isAvailableWhen' | 'priority'>
 
@@ -81,7 +81,7 @@ export function cardLogic(
 
 /**
  * Combine multiple WorldQueries into a single one.
- * 
+ *
  * @param queries WorldQueries to combine
  * @returns A single WorldQuery
  */

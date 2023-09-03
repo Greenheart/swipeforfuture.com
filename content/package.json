@@ -25,5 +25,11 @@
         "node": ">= 16"
     },
     "engineStrict": true,
-    "private": true
+    "private": true,
+    "prettier": {
+        "semi": false,
+        "trailingComma": "all",
+        "singleQuote": true,
+        "tabWidth": 4
+    }
 }

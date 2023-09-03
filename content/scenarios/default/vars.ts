@@ -1,4 +1,4 @@
-import { propRef } from '../../content-utils'
+import { propRef } from '../../content-utils/index.js'
 
 /**
  * Global vars used by multiple parts of the scenario.

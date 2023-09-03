@@ -5,7 +5,7 @@ import {
     toStringArray,
     toBoolean,
     toLowerCaseString,
-} from "./xlsx-utils"
+} from './xlsx-utils'
 import {
     Card,
     BaseCard,
@@ -13,23 +13,23 @@ import {
     createIdContext,
     GameWorldModifier,
     WorldQuery,
-} from "."
-import { createLinkContext, Flag } from "./utils"
+} from './index.js'
+import { createLinkContext, Flag } from './utils.js'
 
-const { linkLogic } = createLinkContext(createIdContext("from-data"))
+const { linkLogic } = createLinkContext(createIdContext('from-data'))
 
 type CardDescription = {
-    "Card Name": string
-    "Card Type": string
+    'Card Name': string
+    'Card Type': string
     Character: string
-    "Text of card": string
-    "Swipe Left Text": string
-    "Swipe Right Text": string
-    "Image Desc": string
-    "Left Effect": string[]
-    "Right Effect": string[]
-    "Left Step"?: string
-    "Right Step"?: string
+    'Text of card': string
+    'Swipe Left Text': string
+    'Swipe Right Text': string
+    'Image Desc': string
+    'Left Effect': string[]
+    'Right Effect': string[]
+    'Left Step'?: string
+    'Right Step'?: string
     Location: string
     Title: string
     When: string[]
@@ -60,11 +60,11 @@ export function loadCharacters(data: any) {
     return loadFile<CharacterDescription>(
         data,
         {
-            "Name": toString(""),
-            "Source": toString(""),
+            Name: toString(''),
+            Source: toString(''),
         },
         {
-            sheetIds: ["_characters"],
+            sheetIds: ['_characters'],
         },
     )
 }
@@ -73,14 +73,14 @@ export function loadParams(data: any) {
     return loadFile<StateDescription>(
         data,
         {
-            "Name": toLowerCaseString(""),
-            "Value": toNumber,
-            "Icon": toString(undefined),
-            "IconSize": toNumber,
-            "Debug": toBoolean,
+            Name: toLowerCaseString(''),
+            Value: toNumber,
+            Icon: toString(undefined),
+            IconSize: toNumber,
+            Debug: toBoolean,
         },
         {
-            sheetIds: ["_params"],
+            sheetIds: ['_params'],
         },
     )
 }
@@ -89,43 +89,43 @@ export function loadFlags(data: any) {
     return loadFile<FlagDescription>(
         data,
         {
-            "Name": toLowerCaseString(""),
-            "Value": toBoolean,
-            "Debug": toBoolean,
+            Name: toLowerCaseString(''),
+            Value: toBoolean,
+            Debug: toBoolean,
         },
         {
-            sheetIds: ["_flags"],
+            sheetIds: ['_flags'],
         },
     )
 }
 
 export function loadStandardFile(
     data: any,
-    sheetIds?: string[]
+    sheetIds?: string[],
 ): CardDescription[] {
     return loadFile<CardDescription>(
         data,
         {
-            "Card Name": toLowerCaseString(""),
-            "Card Type": toString(""),
-            Character: toString(""),
-            "Text of card": toString(""),
-            "Swipe Left Text": toString(""),
-            "Swipe Right Text": toString(""),
-            "Image Desc": toString(""),
-            "Left Effect": toStringArray(";", toLowerCaseString("")),
-            "Right Effect": toStringArray(";", toLowerCaseString("")),
-            "Left Step": toLowerCaseString(undefined),
-            "Right Step": toLowerCaseString(undefined),
-            Location: toString(""),
-            Title: toString(""),
-            When: toStringArray(";", toLowerCaseString("")),
-            Require: toStringArray(";", toLowerCaseString("")),
+            'Card Name': toLowerCaseString(''),
+            'Card Type': toString(''),
+            Character: toString(''),
+            'Text of card': toString(''),
+            'Swipe Left Text': toString(''),
+            'Swipe Right Text': toString(''),
+            'Image Desc': toString(''),
+            'Left Effect': toStringArray(';', toLowerCaseString('')),
+            'Right Effect': toStringArray(';', toLowerCaseString('')),
+            'Left Step': toLowerCaseString(undefined),
+            'Right Step': toLowerCaseString(undefined),
+            Location: toString(''),
+            Title: toString(''),
+            When: toStringArray(';', toLowerCaseString('')),
+            Require: toStringArray(';', toLowerCaseString('')),
             Weight: toNumber,
         },
         {
             sheetIds,
-            sheetFilter: (key) => key[0] !== "_",
+            sheetFilter: (key) => key[0] !== '_',
         },
     )
 }
@@ -145,18 +145,18 @@ function parseGameWorldModifiers(data: string[]): GameWorldModifier[] {
             if (match) {
                 const separator = match[2]
                 const value =
-                    match[3] === "true"
+                    match[3] === 'true'
                         ? true
-                        : match[3] === "false"
+                        : match[3] === 'false'
                         ? false
-                        : (separator === "-" ? -1 : 1) * parseFloat(match[3])
-                const type: "add" | "set" | "replace" =
+                        : (separator === '-' ? -1 : 1) * parseFloat(match[3])
+                const type: 'add' | 'set' | 'replace' =
                     {
-                        "+": "add" as "add",
-                        "-": "add" as "add",
-                        "=": "set" as "set",
-                        "==": "replace" as "replace",
-                    }[separator] || "set"
+                        '+': 'add' as 'add',
+                        '-': 'add' as 'add',
+                        '=': 'set' as 'set',
+                        '==': 'replace' as 'replace',
+                    }[separator] || 'set'
                 acc[type].push({
                     id: match[1],
                     value: value,
@@ -174,24 +174,24 @@ function parseGameWorldModifiers(data: string[]): GameWorldModifier[] {
     }
 
     const mods: GameWorldModifier[] = [
-        "add" as "add",
-        "set" as "set",
-        "replace" as "replace",
+        'add' as 'add',
+        'set' as 'set',
+        'replace' as 'replace',
     ]
         .filter((type) => operations[type].length > 0)
         .map((type) => {
             const ops = operations[type]
             return {
                 type: type,
-                state: ops
-                    .reduce<{ [x: string]: number }>((acc, entry) => {
-                        acc[entry.id] = (
-                            typeof entry.value === "boolean"
-                            ? (entry.value ? Flag.True : Flag.False)
+                state: ops.reduce<{ [x: string]: number }>((acc, entry) => {
+                    acc[entry.id] =
+                        typeof entry.value === 'boolean'
+                            ? entry.value
+                                ? Flag.True
+                                : Flag.False
                             : entry.value
-                        )
-                        return acc
-                    }, {}),
+                    return acc
+                }, {}),
             }
         })
     return mods
@@ -201,7 +201,7 @@ function parseWorldQuery(data: string): WorldQuery | undefined {
     type WQState = {
         [x: string]: [number, number] | number
     }
-    const dataEntries = data.split(",").map((e) => e.trim())
+    const dataEntries = data.split(',').map((e) => e.trim())
     const entries = dataEntries
         .map<WQState | undefined>((e) => {
             const match = e.match(/(\w+)\s*=\s*(\d+)\s*-\s*(\d+)/)
@@ -212,7 +212,7 @@ function parseWorldQuery(data: string): WorldQuery | undefined {
             } else {
                 const match = e.match(/(\w+)\s*=\s*(true|false)/)
                 if (match) {
-                    const value = match[2] === "true" ? Flag.True : Flag.False
+                    const value = match[2] === 'true' ? Flag.True : Flag.False
                     return {
                         [match[1]]: [value, value],
                     }
@@ -239,16 +239,16 @@ function parseWorldQuery(data: string): WorldQuery | undefined {
 
 export function toCardData(
     data: CardDescription[],
-    getImage: (id: string, variant?: string) => string
+    getImage: (id: string, variant?: string) => string,
 ): Card[] {
     const cardMap = data.reduce((acc, entry) => {
         const card = cardContent(
-            entry["Card Name"],
-            getImage(entry["Character"]),
-            entry["Title"],
-            entry["Text of card"],
-            entry["Location"],
-            [entry["Swipe Left Text"], entry["Swipe Right Text"]],
+            entry['Card Name'],
+            getImage(entry['Character']),
+            entry['Title'],
+            entry['Text of card'],
+            entry['Location'],
+            [entry['Swipe Left Text'], entry['Swipe Right Text']],
         )
         acc.set(card, entry)
         return acc
@@ -256,36 +256,36 @@ export function toCardData(
 
     const cardIdMap = Array.from(cardMap.entries()).reduce(
         (acc, [card, entry]) => {
-            acc.set(entry["Card Name"], card)
+            acc.set(entry['Card Name'], card)
             return acc
         },
         new Map<string, BaseCard>(),
     )
 
     const cards = Array.from(cardMap.entries()).map(([card, entry]) => {
-        const left = entry["Left Step"]
-            ? cardIdMap.get(entry["Left Step"])
+        const left = entry['Left Step']
+            ? cardIdMap.get(entry['Left Step'])
             : undefined
-        const right = entry["Right Step"]
-            ? cardIdMap.get(entry["Right Step"])
+        const right = entry['Right Step']
+            ? cardIdMap.get(entry['Right Step'])
             : undefined
         return linkLogic(
             card,
-            entry["When"]
+            entry['When']
                 .map((q) => parseWorldQuery(q))
                 .filter((q): q is WorldQuery => q !== undefined),
             [
                 [
-                    ...parseGameWorldModifiers(entry["Left Effect"]),
+                    ...parseGameWorldModifiers(entry['Left Effect']),
                     { next: left },
                 ],
                 [
-                    ...parseGameWorldModifiers(entry["Right Effect"]),
+                    ...parseGameWorldModifiers(entry['Right Effect']),
                     { next: right },
                 ],
             ],
             entry.Weight,
-            entry["Require"]
+            entry['Require']
                 .map((q) => parseWorldQuery(q))
                 .filter((q): q is WorldQuery => q !== undefined),
         )

@@ -7,7 +7,7 @@ import {
     CardActionData,
     WorldQuery,
     CardPriority,
-} from '.'
+} from './index.js'
 
 /**
  * This type defines the shape of Scenarios created with this Content API
@@ -294,7 +294,7 @@ export function createIdContext(namespace?: string) {
     return (obj: unknown) => {
         const id =
             map.get(obj) ||
-            [namespace, index++].filter((v) => v !== undefined).join(":")
+            [namespace, index++].filter((v) => v !== undefined).join(':')
         map.set(obj, id)
         return id
     }

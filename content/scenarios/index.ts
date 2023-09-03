@@ -1,7 +1,7 @@
-import defaultScenario from './default'
+import defaultScenario from './default/index.js'
 // import coalMining from "./coal-mining-xlsx"
 
-import type { Scenario } from '../content-utils'
+import type { Scenario } from '../content-utils/index.js'
 const allScenarios = [
     defaultScenario,
     // coalMining,
