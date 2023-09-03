@@ -7,10 +7,10 @@ import {
     action,
     addModifier,
     CardPriority,
-} from '../../content-utils'
-import image from './images'
-import { POPULARITY, MONEY, ENVIRONMENT, PEOPLE } from './stats'
-import VARS from './vars'
+} from '../../content-utils/index.js'
+import image from './images.js'
+import { POPULARITY, MONEY, ENVIRONMENT, PEOPLE } from './stats.js'
+import VARS from './vars.js'
 
 export const infranTemplate = cardTemplate({
     image: image('infran'),

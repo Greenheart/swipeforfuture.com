@@ -7,9 +7,9 @@ import {
     cardRef,
     BaseCard,
     showOnlyOnce,
-} from '../../content-utils'
-import image from './images'
-import { ENVIRONMENT } from './stats'
+} from '../../content-utils/index.js'
+import image from './images.js'
+import { ENVIRONMENT } from './stats.js'
 
 const alwaysState: WorldQuery['state'] = { [ENVIRONMENT]: [0, 100] }
 function mockCard(card: BaseCard) {

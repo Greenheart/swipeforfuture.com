@@ -5,46 +5,40 @@ import {
     imageEntry,
     Scenario,
     combineDefaultEntries,
-} from "."
+} from './index.js'
 import {
     loadCharacters,
     loadStandardFile,
     loadParams,
     loadFlags,
     toCardData,
-} from "./from-data"
-import {
-    Flag
-} from "./utils"
+} from './from-data.js'
+import { Flag } from './utils.js'
 
-export function parseScenario(
-    data: any,
-    scenarioId: string = "xlsx-scenario"
-) {
+export function parseScenario(data: any, scenarioId: string = 'xlsx-scenario') {
     const rawData = loadStandardFile(data)
     const characterData = loadCharacters(data)
     const paramData = loadParams(data)
     const flagData = loadFlags(data)
-    const stats = paramData.filter(param => param.Icon).map(
-        param => stat(
-            param.Name,
-            0,
-            100,
-            param.Icon!,
-            param.IconSize === undefined ? "100%" : param.IconSize + "%"
+    const stats = paramData
+        .filter((param) => param.Icon)
+        .map((param) =>
+            stat(
+                param.Name,
+                0,
+                100,
+                param.Icon!,
+                param.IconSize === undefined ? '100%' : param.IconSize + '%',
+            ),
         )
-    )
     const defaultStates = [
-        ...paramData.map(param => defaultState(param.Name, param.Value)),
-        ...flagData.map(flag => defaultState(
-            flag.Name,
-            flag.Value ? Flag.True : Flag.False
-        ))
+        ...paramData.map((param) => defaultState(param.Name, param.Value)),
+        ...flagData.map((flag) =>
+            defaultState(flag.Name, flag.Value ? Flag.True : Flag.False),
+        ),
     ]
     const { image } = imageDB(
-        characterData.map(char => (
-            imageEntry(char.Name, char.Source)
-        ))
+        characterData.map((char) => imageEntry(char.Name, char.Source)),
     )
     const cards = toCardData(rawData, image)
     const scenario: Scenario = {
@@ -56,16 +50,16 @@ export function parseScenario(
         },
         worldStateModifiers: [
             {
-                type: "round",
+                type: 'round',
             },
             {
-                type: "cycle",
-                id: "daycycle",
+                type: 'cycle',
+                id: 'daycycle',
                 length: 4,
             },
             {
-                type: "debug",
-                stateIds: paramData.filter(p => p.Debug).map(p => p.Name)
+                type: 'debug',
+                stateIds: paramData.filter((p) => p.Debug).map((p) => p.Name),
             },
         ],
     }

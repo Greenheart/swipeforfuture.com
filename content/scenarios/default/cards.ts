@@ -6,10 +6,10 @@ import {
     cardRef,
     CardPriority,
     showOnlyOnce,
-} from '../../content-utils'
-import { ENVIRONMENT, MONEY, PEOPLE, SECURITY, POPULARITY } from './stats'
-import VARS from './vars'
-import image from './images'
+} from '../../content-utils/index.js'
+import { ENVIRONMENT, MONEY, PEOPLE, SECURITY, POPULARITY } from './stats.js'
+import VARS from './vars.js'
+import image from './images.js'
 
 export const otherCards: Card[] = [
     showOnlyOnce({

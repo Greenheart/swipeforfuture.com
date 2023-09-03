@@ -1,4 +1,4 @@
-import { Card } from '../../content-utils'
+import { Card } from '../../content-utils/index.js'
 
 const cards: Card[] = []
 

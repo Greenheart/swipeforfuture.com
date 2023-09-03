@@ -3,7 +3,7 @@ import {
     imageEntry,
     unsplashImage,
     pexelsImage,
-} from '../../content-utils'
+} from '../../content-utils/index.js'
 
 const { image } = imageDB([
     imageEntry('envira', unsplashImage('1546541612-82d19b258cd5')),

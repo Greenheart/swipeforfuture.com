@@ -1,4 +1,4 @@
-import { stat } from '../../content-utils'
+import { stat } from '../../content-utils/index.js'
 
 export const STATS = {
     environment: stat('Environment', 0, 100, 'GiWheat', '70%'),

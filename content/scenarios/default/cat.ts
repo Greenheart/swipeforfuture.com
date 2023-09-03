@@ -6,9 +6,9 @@ import {
     addModifier,
     action,
     cardRef,
-} from '../../content-utils'
-import { statIds } from './stats'
-import image from './images'
+} from '../../content-utils/index.js'
+import { statIds } from './stats.js'
+import image from './images.js'
 
 export const catTemplate = cardTemplate({
     image: image('cat'),

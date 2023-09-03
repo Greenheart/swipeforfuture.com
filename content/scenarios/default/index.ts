@@ -1,4 +1,8 @@
-import { Scenario, getDynamicVars, getScenarioId } from '../../content-utils'
+import {
+    Scenario,
+    getDynamicVars,
+    getScenarioId,
+} from '../../content-utils/index.js'
 import {
     ENVIRONMENT,
     PEOPLE,
@@ -6,17 +10,17 @@ import {
     MONEY,
     POPULARITY,
     STATS,
-} from './stats'
+} from './stats.js'
 
-import VARS from './vars'
+import VARS from './vars.js'
 
-import { catastrophicCards } from './cat'
-import { enviraCards } from './envira'
-import { infranCards } from './infran'
-import { otherCards } from './cards'
-import { endGameCards } from './endgame'
-import { mariaCards } from './maria'
-import { environmentalInitiativeCards } from './environmental-initiatives'
+import { catastrophicCards } from './cat.js'
+import { enviraCards } from './envira.js'
+import { infranCards } from './infran.js'
+import { otherCards } from './cards.js'
+import { endGameCards } from './endgame.js'
+import { mariaCards } from './maria.js'
+import { environmentalInitiativeCards } from './environmental-initiatives.js'
 
 const scenario: Scenario = {
     id: getScenarioId(import.meta.url),

@@ -5,12 +5,12 @@ import {
     cardLogic,
     GameWorldModifier,
     combineWorldQueries,
-} from "."
+} from './index.js'
 
 type ModifierWithNextCard = GameWorldModifier & { next?: BaseCard }
 export enum Flag {
     True = 1,
-    False = 0
+    False = 0,
 }
 
 export function createLinkContext(getId: (obj: unknown) => string) {
@@ -26,7 +26,7 @@ export function createLinkContext(getId: (obj: unknown) => string) {
     function linkTo(card: BaseCard): GameWorldModifier {
         const id = getId(card)
         return {
-            type: "set",
+            type: 'set',
             state: {
                 [id]: Flag.True,
             },
@@ -36,7 +36,7 @@ export function createLinkContext(getId: (obj: unknown) => string) {
     function linkVisited(card: BaseCard): GameWorldModifier {
         const id = getId(card)
         return {
-            type: "set",
+            type: 'set',
             state: {
                 [id]: Flag.False,
             },

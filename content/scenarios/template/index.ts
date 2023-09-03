@@ -1,4 +1,8 @@
-import { Scenario, getDynamicVars, getScenarioId } from '../../content-utils'
+import {
+    Scenario,
+    getDynamicVars,
+    getScenarioId,
+} from '../../content-utils/index.js'
 import {
     ENVIRONMENT,
     PEOPLE,
@@ -6,9 +10,9 @@ import {
     MONEY,
     POPULARITY,
     STATS,
-} from './stats'
+} from './stats.js'
 
-import cards from './cards'
+import cards from './cards.js'
 
 const scenario: Scenario = {
     id: getScenarioId(import.meta.url),

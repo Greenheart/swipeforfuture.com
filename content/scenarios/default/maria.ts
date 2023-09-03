@@ -6,10 +6,10 @@ import {
     worldQuery,
     cardFromTemplate,
     CardPriority,
-} from '../../content-utils'
-import { POPULARITY, MONEY, ENVIRONMENT } from './stats'
-import VARS from './vars'
-import image from './images'
+} from '../../content-utils/index.js'
+import { POPULARITY, MONEY, ENVIRONMENT } from './stats.js'
+import VARS from './vars.js'
+import image from './images.js'
 
 export const mariaTemplate = cardTemplate({
     image: image('maria'),
