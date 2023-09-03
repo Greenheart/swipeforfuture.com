@@ -2,7 +2,7 @@ import { outputFile } from 'fs-extra'
 import { resolve } from 'path'
 
 import scenarios from '../scenarios/index.js'
-import type { Scenario, ScenarioManifest } from '../content-utils'
+import type { Scenario, ScenarioManifest } from '../content-utils/index.js'
 
 async function buildScenarioManifest(
     scenarios: { [id: string]: Scenario },
