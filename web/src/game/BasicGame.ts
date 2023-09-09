@@ -14,7 +14,11 @@ export class BasicGame<P> implements Game<P> {
 
     constructor(
         cards: Card<P>[],
-        stats: Stat<P>[],
+        stats: Omit<Stat<P>, 'getIndicator'>[],
+        prepareStat: (
+            game: Game<P>,
+            stat: Omit<Stat<P>, 'getIndicator'>,
+        ) => Stat<P>,
         initialParams: P,
         options: Partial<GameOptions<P>> = {},
     ) {
@@ -23,7 +27,7 @@ export class BasicGame<P> implements Game<P> {
         this._random = random
         this._tickModifiers = tickModifiers
         this._initialParams = initialParams
-        this._stats = stats
+        this._stats = stats.map((stat) => prepareStat(this, stat))
     }
 
     get stats() {

@@ -49,12 +49,18 @@ export function load(
     const stateExtensions = stateExtensionsFromData(
         gameWorld.worldStateModifiers,
     )
-    return new BasicGame<Params>(Object.values(cards), stats, defaultParams, {
-        // After each swipe, run the tickModifiers to perform common tasks.
-        // NOTE: Ensure parameterCaps runs before debug logging and the other StateExtensions
-        tickModifiers: [parameterCaps, ...stateExtensions],
-        random,
-    })
+    return new BasicGame<Params>(
+        Object.values(cards),
+        stats,
+        prepareStat,
+        defaultParams,
+        {
+            // After each swipe, run the tickModifiers to perform common tasks.
+            // NOTE: Ensure parameterCaps runs before debug logging and the other StateExtensions
+            tickModifiers: [parameterCaps, ...stateExtensions],
+            random,
+        },
+    )
 }
 
 /**
@@ -63,11 +69,29 @@ export function load(
  * @param stats The stats data
  * @returns A list of Stats
  */
-function statsFromData(stats: GameWorld['stats']): Stat<Params>[] {
-    return stats.map<Stat<Params>>((stat) => ({
+function statsFromData(
+    stats: GameWorld['stats'],
+): Omit<Stat<Params>, 'getIndicator'>[] {
+    return stats.map((stat) => ({
         ...stat,
         getValue: ({ params }) => params.vars[stat.id] ?? 0,
     }))
+}
+
+function prepareStat(
+    game: Game<Params>,
+    stat: Omit<Stat<Params>, 'getIndicator'>,
+): Stat<Params> {
+    return {
+        ...stat,
+        getIndicator: (
+            state: GameState<Params>,
+            action: StateModifier<Params>,
+        ) => {
+            const newState = game.applyAction(state, action)
+            return newState.params.vars[stat.id] - state.params.vars[stat.id]
+        },
+    }
 }
 
 /**

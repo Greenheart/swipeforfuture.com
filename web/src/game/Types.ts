@@ -1,5 +1,9 @@
 export type Stat<P> = {
     getValue: (state: GameState<P>) => number
+    /**
+     * Get the indicator to help the player understand how an action would impact the game state.
+     */
+    getIndicator: (state: GameState<P>, action: StateModifier<P>) => number
     id: string
     name: string
     icon: {

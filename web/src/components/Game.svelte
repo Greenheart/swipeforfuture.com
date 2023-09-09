@@ -12,12 +12,27 @@
 
     const state = writable<GameState<any>>(game.initialState)
 
-    let stats: Array<Stat<any> & { value: number }>
+    let stats: Array<
+        Stat<any> & {
+            value: number
+            indicators: { left: number; right: number }
+        }
+    >
 
     $: {
         stats = game.stats.map((stat) =>
             Object.assign({}, stat, {
                 value: stat.getValue($state),
+                indicators: {
+                    left: stat.getIndicator(
+                        $state,
+                        $state.card.actions.left.modifier,
+                    ),
+                    right: stat.getIndicator(
+                        $state,
+                        $state.card.actions.right.modifier,
+                    ),
+                },
             }),
         )
     }

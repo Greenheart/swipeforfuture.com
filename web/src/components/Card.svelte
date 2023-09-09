@@ -8,7 +8,7 @@
     } from '$util/constants'
     import pannable from '$util/pannable'
     import type { CardPresentation } from '$game/Types'
-    import { consequenceIndicators } from '$game/stores'
+    import { currentAction } from '$game/stores'
 
     const transition = `transition: transform ${SWIPE_DELAY}ms ease-out`
     const actionIds: ('left' | 'right')[] = ['left', 'right']
@@ -21,7 +21,6 @@
     let isMovingOut = false
     let dir: SwipeDirection | undefined
     let borderWidth = ''
-    let currentAction: 'left' | 'right' | undefined = undefined
 
     const coords = spring(
         { x: 0, y: 0 },
@@ -44,11 +43,9 @@
         dir = Math.sign(event.detail.totalDeltaX)
 
         if (Math.abs(event.detail.totalDeltaX) > 0.25 * SWIPE_THRESHOLD) {
-            currentAction = dir < 0 ? 'left' : 'right'
-            // This is just the CardPresentation, but we would need the supposed results of the action here.
-            // $consequenceIndicators = actions[currentAction]
+            $currentAction = dir < 0 ? 'left' : 'right'
         } else {
-            currentAction = undefined
+            $currentAction = undefined
         }
     }
 
@@ -62,7 +59,7 @@
     }
 
     async function handlePanEnd(event: PanEvent) {
-        currentAction = undefined
+        $currentAction = undefined
 
         if (
             Math.abs(event.detail.totalDeltaX) > SWIPE_THRESHOLD &&
@@ -110,7 +107,7 @@
                         translate3d(-50%, 0, 0) rotate3d(0, 0, 1, {$coords.x *
                         -0.05}deg);
                         transition: opacity 0.2s;
-                        opacity: {actionId === currentAction ? 1 : 0};
+                        opacity: {actionId === $currentAction ? 1 : 0};
                         overflow: hidden;"
                 >
                     <span
@@ -121,7 +118,7 @@
                             : 'left'};
                             transition: transform 0.2s;
                             transform: translate3d(0, {actionId ===
-                        currentAction
+                        $currentAction
                             ? '0'
                             : '-10px'}, 0);"
                     >
