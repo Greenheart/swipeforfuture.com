@@ -9,6 +9,9 @@ export type GameOptions<P> = {
  * Change how actions are applied.
  */
 export type ApplyActionOptions = {
+    /**
+     * Enabled when calculating action indicators.
+     */
     isPreview?: boolean
 }
 
@@ -57,15 +60,21 @@ export class BasicGame<P> implements Game<P> {
     applyAction(
         state: GameState<P>,
         action: StateModifier<P>,
-        options: ApplyActionOptions = {},
+        { isPreview }: ApplyActionOptions = {},
     ): GameState<P> {
         const nextState = this._applyModifiers(
             {
                 ...state,
                 card: undefined as unknown as Card<P>,
             },
-            [action, ...this._tickModifiers],
-            options,
+            [
+                action,
+                ...(Boolean(isPreview)
+                    ? this._tickModifiers.filter(
+                          (modifier) => modifier.disabledDuringPreview,
+                      )
+                    : this._tickModifiers),
+            ],
         )
         return nextState.card
             ? nextState
@@ -80,15 +89,8 @@ export class BasicGame<P> implements Game<P> {
     private _applyModifiers(
         state: GameState<P>,
         modifiers: StateModifier<P>[],
-        { isPreview }: ApplyActionOptions = {},
     ): GameState<P> {
-        return modifiers.reduce(
-            (acc, modifier) =>
-                Boolean(isPreview) && modifier.disabledDuringPreview
-                    ? state
-                    : modifier(acc),
-            state,
-        )
+        return modifiers.reduce((acc, modifier) => modifier(acc), state)
     }
 
     private _getAvailableCards(state: GameState<P>): Card<P>[] {
