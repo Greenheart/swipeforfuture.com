@@ -258,14 +258,14 @@ function createRefFactory(type: string) {
  * @param name Display name to show represent the stat in UI and text
  * @param min Minimum value
  * @param max Maximum value
- * @param icon Icon code to use. Represents an icon component name from `react-icons`
+ * @param iconSrc Icon src, ideally an embedded SVG in a Base64 URL-encoded data url.
  * @param iconSize A CSS size unit to change icon size
  */
 export function stat(
     name: string,
     min: number,
     max: number,
-    icon: string,
+    iconSrc: string,
     iconSize?: string,
 ): StatDefinition {
     if (max <= min) throw 'Error: `max` must be larger than `min`'
@@ -274,8 +274,10 @@ export function stat(
         min,
         max,
         name,
-        icon,
-        iconSize,
+        icon: {
+            src: iconSrc,
+            size: iconSize ? iconSize : undefined,
+        },
     }
 }
 
