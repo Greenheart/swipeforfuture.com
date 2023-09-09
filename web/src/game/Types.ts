@@ -61,12 +61,22 @@ export type GameState<P> = {
     params: P
 }
 
+/**
+ * Change how actions are applied.
+ */
+export type ApplyActionOptions = {
+    /**
+     * Enabled when calculating action indicators.
+     */
+    isPreview?: boolean
+}
+
 export interface Game<P> {
     initialState: GameState<P>
     applyAction(
         prevState: GameState<P>,
         action: StateModifier<P>,
-        { isPreview }: { isPreview?: boolean },
+        options: ApplyActionOptions,
     ): GameState<P>
     stats: Stat<P>[]
     /**

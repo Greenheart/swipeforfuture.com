@@ -1,18 +1,15 @@
-import type { Game, GameState, StateModifier, Card, Stat } from './Types'
+import type {
+    Game,
+    GameState,
+    StateModifier,
+    Card,
+    Stat,
+    ApplyActionOptions,
+} from './Types'
 
 export type GameOptions<P> = {
     random: () => number
     tickModifiers: StateModifier<P>[]
-}
-
-/**
- * Change how actions are applied.
- */
-export type ApplyActionOptions = {
-    /**
-     * Enabled when calculating action indicators.
-     */
-    isPreview?: boolean
 }
 
 export class BasicGame<P> implements Game<P> {
