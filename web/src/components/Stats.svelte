@@ -29,10 +29,12 @@
                 />
                 {#if TEMP_INDICATORS[i]}
                     <div
-                        style:width={TEMP_INDICATORS[i] > 0 ? '12px' : '8px'}
-                        class="bg-black rounded-full shadow-md aspect-square absolute"
-                        style:top={TEMP_INDICATORS[i] > 0 ? '-6px' : ''}
-                        style:bottom={TEMP_INDICATORS[i] > 0 ? '' : '-4px'}
+                        style:width={TEMP_INDICATORS[i] > 0 ? '30%' : '20%'}
+                        class="bg-black rounded-full aspect-square absolute {TEMP_INDICATORS[
+                            i
+                        ] > 0
+                            ? 'top-0 -translate-y-1/2'
+                            : 'bottom-0 translate-y-1/2'}"
                     />
                 {/if}
                 <!-- {#if $consequenceIndicators?.[i]}
