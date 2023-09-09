@@ -28,22 +28,20 @@ Seriously though, no pressure. You got this (we hope...) 😬
 
 **[Play Swipe for Future here!](https://swipeforfuture.com)**
 
-## We 💚 Open Source
+## Welcome to join the co-creation!
 
 This game is free software, licensed under the [GNU GPL v3](./LICENSE) license to allow as many people as possible to explore, create and share scenarios for a sustainable future.
 
-**[Join us and let's get creative together!](./CONTRIBUTING.md)**
+**[Join us and let's get creative together!](./docs/CONTRIBUTING.md)**
 
 ## Do you have ideas for the game or scenarios you want to explore?
-
--   Join our [Discord](https://discord.gg/JGkQr9raU5) and chat with other contributors!
 
 We use GitHub to collaborate on ideas, improvements, bugs and development. This project has two parts:
 
 -   📱 Game client in the `web` directory.
 -   📝 Scenarios and content creation in the `content` directory.
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) to learn more about how you can help improve scenarios and the game itself. Feel free to ask us on [Discord](https://discord.gg/JGkQr9raU5) if you want help getting started!
+See [CONTRIBUTING.md](./docs/CONTRIBUTING.md) to learn how you can help improve scenarios and the game itself.
 
 ## Contributors
 

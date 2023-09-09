@@ -12,6 +12,6 @@ By participating in the Swipe for Future community, you agree that you'll follow
 
 -   **Spamming** includes posting off-topic messages to disrupt discussions or flooding discussions with files or text.
 
-If you see someone harass, troll, or spam anywhere in the Swipe for Future community (Discord, GitHub, Instagram etc.), notify us in the Core Team, preferably with a screenshot of the offense. The Core Team will take any action we deem appropriate, up to and including banning the offender from Swipe for Future.
+If you see someone harass, troll, or spam anywhere in the Swipe for Future community, notify us in the Core Team, preferably with a screenshot of the offense. The Core Team will take any action we deem appropriate, up to and including banning the offender from Swipe for Future.
 
 Inspired by the freeCodeCamp code of conduct.

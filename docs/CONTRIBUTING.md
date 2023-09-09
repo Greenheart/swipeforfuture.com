@@ -16,12 +16,12 @@ By participating in our community, you pledge to follow the [Swipe for Future Co
 
 ## Have a question?
 
-Feel free to chat with us on [Discord](https://discord.gg/JGkQr9raU5) if you want help getting started!
+Let us know if you want help getting started!
 
 ## 🎮 Play the game and contribute with feedback + ideas
 
 -   Play on https://swipeforfuture.com
--   Let us know what you think on [Discord](https://discord.gg/JGkQr9raU5) or by joining the [discussions on GitHub](https://github.com/Greenheart/swipeforfuture.com/issues).
+-   Let us know what you think in the [discussions on GitHub](https://github.com/Greenheart/swipeforfuture.com/issues).
 -   You can also [open issues on GitHub](https://github.com/Greenheart/swipeforfuture.com/issues) if you find bugs or have new ideas. Just remember to search for similar discussions first to avoid duplicates.
 
 ## 📝 Create scenarios and content
@@ -30,9 +30,9 @@ Content creation is a major part of Swipe for Future, and a great opportunity to
 
 ### Don't know how to code? No problem!
 
-To contribute scenario content, you can [play the game](https://swipeforfuture.com) and chat with us on [Discord](https://discord.gg/JGkQr9raU5) to help create engaging stories and game play. We'd love hear your ideas, and we could help you tell that story or scenario you've been thinking about!
+To contribute scenario content, you can [play the game](https://swipeforfuture.com) and help create engaging stories and game play. We'd love hear your ideas, and we could help you tell that story or scenario you've been thinking about!
 
-**Fun fact:** While the core game and official scenarios are centered around climate justice and sustainability, the game itself actually supports any type of scenario content.
+**Fun fact:** While the core game and official scenarios are centered around climate justice and sustainability, the game itself actually supports a wide range of scenarios.
 
 ## 👩‍💻 Develop the game and scenarios locally on your computer
 
@@ -68,7 +68,7 @@ This project consists of the following parts:
 3. You can also play other local scenarios by changing the final part of the above URL to end with `?dev=[SCENARIO_ID]`, where `[SCENARIO_ID]` matches one of the directories in `/content/scenarios`.
 4. To make changes to scenarios, open the `swipeforfuture.com` directory in VS Code. Then use the file explorer (top left of your screen by default) to find the `/content/scenarios` directory and find the scenario you want to edit.
 5. When making changes, the project will automatically rebuild scenarios and prepare them into `JSON` files that can be loaded by the game. However, you need to manually refresh the browser to play the scenario with your latest changes.
-6. When you are ready to save your changes, you can commit them using Git and publish a pull request on GitHub. Don't worry if you're new to Git and GitHub - just write in the [Discord](https://discord.gg/JGkQr9raU5) chat and know and we'll help you! :)
+6. When you are ready to save your changes, you can commit them using Git and publish a pull request on GitHub. Don't worry if you're new to Git and GitHub - let us know and we'll help you! :)
 
 #### More info about scenario development
 
