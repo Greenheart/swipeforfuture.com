@@ -37,8 +37,7 @@ export type StatDefinition = {
     name: string
     min: number
     max: number
-    icon: string
-    iconSize?: string
+    icon: { src: string; size?: string }
 }
 
 export interface CardDescription {
@@ -55,7 +54,7 @@ export type GameWorldModifier = Partial<WorldState> & {
 
 export enum CardPriority {
     Event = 0,
-    Card = 1
+    Card = 1,
 }
 
 export interface CardActionData {

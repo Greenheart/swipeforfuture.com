@@ -22,11 +22,11 @@
             >
                 <div class="w-8 h-8 grid place-items-center">
                     <img
-                        src={stat.icon}
+                        src={stat.icon.src}
                         class="w-full h-full"
                         alt="{stat.name} icon"
-                        style:width={stat.iconSize ? stat.iconSize : ''}
-                        style:height={stat.iconSize ? stat.iconSize : ''}
+                        style:width={stat.icon.size ? stat.icon.size : ''}
+                        style:height={stat.icon.size ? stat.icon.size : ''}
                     />
                 </div>
             </div>

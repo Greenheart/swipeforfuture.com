@@ -2,8 +2,10 @@ export type Stat<P> = {
     getValue: (state: GameState<P>) => number
     id: string
     name: string
-    icon: string
-    iconSize?: string
+    icon: {
+        src: string
+        size?: string
+    }
 }
 
 export type StateModifier<P> = (state: GameState<P>) => GameState<P>
