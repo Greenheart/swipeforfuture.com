@@ -256,6 +256,8 @@ function createRefFactory(type: string) {
  * Create a reusable StatDefinition. This is useful to acoid hard coded strings.
  *
  * @param name Display name to show represent the stat in UI and text
+ * @param min Minimum value
+ * @param max Maximum value
  * @param icon Icon code to use. Represents an icon component name from `react-icons`
  * @param iconSize A CSS size unit to change icon size
  */
