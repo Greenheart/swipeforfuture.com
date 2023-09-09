@@ -1,11 +1,11 @@
 <script lang="ts" context="module">
     import { writable } from 'svelte/store'
+    import { onMount } from 'svelte'
 
     import CardView from '$components/CardView.svelte'
     import Stats from '$components/Stats.svelte'
     import { SwipeDirection } from '$util/constants'
     import type { GameState, Game as GameLogic, Stat } from '$game/Types'
-    import { onMount } from 'svelte'
 </script>
 
 <script lang="ts">

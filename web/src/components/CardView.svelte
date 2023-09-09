@@ -56,8 +56,8 @@
 </div>
 
 <style>
-    /* 
-     * Improve browser rendering performance by giving hinting that the size and layout 
+    /*
+     * Improve browser rendering performance by specifying that the size and layout
      * of the childrens within the card won't affect other parts of the page.
      * Less work for the browser = better performance.
      * https://developer.mozilla.org/en-US/docs/Web/CSS/contain
