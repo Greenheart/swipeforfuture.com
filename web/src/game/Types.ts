@@ -23,7 +23,7 @@ export type IndicatorState = 'visible' | 'hidden' | 'unknown'
 
 export interface CardAction<P> {
     description: string
-    indicatorState?: IndicatorState
+    indicatorState: IndicatorState
     modifier: StateModifier<P>
     next?: Card<P>['id']
 }
