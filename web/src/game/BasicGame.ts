@@ -68,7 +68,7 @@ export class BasicGame<P> implements Game<P> {
                 action,
                 ...(Boolean(isPreview)
                     ? this._tickModifiers.filter(
-                          (modifier) => modifier.disabledDuringPreview,
+                          (modifier) => !modifier.disabledDuringPreview,
                       )
                     : this._tickModifiers),
             ],
