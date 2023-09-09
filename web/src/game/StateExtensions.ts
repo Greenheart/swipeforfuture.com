@@ -4,7 +4,7 @@ import type { GameWorld, WorldStateModifier } from '$shared/ContentTypes'
 export type StateExtension = StateModifier<Params>
 
 /**
- * World state extension counting the number of sounds from game start
+ * World state extension counting the number of rounds from game start
  *
  * @param worldState The world state on which to operate
  * @returns WorldState The updated world state
