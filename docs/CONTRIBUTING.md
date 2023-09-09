@@ -28,6 +28,9 @@ Let us know if you want help getting started!
 
 Content creation is a major part of Swipe for Future, and a great opportunity to be creative!
 
+-   How to get started: Continue reading below
+-   In-depth documentation about how scenarios work: [SCENARIOS.md](./SCENARIOS.md)
+
 ### Don't know how to code? No problem!
 
 To contribute scenario content, you can [play the game](https://swipeforfuture.com) and help create engaging stories and game play. We'd love hear your ideas, and we could help you tell that story or scenario you've been thinking about!
@@ -80,3 +83,7 @@ This project consists of the following parts:
 
 -   For yes/no cards, use the right action for "yes" and the left action for "no"
 -   For cards with other options than yes/no, feel free to mix up the order so not all _good_ cards always are right swipes. The game is more fun when players have to be ready to sometimes swipe left too!
+
+---
+
+Also check out the in-depth documentation about how scenarios work: [SCENARIOS.md](./SCENARIOS.md)
