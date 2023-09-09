@@ -20,9 +20,9 @@ Feel free to chat with us on [Discord](https://discord.gg/JGkQr9raU5) if you wan
 
 ## 🎮 Play the game and contribute with feedback + ideas
 
-- Play on https://swipeforfuture.com
-- Let us know what you think on [Discord](https://discord.gg/JGkQr9raU5) or by joining the [discussions on GitHub](https://github.com/Greenheart/swipeforfuture.com/issues).
-- You can also [open issues on GitHub](https://github.com/Greenheart/swipeforfuture.com/issues) if you find bugs or have new ideas. Just remember to search for similar discussions first to avoid duplicates.
+-   Play on https://swipeforfuture.com
+-   Let us know what you think on [Discord](https://discord.gg/JGkQr9raU5) or by joining the [discussions on GitHub](https://github.com/Greenheart/swipeforfuture.com/issues).
+-   You can also [open issues on GitHub](https://github.com/Greenheart/swipeforfuture.com/issues) if you find bugs or have new ideas. Just remember to search for similar discussions first to avoid duplicates.
 
 ## 📝 Create scenarios and content
 
@@ -38,14 +38,15 @@ To contribute scenario content, you can [play the game](https://swipeforfuture.c
 
 This project consists of the following parts:
 
-- `/web` - The core game module.
-- `/shared` - Shared TypeScript definitions that describe the structure of game content.
-- `/content` - The development tools used to create scenarios.
+-   `/web` - The core game module.
+-   `/shared` - Shared TypeScript definitions that describe the structure of game content.
+-   `/content` - The development tools used to create scenarios.
 
 ### 1. Setup your local environment
 
-- We recommend installing the [VS Code](https://code.visualstudio.com/) editor to get the best experience.
-- You need to have [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/) installed.
+-   We recommend installing the [VS Code](https://code.visualstudio.com/) editor to get the best experience.
+-   You need to have [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/) installed.
+-   There are a number of helpful extensions for VS Code that simplify development. Consider installing the plugins for [Tailwind CSS](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss), [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
 ### 2. Setup the game and scenarios locally
 
@@ -75,8 +76,7 @@ This project consists of the following parts:
 2. **NOTE:** When adding a new scenario, remember to add them in `/content/scenarios/index.ts` to make the new scenario available to play in the game. If you forget to do this, it won't be possible to load the scenario using `?dev=[SCENARIO_ID]`. To verify that the scenario got built correctly during development, you can check if it has exported the scenario JSON file correctly to `/web/static/dev-only/[SCENARIO_ID].json`.
 3. Sometimes changes in the game or the scenarios cause things to crash. If that happens, you will usually see errors in one of the two terminals. and then need to restart both the game client and the scenario development script. If the error persists, see if you have made some mistake in the code that need to be fixed.
 
-
 #### Best practices for scenarios
 
-- For yes/no cards, use the right action for "yes" and the left action for "no"
-- For cards with other options than yes/no, feel free to mix up the order so not all *good* cards always are right swipes. The game is more fun when players have to be ready to sometimes swipe left too!
+-   For yes/no cards, use the right action for "yes" and the left action for "no"
+-   For cards with other options than yes/no, feel free to mix up the order so not all _good_ cards always are right swipes. The game is more fun when players have to be ready to sometimes swipe left too!

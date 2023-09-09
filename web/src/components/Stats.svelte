@@ -1,8 +1,6 @@
 <script lang="ts" context="module">
     import Bar from '$components/Bar.svelte'
     import type { Stat } from '$game/Types'
-
-    // TODO: Improve how icons are loaded and handled. Maybe bundle together with the scenario itself.
 </script>
 
 <script lang="ts">
