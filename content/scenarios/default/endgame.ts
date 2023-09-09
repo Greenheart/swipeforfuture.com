@@ -19,13 +19,13 @@ export const endGameCards: Card[] = [
         weight: 1000,
         actions: {
             left: action(
-                replaceModifier({}),
+                replaceModifier(),
                 'Sorry, not sorry!',
                 undefined,
                 'unknown',
             ),
             right: action(
-                replaceModifier({}),
+                replaceModifier(),
                 "Hah, we'll find another one!",
                 undefined,
                 'unknown',
