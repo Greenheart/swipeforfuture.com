@@ -2,7 +2,8 @@
     "name": "swipeforfuture",
     "private": true,
     "scripts": {
-        "dev": "pnpm --filter \"./(web|content)\" --parallel dev"
+        "dev": "pnpm --filter \"./(web|content)\" --parallel dev",
+        "dev:host": "pnpm --filter \"./(web|content)\" --parallel dev:host"
     },
     "type": "module"
 }
