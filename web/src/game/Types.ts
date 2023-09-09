@@ -3,7 +3,10 @@ export type Stat<P> = {
     /**
      * Get the indicator to help the player understand how an action would impact the game state.
      */
-    getIndicator: (state: GameState<P>, action: StateModifier<P>) => number
+    getIndicator: (
+        state: GameState<P>,
+        action: StateModifier<P>,
+    ) => number | 'unknown'
     id: string
     name: string
     icon: {
@@ -14,8 +17,11 @@ export type Stat<P> = {
 
 export type StateModifier<P> = (state: GameState<P>) => GameState<P>
 
+export type IndicatorState = 'visible' | 'hidden' | 'unknown'
+
 export interface CardAction<P> {
     description: string
+    indicatorState?: IndicatorState
     modifier: StateModifier<P>
     next?: Card<P>['id']
 }

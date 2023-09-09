@@ -1,4 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite'
+import Icons from 'unplugin-icons/vite'
 import { resolve } from 'path'
 import { setDefaultResultOrder } from 'dns'
 
@@ -6,7 +7,7 @@ setDefaultResultOrder('verbatim')
 
 /** @type {import('vite').UserConfig} */
 const config = {
-    plugins: [sveltekit()],
+    plugins: [sveltekit(), Icons({ compiler: 'svelte' })],
     resolve: {
         alias: {
             $components: resolve('./src/components'),

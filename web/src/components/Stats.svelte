@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import { Bar } from '$components'
     import type { Stat } from '$game/Types'
+    import QuestionMark from '~icons/heroicons/question-mark-circle-20-solid'
 </script>
 
 <script lang="ts">
@@ -12,7 +13,7 @@
             /**
              * If set, these numbers show how the current action would affect the game state.
              */
-            indicators: { left: number; right: number }
+            indicators: { left: number | 'unknown'; right: number | 'unknown' }
         }
     >
 </script>
@@ -37,7 +38,13 @@
                 />
                 {#if $currentAction}
                     {@const indicator = stat.indicators[$currentAction]}
-                    {#if indicator !== 0}
+                    {#if indicator === 'unknown'}
+                        <div
+                            class="text-black text-base rounded-full aspect-square bg-white absolute top-0 -translate-y-1/2"
+                        >
+                            <QuestionMark />
+                        </div>
+                    {:else if indicator !== 0}
                         <div
                             style:width={indicator > 0 ? '30%' : '20%'}
                             class="bg-black rounded-full aspect-square absolute {indicator >

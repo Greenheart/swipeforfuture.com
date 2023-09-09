@@ -88,8 +88,18 @@ function prepareStat(
             state: GameState<Params>,
             action: StateModifier<Params>,
         ) => {
-            const newState = game.applyAction(state, action)
-            return newState.params.vars[stat.id] - state.params.vars[stat.id]
+            const indicatorState =
+                (state.card.actions.left.modifier === action
+                    ? state.card.actions.left.indicatorState
+                    : state.card.actions.left.indicatorState) || 'visible'
+
+            if (indicatorState === 'visible') {
+                const newState = game.applyAction(state, action)
+                return (
+                    newState.params.vars[stat.id] - state.params.vars[stat.id]
+                )
+            }
+            return indicatorState === 'hidden' ? 0 : 'unknown'
         },
     }
 }
