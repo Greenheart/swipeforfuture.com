@@ -1,11 +1,11 @@
 import { stat, ICONS } from '../../content-utils/index.js'
 
 export const STATS = {
-    environment: stat('Environment', 0, 100, ICONS.GiWheat, '70%'),
+    environment: stat('Environment', 0, 100, ICONS.GiWheat, '80%'),
     people: stat('People', 0, 100, ICONS.IoIosPeople),
     security: stat('Security', 0, 100, ICONS.GiAk47),
     money: stat('Money', 0, 100, ICONS.GiMoneyStack),
-    popularity: stat('Popularity', 0, 100, ICONS.FiSmile, '75%'),
+    popularity: stat('Popularity', 0, 100, ICONS.FiSmile, '80%'),
 }
 export const ENVIRONMENT = STATS.environment.id
 export const PEOPLE = STATS.people.id
