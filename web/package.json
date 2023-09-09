@@ -10,7 +10,7 @@
         "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
         "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. .",
         "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
-        "deploy": "npm run build && gh-pages -d build --dotfiles"
+        "deploy": "pnpm run build && gh-pages -d build --dotfiles"
     },
     "devDependencies": {
         "@iconify-json/heroicons": "^1.1.12",
