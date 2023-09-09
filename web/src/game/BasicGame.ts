@@ -5,6 +5,9 @@ export type GameOptions<P> = {
     tickModifiers: StateModifier<P>[]
 }
 
+/**
+ * Change how actions are applied.
+ */
 export type ApplyActionOptions = {
     isPreview?: boolean
 }
@@ -61,8 +64,6 @@ export class BasicGame<P> implements Game<P> {
                 ...state,
                 card: undefined as unknown as Card<P>,
             },
-            // IDEA: Only run the tickModifiers that alter the GameState
-            // This prevents the debug logging from running multiple times when calculating action indicators
             [action, ...this._tickModifiers],
             options,
         )
@@ -81,9 +82,6 @@ export class BasicGame<P> implements Game<P> {
         modifiers: StateModifier<P>[],
         { isPreview }: ApplyActionOptions = {},
     ): GameState<P> {
-        // IDEA: only run the modifiers that alter the game state
-        // For example, disable debug logging when calculating the action indicators
-        // Filter out the modifiers based on how they got registered
         return modifiers.reduce(
             (acc, modifier) =>
                 Boolean(isPreview) && modifier.disabledDuringPreview
