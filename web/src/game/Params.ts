@@ -21,18 +21,16 @@ export function isMatchingParamQuery(
     params: Params,
     { vars = {} }: ParamQuery,
 ): boolean {
-    const hasStateMatch = Object.entries(vars).every(
-        ([key, value]) => {
-            if (Array.isArray(value)) {
-                // Match if value is within the range
-                const [min, max] = value
-                return params.vars[key] >= min && params.vars[key] <= max
-            } else {
-                // Shorthand syntax used: Match if value is exact match
-                return params.vars[key] === value
-            }
+    const hasStateMatch = Object.entries(vars).every(([key, value]) => {
+        if (Array.isArray(value)) {
+            // Match if value is within the range
+            const [min, max] = value
+            return params.vars[key] >= min && params.vars[key] <= max
+        } else {
+            // Shorthand syntax used: Match if value is exact match
+            return params.vars[key] === value
         }
-    )
+    })
 
     return hasStateMatch
 }
