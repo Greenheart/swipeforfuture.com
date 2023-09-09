@@ -7,6 +7,7 @@ import {
     CardActionData,
     WorldQuery,
     CardPriority,
+    IndicatorState,
 } from './index.js'
 
 /**
@@ -172,10 +173,13 @@ export function action(
     modifiers: Modifier | Modifier[],
     description?: string,
     next?: Card['id'],
+    indicatorState?: IndicatorState,
 ): CardActionData {
+    action
     return {
         description,
         modifiers: Array.isArray(modifiers) ? modifiers : [modifiers],
+        ...(indicatorState ? { indicatorState } : {}),
         ...(next ? { next } : {}),
     }
 }

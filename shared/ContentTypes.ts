@@ -60,6 +60,7 @@ export enum CardPriority {
 export interface CardActionData {
     description?: string
     modifiers: GameWorldModifier[]
+    indicatorState?: IndicatorState
     next?: Card['id']
 }
 
@@ -88,3 +89,5 @@ export interface WorldQuery {
         [x: string]: WorldStateRange
     }
 }
+
+export type IndicatorState = 'visible' | 'hidden' | 'unknown'

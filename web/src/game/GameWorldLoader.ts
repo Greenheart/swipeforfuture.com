@@ -89,9 +89,9 @@ function prepareStat(
             action: StateModifier<Params>,
         ) => {
             const indicatorState =
-                (state.card.actions.left.modifier === action
+                state.card.actions.left.modifier === action
                     ? state.card.actions.left.indicatorState
-                    : state.card.actions.left.indicatorState) || 'visible'
+                    : state.card.actions.left.indicatorState
 
             if (indicatorState === 'visible') {
                 const newState = game.applyAction(state, action)
@@ -220,6 +220,7 @@ function actionFromData(
 ): CardAction<Params> {
     return {
         description: data.description ?? defaultDescription,
+        indicatorState: data.indicatorState ?? 'visible',
         modifier: (state) => updateParams(state, data.modifiers, defaultParams),
         next: data.next,
     }
