@@ -10,7 +10,7 @@
 <header
     class="flex bg-green-700 xs:space-x-10 justify-around xs:justify-center items-center p-2 2xs:p-4 shadow-lg"
 >
-    {#each stats as stat}
+    {#each stats as stat (stat.name)}
         <div
             class="flex justify-between items-center flex-col"
             title={stat.name}

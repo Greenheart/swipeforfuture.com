@@ -25,10 +25,7 @@
     <div class="h-36 2xs:h-44 xs:h-56 xs:py-4 text-center px-4 xs:px-8">
         {#key card}
             <div class="w-full h-full grid place-items-center">
-                <p
-                    in:fly={{ duration: 200, delay: 200, y: -5 }}
-                    out:fly={{ duration: 200, y: 5 }}
-                >
+                <p in:fly={{ duration: 200, delay: 200, y: -5 }}>
                     {card.text}
                 </p>
             </div>
@@ -38,16 +35,19 @@
     <div class="{imageSize} relative">
         <div class="absolute z-0 {imageSize} top-0 left-0 bg-gray-900" />
         <Card {onSwipe} actions={card.actions} {imageSize}>
-            <div
-                style="background-image: url({card.image})"
-                class="bg-no-repeat bg-center {imageSize} z-10 bg-cover"
-            />
+            {#key card}
+                <div
+                    in:fly={{ duration: 200, y: -5 }}
+                    style="background-image: url({card.image})"
+                    class="bg-no-repeat bg-center {imageSize} z-10 bg-cover"
+                />
+            {/key}
         </Card>
     </div>
 
     <div class="h-14 text-center my-2 xs:my-4">
         {#key card}
-            <div class="h-full" in:fade={{ duration: 200 }}>
+            <div class="h-full" in:fade={{ duration: 200, delay: 200 }}>
                 <h2>{card.title}</h2>
                 <p class="text-gray-300">{card.location}</p>
             </div>
