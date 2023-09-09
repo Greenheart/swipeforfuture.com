@@ -1,25 +1,40 @@
 <script lang="ts" context="module">
+    import { fade, fly } from 'svelte/transition'
+    import { beforeUpdate, tick } from 'svelte'
+
     import Card from '$components/Card.svelte'
     import type { CardPresentation } from '$game/Types'
     import type { SwipeDirection } from '$util/constants'
+
+    const imageSize =
+        'w-[60vmin] h-[60vmin] 2xs:w-[85vmin] 2xs:h-[85vmin] max-w-[400px] max-h-[400px] rounded-lg'
 </script>
 
 <script lang="ts">
     export let card: CardPresentation
     export let onSwipe: (direction: SwipeDirection) => void
 
-    const imageSize =
-        'w-[60vmin] h-[60vmin] 2xs:w-[85vmin] 2xs:h-[85vmin] max-w-[400px] max-h-[400px] rounded-lg'
+    beforeUpdate(async () => {
+        await tick()
+    })
 </script>
 
 <div
     class="flex flex-col items-center justify-center text-white 2xs:text-lg xs:text-xl font-light max-w-prose m-auto card"
 >
-    <p
-        class="text-center xs:py-4 h-36 2xs:h-44 xs:h-56 flex place-items-center px-4 xs:px-8"
-    >
-        {card.text}
-    </p>
+    <div class="h-36 2xs:h-44 xs:h-56 xs:py-4 text-center px-4 xs:px-8">
+        {#key card}
+            <div class="w-full h-full grid place-items-center">
+                <p
+                    in:fly={{ duration: 200, delay: 200, y: -5 }}
+                    out:fly={{ duration: 200, y: 5 }}
+                >
+                    {card.text}
+                </p>
+            </div>
+        {/key}
+    </div>
+
     <div class="{imageSize} relative">
         <div class="absolute z-0 {imageSize} top-0 left-0 bg-gray-900" />
         <Card {onSwipe} actions={card.actions} {imageSize}>
@@ -29,8 +44,15 @@
             />
         </Card>
     </div>
-    <h2 class="mt-2 xs:mt-4">{card.title}</h2>
-    <p class="text-gray-300 mb-2 xs:mb-4">{card.location}</p>
+
+    <div class="h-14 text-center my-2 xs:my-4">
+        {#key card}
+            <div class="h-full" in:fade={{ duration: 200 }}>
+                <h2>{card.title}</h2>
+                <p class="text-gray-300">{card.location}</p>
+            </div>
+        {/key}
+    </div>
 </div>
 
 <style>
