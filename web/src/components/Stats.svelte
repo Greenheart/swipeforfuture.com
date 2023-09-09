@@ -20,7 +20,15 @@
             <div
                 class="w-8 h-8 2xs:w-10 2xs:h-10 xs:w-12 xs:h-12 rounded-full bg-white grid place-items-center shadow-lg mb-2 xs:mb-3 text-black text-sm"
             >
-                {stat.name.slice(0, 2)}
+                <div class="w-8 h-8 grid place-items-center">
+                    <img
+                        src={stat.icon}
+                        class="w-full h-full"
+                        alt="{stat.name} icon"
+                        style:width={stat.iconSize ? stat.iconSize : ''}
+                        style:height={stat.iconSize ? stat.iconSize : ''}
+                    />
+                </div>
             </div>
             <Bar value={stat.value} />
         </div>
