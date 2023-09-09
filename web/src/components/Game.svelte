@@ -2,8 +2,7 @@
     import { writable } from 'svelte/store'
     import { onMount } from 'svelte'
 
-    import CardView from '$components/CardView.svelte'
-    import Stats from '$components/Stats.svelte'
+    import { CardView, Stats } from '$components'
     import { SwipeDirection } from '$util/constants'
     import type { GameState, Game as GameLogic, Stat } from '$game/Types'
 </script>

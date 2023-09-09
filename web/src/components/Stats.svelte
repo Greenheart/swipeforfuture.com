@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import Bar from '$components/Bar.svelte'
+    import { Bar } from '$components'
     import type { Stat } from '$game/Types'
 </script>
 

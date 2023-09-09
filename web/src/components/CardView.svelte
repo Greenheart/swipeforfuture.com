@@ -2,7 +2,7 @@
     import { fade, fly } from 'svelte/transition'
     import { beforeUpdate, tick } from 'svelte'
 
-    import Card from '$components/Card.svelte'
+    import { Card } from '$components'
     import type { CardPresentation } from '$game/Types'
     import type { SwipeDirection } from '$util/constants'
 

@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import { onMount } from 'svelte'
 
-    import Game from '$components/Game.svelte'
+    import { Game } from '$components'
     import { loadScenario } from '$game/load-scenario'
     import { load } from '$game/GameWorldLoader'
     import { SFF_DEFAULT_SCENARIO } from '$util/constants'

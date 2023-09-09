@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Link from '$components/Link.svelte'
+    import {Link} from '$components'
 </script>
 
 <div class="text-white text-center text-lg 2xs:text-xl xs:text-2xl p-4 pt-16 pb-4 xs:py-16 font-light">
