@@ -23,7 +23,7 @@
                 <div class="w-8 h-8 grid place-items-center">
                     <img
                         src={stat.icon.src}
-                        class="w-full h-full"
+                        class="w-full h-full object-contain"
                         alt="{stat.name} icon"
                         style:width={stat.icon.size ? stat.icon.size : ''}
                         style:height={stat.icon.size ? stat.icon.size : ''}
