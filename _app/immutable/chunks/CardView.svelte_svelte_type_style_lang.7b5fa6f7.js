@@ -1,0 +1,1 @@
+function _(s,r){const o={},f={},c={$$scope:1};let i=s.length;for(;i--;){const t=s[i],e=r[i];if(e){for(const n in t)n in e||(f[n]=1);for(const n in e)c[n]||(o[n]=e[n],c[n]=1);s[i]=e}else for(const n in t)c[n]=1}for(const t in f)t in o||(o[t]=void 0);return o}export{_ as g};
