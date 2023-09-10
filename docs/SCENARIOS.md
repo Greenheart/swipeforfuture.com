@@ -6,6 +6,8 @@
 
 Swipe for Future allows for a wide range of possible scenarios.
 
+**TODO: Add examples to make this document less abstract and more useful**
+
 ---
 
 ## Stats
@@ -53,6 +55,12 @@ This is useful for special variables behind the scenes that control which other 
 #### `replace`: Reset the game state to the default game state when the scenario started.
 
 This can be useful to create a loop to let the player restart after losing the scenario.
+
+### Connecting specific cards with `next`
+
+In some cases, you might want to connect specific cards together, for example to show a specific card directly after the player takes an action. This can be achieved by adding a `next` property to the `CardAction` (for example for `left`). There are content utils available to simplify linking of cards, to automatically show and hide them in the right order.
+
+**TODO: Make this section clearer. What content-utils to use? What's important to think about?**
 
 ---
 
