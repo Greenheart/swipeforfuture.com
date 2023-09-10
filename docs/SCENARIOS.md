@@ -23,7 +23,20 @@ Scenarios can have one or more stats, visible at the top of the game UI. Stats a
 
 ## Cards
 
-Cards are the basic building blocks of scenarios. Each turn, the game picks one of the available cards based on the game state.
+Cards are the basic building blocks of scenarios. Each turn, the game picks one of the available cards based on the game state. Every card can control how and when it is shown, by specifying one or more `WorldQuery`.
+
+When the game selects a card, it first gets all the cards that are available at that time.
+
+### Defining when a card is available with one or more `WorldQuery`
+
+The basic idea is to make a card available only when some conditions are met. It can either be when a game state variable is within a certain range, like between`20` and `55`. It can also be when specific variables have been set, allowing for more advanced conditions.
+
+#### There are two ways to use define when a card should be available:
+
+1. If you want several conditions to all be met at the same time, you can define a `WorldQuery` that is matching multiple variables. The card will only be available when everything in this `WorldQuery` is matching.
+2. If you want different possible conditions, you can add multiple world queries to a card. As long as at least one of the world queries are matching the current game state, the card will be available to the player.
+
+### Swiping and making game progression
 
 When the player swipes a card either to the left or right, this updates the game state by applying the corresponding `CardAction`. Each `CardAction` can change the game state based on one or more `GameWorldModifier`s.
 
@@ -40,3 +53,16 @@ This is useful for special variables behind the scenes that control which other 
 #### `replace`: Reset the game state to the default game state when the scenario started.
 
 This can be useful to create a loop to let the player restart after losing the scenario.
+
+---
+
+## Card groups
+
+It's possible to group cards together, for example to make them all available at the same time. This can make it easier to structure a scenario to have distinct sections.
+
+![Graphic diagram showing an example of how card groups work together](./images/card-groups.jpg)
+
+In the diagram:
+
+1. In the `Start` card group, some card(s) uses the `set` modifier to unlock the next card group, `Explore`. Until this happens, only the cards from the `Start` card group are available in the game.
+2. All cards in the `Explore` card group has a `WorldQuery` that makes them show up only when a specific flag from the `Start` card group has been set. The same logic can be applied to the later card groups `Midgame` and `Endgame` too.
