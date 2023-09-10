@@ -15,7 +15,9 @@ export type Stat<P> = {
     }
 }
 
-export type StateModifier<P> = (state: GameState<P>) => GameState<P>
+export type StateModifier<P> = ((state: GameState<P>) => GameState<P>) & {
+    disabledDuringPreview?: boolean
+}
 
 export type IndicatorState = 'visible' | 'hidden' | 'unknown'
 
@@ -59,9 +61,23 @@ export type GameState<P> = {
     params: P
 }
 
+/**
+ * Change how actions are applied.
+ */
+export type ApplyActionOptions = {
+    /**
+     * Enabled when calculating action indicators.
+     */
+    isPreview?: boolean
+}
+
 export interface Game<P> {
     initialState: GameState<P>
-    applyAction(prevState: GameState<P>, action: StateModifier<P>): GameState<P>
+    applyAction(
+        prevState: GameState<P>,
+        action: StateModifier<P>,
+        options: ApplyActionOptions,
+    ): GameState<P>
     stats: Stat<P>[]
     /**
      * List of URLs to preload, for example images and other static assets.

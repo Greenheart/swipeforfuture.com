@@ -1,4 +1,11 @@
-import type { Game, GameState, StateModifier, Card, Stat } from './Types'
+import type {
+    Game,
+    GameState,
+    StateModifier,
+    Card,
+    Stat,
+    ApplyActionOptions,
+} from './Types'
 
 export type GameOptions<P> = {
     random: () => number
@@ -47,13 +54,24 @@ export class BasicGame<P> implements Game<P> {
         return this._cards.map((c) => c.image)
     }
 
-    applyAction(state: GameState<P>, action: StateModifier<P>): GameState<P> {
+    applyAction(
+        state: GameState<P>,
+        action: StateModifier<P>,
+        { isPreview }: ApplyActionOptions = {},
+    ): GameState<P> {
         const nextState = this._applyModifiers(
             {
                 ...state,
                 card: undefined as unknown as Card<P>,
             },
-            [action, ...this._tickModifiers],
+            [
+                action,
+                ...(Boolean(isPreview)
+                    ? this._tickModifiers.filter(
+                          (modifier) => !modifier.disabledDuringPreview,
+                      )
+                    : this._tickModifiers),
+            ],
         )
         return nextState.card
             ? nextState

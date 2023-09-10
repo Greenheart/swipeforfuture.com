@@ -94,7 +94,9 @@ function prepareStat(
                     : state.card.actions.left.indicatorState
 
             if (indicatorState === 'visible') {
-                const newState = game.applyAction(state, action)
+                const newState = game.applyAction(state, action, {
+                    isPreview: true,
+                })
                 return (
                     newState.params.vars[stat.id] - state.params.vars[stat.id]
                 )

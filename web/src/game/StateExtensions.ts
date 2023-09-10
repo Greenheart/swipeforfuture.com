@@ -162,7 +162,9 @@ export function stateExtensionsFromData(
                     0,
                 )
             case 'debug':
-                return createDebugger(modifier.stateIds)
+                const fn = createDebugger(modifier.stateIds)
+                fn.disabledDuringPreview = true
+                return fn
             default:
                 throw new Error(
                     'Missing modifier type: ' + (modifier as any).type,
